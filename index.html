@@ -278,7 +278,7 @@
             <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador para realizar modificaciones.</p>
             
             <form id="auth-form" class="space-y-4">
-                <input type="password" id="admin-pass" required placeholder="Contraseña (ej. EventPro2026)" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                <input type="password" id="admin-pass" required placeholder="Contraseña" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 hover:bg-white/25 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Cancelar</button>
                     <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Validar</button>
@@ -543,7 +543,7 @@
             e.preventDefault();
             const pass = document.getElementById('admin-pass').value.trim();
             
-            if (pass === 'EventPro2026') {
+            if (pass === 'eventos2026') {
                 closePasswordModal();
                 if (authTargetType === 'hero') {
                     heroFileInput.click();
