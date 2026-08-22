@@ -1,178 +1,538 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productora de Eventos - Estilo Elegante</title>
-    <!-- Tailwind CSS -->
+    <title>EVENTPRO | Productora de Eventos de Alta Gama</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        azulOscuro: '#0B192C',
-                        azulClaro: '#1E3E62',
-                        verdeOscurito: '#1B4D3E',
+                        luxuryBg: '#0B192C',
+                        luxuryCard: '#1E3E62',
+                        luxuryBtn: '#1B4D3E',
+                        luxuryBtnHover: '#236551',
+                    },
+                    fontFamily: {
+                        sans: ['Cinzel', 'sans-serif'],
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+    <!-- Google Fonts: Cinzel para títulos de lujo y Plus Jakarta Sans para lectura -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0B192C;
+            color: #FFFFFF;
+        }
+        h1, h2, h3, h4, .font-cinzel {
+            font-family: 'Cinzel', serif;
+        }
+        /* Efecto Glassmorphism */
+        .glass-nav {
+            background: rgba(11, 25, 44, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(30, 62, 98, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Ocultar scrollbar en carrusel manteniendo funcionalidad */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </head>
-<body class="bg-azulOscuro text-white font-sans antialiased selection:bg-verdeOscurito selection:text-white">
+<body class="bg-luxuryBg text-white antialiased selection:bg-luxuryBtn selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-        <div class="text-2xl font-bold tracking-wider text-white">
-            EVENT<span class="text-emerald-400">PRO</span>
-        </div>
-        <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
-            <a href="#inicio" class="hover:text-white transition">About</a>
-            <a href="#servicios" class="hover:text-white transition">Services</a>
-            <a href="#cotizador" class="hover:text-white transition">Gallery / Contact</a>
-        </nav>
-        <a href="#cotizador" class="bg-verdeOscurito hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition shadow-lg">
-            Book Consultation
-        </a>
-    </header>
+    <!-- 1. NAVBAR FIJO / FLOTANTE (Glassmorphism) -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logotipo -->
+            <a href="#inicio" class="text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2">
+                EVENT<span class="text-emerald-400 font-light">PRO</span>
+            </a>
 
-    <!-- Hero Section (Basado en la referencia) -->
-    <section id="inicio" class="max-w-7xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <!-- Texto Principal -->
-        <div class="space-y-6">
-            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-                Create <span class="text-emerald-400">Unforgettable</span> Events With Style
-            </h1>
-            <p class="text-gray-300 text-base md:text-lg max-w-lg leading-relaxed">
-                Luxury weddings, corporate events, birthday celebrations and grand experiences planned with elegance and perfection.
-            </p>
-            <div>
-                <a href="#cotizador" class="inline-block bg-verdeOscurito hover:bg-emerald-700 text-white font-medium px-8 py-3.5 rounded-xl transition shadow-xl">
+            <!-- Enlaces de Navegación (Desktop) -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider">
+                <a href="#inicio" class="text-gray-300 hover:text-white transition-colors">INICIO</a>
+                <a href="#servicios" class="text-gray-300 hover:text-white transition-colors">SERVICIOS</a>
+                <a href="#galeria" class="text-gray-300 hover:text-white transition-colors">GALERÍA</a>
+                <a href="#contacto" class="text-gray-300 hover:text-white transition-colors">CONTACTO</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:block">
+                <a href="#contacto" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-widest transition-all shadow-lg hover:shadow-emerald-900/30 border border-emerald-600/30">
                     Book Consultation
                 </a>
             </div>
+
+            <!-- Botón Menú Móvil -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
         </div>
 
-        <!-- Tarjeta Visual / Imagen en el Hero -->
-        <div class="relative">
-            <div class="bg-azulClaro p-4 rounded-3xl shadow-2xl border border-blue-900/50">
-                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800" alt="Evento de lujo" class="rounded-2xl object-cover w-full h-[350px] md:h-[420px]">
-            </div>
+        <!-- Menú Móvil desplegable -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#inicio" class="block text-gray-300 hover:text-white tracking-wider">INICIO</a>
+            <a href="#servicios" class="block text-gray-300 hover:text-white tracking-wider">SERVICIOS</a>
+            <a href="#galeria" class="block text-gray-300 hover:text-white tracking-wider">GALERÍA</a>
+            <a href="#contacto" class="block text-gray-300 hover:text-white tracking-wider">CONTACTO</a>
+            <a href="#contacto" class="block text-center bg-luxuryBtn text-white py-3 rounded-full text-xs font-semibold uppercase tracking-widest">
+                Book Consultation
+            </a>
         </div>
-    </section>
+    </header>
 
-    <!-- Services Section -->
-    <section id="servicios" class="max-w-7xl mx-auto px-6 py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Our Services</h2>
-            <p class="text-gray-400 mt-2 text-sm md:text-base">Experiencias memorables diseñadas a tu medida</p>
-        </div>
+    <!-- 2. HERO SECTION IMPACTANTE Y ASIMÉTRICO -->
+    <section id="inicio" class="relative min-h-screen flex items-center pt-28 pb-20 px-6 overflow-hidden">
+        <!-- Resplandor de fondo estético -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-emerald-900/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Servicio 1 -->
-            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" alt="Luxury Weddings" class="h-48 w-full object-cover">
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Luxury Weddings</h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">Elegant weddings with premium décor and flawless planning.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Servicio 2 -->
-            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
-                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=600" alt="Corporate Events" class="h-48 w-full object-cover">
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Corporate Events</h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">Professional conferences, launches and networking events.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Servicio 3 -->
-            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=600" alt="Birthday Parties" class="h-48 w-full object-cover">
-                <div class="p-6 flex flex-col flex-grow justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Birthday Parties</h3>
-                        <p class="text-gray-300 text-sm leading-relaxed">Creative celebrations tailored to every age and style.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cotizador / Formulario de WhatsApp -->
-    <section id="cotizador" class="max-w-xl mx-auto px-6 py-16">
-        <div class="bg-azulClaro p-8 rounded-3xl shadow-2xl border border-blue-900/60">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-white">Solicita tu Presupuesto</h2>
-                <p class="text-gray-300 text-sm mt-1">Completa los datos para coordinar tu evento vía WhatsApp</p>
-            </div>
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <form id="eventForm" class="space-y-5">
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-gray-200">Nombre del Cliente</label>
-                    <input type="text" id="nombre" required class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Ej. Carlos Pérez">
+            <!-- Columna Izquierda: Textos y CTA -->
+            <div class="lg:col-span-7 space-y-8 z-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-xs tracking-widest uppercase">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Exclusividad & Alta Costura en Eventos
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+                    Creamos Experiencias <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-emerald-400 font-light italic">Inolvidables</span>
+                </h1>
+                
+                <p class="text-gray-300 text-lg sm:text-xl font-light max-w-2xl leading-relaxed">
+                    Diseñamos, producimos y ejecutamos eventos de alta gama para clientes que no aceptan menos que la perfección absoluta. Tu visión, llevada a una dimensión extraordinaria.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                    <a href="#contacto" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase text-center transition-all shadow-xl hover:shadow-emerald-900/40 border border-emerald-500/30">
+                        Diseña Tu Evento
+                    </a>
+                    <a href="#galeria" class="glass-card hover:bg-white/10 text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase text-center transition-all border border-white/15">
+                        Explorar Galería
+                    </a>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-gray-200">Tipo de Evento</label>
-                    <select id="tipoEvento" class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white">
-                        <option value="Boda">Boda</option>
-                        <option value="XV Años">XV Años</option>
-                        <option value="Corporativo">Evento Corporativo</option>
-                        <option value="Cumpleaños / Fiesta Privada">Cumpleaños / Fiesta Privada</option>
-                        <option value="Otro">Otro</option>
-                    </select>
+                <!-- Métricas de prestigio -->
+                <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10 max-w-lg">
+                    <div>
+                        <p class="text-3xl font-bold font-cinzel text-emerald-400">+150</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">Eventos Globales</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-bold font-cinzel text-white">100%</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">A medida</p>
+                    </div>
+                    <div>
+                        <p class="text-3xl font-bold font-cinzel text-emerald-400">VIP</p>
+                        <p class="text-xs text-gray-400 uppercase tracking-wider mt-1">Atención Exclusiva</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Contenedor Flotante Estilizado y Costoso -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative mx-auto max-w-md lg:max-w-none">
+                    <!-- Marco decorativo trasero -->
+                    <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
+                    
+                    <!-- Grid de Imágenes Superpuestas (Efecto de diseño moderno) -->
+                    <div class="relative grid grid-cols-2 gap-4 p-4 glass-card rounded-2xl shadow-2xl">
+                        <div class="space-y-4">
+                            <div class="overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
+                                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Boda de lujo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                            <div class="overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
+                                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Evento corporativo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-8">
+                            <div class="overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
+                                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="Fiesta privada" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                            <div class="overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
+                                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" alt="Gala exclusiva" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+
+                        <!-- Badge flotante de sello de calidad -->
+                        <div class="absolute -bottom-6 -left-6 glass-card px-6 py-4 rounded-xl border border-white/20 shadow-2xl flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-luxuryBtn flex items-center justify-center text-emerald-300 font-bold">★</div>
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-widest">Excelencia Reconocida</p>
+                                <p class="text-sm font-semibold text-white">Luxury Event Awards</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. SECCIÓN DE SERVICIOS -->
+    <section id="servicios" class="py-28 px-6 relative bg-luxuryBg/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Nuestra Especialidad</h2>
+                <h3 class="text-3xl sm:text-5xl font-bold tracking-tight">Servicios de Alta Gama</h3>
+                <p class="text-gray-300 font-light">Diseñados minuciosamente para superar las expectativas más exigentes del mercado global.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta 1: Bodas de Lujo -->
+                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/50 flex flex-col">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="Bodas de Lujo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Exclusivo</span>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-3 font-cinzel">Bodas de Lujo</h4>
+                            <p class="text-gray-300 text-sm font-light leading-relaxed">
+                                Desde locaciones históricas en Europa hasta villas privadas frente al mar. Coordinación integral, diseño floral de alta costura y gastronomía con estrellas Michelin.
+                            </p>
+                        </div>
+                        <a href="#contacto" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">
+                            Cotizar este servicio <span>→</span>
+                        </a>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-gray-200">Presupuesto Promedio ($ USD)</label>
-                    <input type="number" id="presupuesto" required class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Ej. 1500">
+                <!-- Tarjeta 2: Eventos Corporativos -->
+                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/50 flex flex-col">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Eventos Corporativos" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Executive</span>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-3 font-cinzel">Eventos Corporativos</h4>
+                            <p class="text-gray-300 text-sm font-light leading-relaxed">
+                                Cumbres ejecutivas, lanzamientos de productos globales y galas empresariales que proyectan autoridad, elegancia e innovación de marca impecable.
+                            </p>
+                        </div>
+                        <a href="#contacto" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">
+                            Cotizar este servicio <span>→</span>
+                        </a>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-gray-200">Anotaciones Adicionales</label>
-                    <textarea id="anotaciones" rows="3" class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Fecha estimada, invitados, detalles extra..."></textarea>
+                <!-- Tarjeta 3: Fiestas Privadas -->
+                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-950/50 flex flex-col">
+                    <div class="relative h-72 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="Fiestas Privadas" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Private VIP</span>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-3 font-cinzel">Fiestas Privadas</h4>
+                            <p class="text-gray-300 text-sm font-light leading-relaxed">
+                                Celebraciones privadas con estrictos protocolos de confidencialidad, espectáculos personalizados, diseño lumínico arquitectónico y experiencias memorables.
+                            </p>
+                        </div>
+                        <a href="#contacto" class="inline-flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">
+                            Cotizar este servicio <span>→</span>
+                        </a>
+                    </div>
                 </div>
 
-                <button type="submit" class="w-full bg-verdeOscurito hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg flex items-center justify-center space-x-2">
-                    <span>Enviar Solicitud por WhatsApp</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECCIÓN DE GALERÍA ESPECTACULAR CON SUBIDA LOCAL Y LIGHTBOX -->
+    <section id="galeria" class="py-28 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div>
+                    <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Portafolio Visual</h2>
+                    <h3 class="text-3xl sm:text-5xl font-bold tracking-tight mt-2">Galería Cinematográfica</h3>
+                </div>
+                
+                <!-- Interfaz de Subida Local Personalizada -->
+                <div class="flex items-center gap-4">
+                    <label for="local-image-upload" class="cursor-pointer bg-luxuryCard hover:bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 shadow-lg">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                        </svg>
+                        Subir Mis Fotos
+                    </label>
+                    <input type="file" id="local-image-upload" accept="image/*" multiple class="hidden">
+                </div>
+            </div>
+
+            <!-- Grid de Galería Dinámico -->
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Imagen por defecto 1 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1000" alt="Boda Real" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Bodas</p>
+                        <p class="text-lg font-bold">The Grand Royal Wedding</p>
+                    </div>
+                </div>
+
+                <!-- Imagen por defecto 2 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=1000" alt="Gala Corporativa" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Corporativo</p>
+                        <p class="text-lg font-bold">Global Innovation Summit</p>
+                    </div>
+                </div>
+
+                <!-- Imagen por defecto 3 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000" alt="Fiesta Privada" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Privado</p>
+                        <p class="text-lg font-bold">Sunset Skyline Celebration</p>
+                    </div>
+                </div>
+
+                <!-- Imagen por defecto 4 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=1000" alt="Lanzamiento" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Exclusivo</p>
+                        <p class="text-lg font-bold">Luxury Brand Launch</p>
+                    </div>
+                </div>
+
+                <!-- Imagen por defecto 5 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&q=80&w=1000" alt="Cena de Gala" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Catering VIP</p>
+                        <p class="text-lg font-bold">Michelin Star Experience</p>
+                    </div>
+                </div>
+
+                <!-- Imagen por defecto 6 -->
+                <div class="gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=1000" alt="Fiesta Nocturna" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Nightlife</p>
+                        <p class="text-lg font-bold">The Black Tie Extravaganza</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal (Oculto por defecto) -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+        <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl hover:text-emerald-400 transition-colors">&times;</button>
+        <img id="lightbox-img" src="" alt="Ampliada" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10">
+    </div>
+
+    <!-- 5. FORMULARIO DE COTIZACIÓN CON INTEGRACIÓN A WHATSAPP -->
+    <section id="contacto" class="py-28 px-6 relative bg-luxuryCard/20">
+        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden">
+            <!-- Detalle decorativo -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center max-w-xl mx-auto mb-12 space-y-3">
+                <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Inicie Su Proyecto</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold tracking-tight">Solicitar Cotización Privada</h3>
+                <p class="text-gray-300 text-sm font-light">Complete los detalles y conéctese de inmediato con nuestros directores creativos vía WhatsApp.</p>
+            </div>
+
+            <form id="whatsapp-form" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Nombre -->
+                    <div class="space-y-2">
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 font-medium">Nombre del Cliente *</label>
+                        <input type="text" id="client-name" required placeholder="Ej. Victoria Sterling" class="w-full bg-luxuryBg/80 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors text-sm">
+                    </div>
+
+                    <!-- Tipo de Evento -->
+                    <div class="space-y-2">
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 font-medium">Tipo de Evento *</label>
+                        <select id="event-type" required class="w-full bg-luxuryBg/80 border border-white/10 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-emerald-500 transition-colors text-sm">
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            <option value="Bodas de Lujo">Bodas de Lujo</option>
+                            <option value="Eventos Corporativos">Eventos Corporativos</option>
+                            <option value="Fiestas Privadas">Fiestas Privadas</option>
+                            <option value="Gala Exclusiva">Gala Exclusiva</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Presupuesto Promedio -->
+                <div class="space-y-2">
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 font-medium">Presupuesto Promedio ($ USD) *</label>
+                    <input type="number" id="event-budget" required placeholder="Ej. 50000" class="w-full bg-luxuryBg/80 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors text-sm">
+                </div>
+
+                <!-- Anotaciones Adicionales -->
+                <div class="space-y-2">
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 font-medium">Anotaciones Adicionales / Visión del Evento</label>
+                    <textarea id="event-notes" rows="4" placeholder="Describa brevemente locación estimada, fecha aproximada o requerimientos especiales..." class="w-full bg-luxuryBg/80 border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-emerald-500 transition-colors text-sm"></textarea>
+                </div>
+
+                <!-- Botón Enviar a WhatsApp -->
+                <button type="submit" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover text-white py-4 rounded-xl font-semibold text-xs uppercase tracking-[0.2em] transition-all shadow-xl hover:shadow-emerald-950/50 flex items-center justify-center gap-3 border border-emerald-500/30">
+                    <svg class="w-5 h-5 text-emerald-300" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                    </svg>
+                    Enviar Cotización a WhatsApp
                 </button>
             </form>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-azulClaro border-t border-blue-900/40 py-8 text-center text-sm text-gray-400">
-        <p>&copy; 2026 EventPro Productora. Todos los derechos reservados.</p>
+    <!-- FOOTER -->
+    <footer class="py-12 px-6 border-t border-white/10 text-center text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="font-cinzel text-white text-sm tracking-widest">EVENT<span class="text-emerald-400">PRO</span></p>
+            <p>© 2026 EventPro Luxury Productions. Todos los derechos reservados.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-emerald-400 transition-colors">Privacidad</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Términos VIP</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">Instagram</a>
+            </div>
+        </div>
     </footer>
 
-    <!-- Script de Envío a WhatsApp -->
+    <!-- SCRIPTS DE FUNCIONALIDAD -->
     <script>
-        document.getElementById('eventForm').addEventListener('submit', function(e) {
+        // 1. Menú Móvil Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cerrar menú al hacer clic en un enlace móvil
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // 2. Funcionalidad de Lightbox para la Galería
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(imgSrc) {
+            lightboxImg.src = imgSrc;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+        }
+
+        // Asignar evento click a las imágenes existentes de la galería
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.parentElement.addEventListener('click', () => {
+                openLightbox(img.src);
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // 3. Subida Local de Imágenes en Tiempo Real
+        const imageUploadInput = document.getElementById('local-image-upload');
+        const galleryGrid = document.getElementById('gallery-grid');
+
+        imageUploadInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            if (!files) return;
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageUrl = e.target.result;
+
+                    // Crear elemento de tarjeta para la galería
+                    const newItem = document.createElement('div');
+                    newItem.className = 'gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-emerald-500/30 animate-pulse';
+                    
+                    newItem.innerHTML = `
+                        <img src="${imageUrl}" alt="Imagen Personalizada" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                            <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">Personalizado</p>
+                            <p class="text-lg font-bold">Mi Evento Subido</p>
+                        </div>
+                    `;
+
+                    // Quitar animación de carga al cargar
+                    setTimeout(() => newItem.classList.remove('animate-pulse'), 1000);
+
+                    // Añadir evento de lightbox a la nueva imagen
+                    newItem.addEventListener('click', () => {
+                        openLightbox(imageUrl);
+                    });
+
+                    // Insertar al inicio de la galería
+                    galleryGrid.prepend(newItem);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // 4. Integración del Formulario con WhatsApp
+        const whatsappForm = document.getElementById('whatsapp-form');
+
+        whatsappForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const nombre = document.getElementById('nombre').value;
-            const tipoEvento = document.getElementById('tipoEvento').value;
-            const presupuesto = document.getElementById('presupuesto').value;
-            const anotaciones = document.getElementById('anotaciones').value || "Ninguna";
+            // Capturar datos de los campos
+            const name = document.getElementById('client-name').value.trim();
+            const eventType = document.getElementById('event-type').value;
+            const budget = document.getElementById('event-budget').value.trim();
+            const notes = document.getElementById('event-notes').value.trim() || 'Sin notas adicionales.';
 
-            // Reemplaza este número con el WhatsApp real de tu cliente (código de país + número sin símbolos)
-            const numeroWhatsApp = "584120000000"; 
+            // Estructura exacta requerida para el mensaje
+            const message = `*¡Tienes un futuro cliente procedente de la página!* 🚀\n\n👤 *Nombre:* ${name}\n🎉 *Tipo de evento:* ${eventType}\n💰 *Presupuesto promedio:* $${budget}\n📝 *Anotaciones:* ${notes}`;
 
-            const mensaje = `*¡Tienes un futuro cliente procedente de la página!* 🚀\n\n` +
-                            `👤 *Nombre:* ${nombre}\n` +
-                            `🎉 *Tipo de evento:* ${tipoEvento}\n` +
-                            `💰 *Presupuesto promedio:* $${presupuesto}\n` +
-                            `📝 *Anotaciones:* ${anotaciones}`;
+            // Número de teléfono corporativo simulado de la productora (reemplazar con el real en formato internacional sin símbolos)
+            const phoneNumber = "1234567890"; // Ejemplo
 
-            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
+            // Codificar mensaje para URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            // Abrir WhatsApp en nueva pestaña
+            window.open(whatsappUrl, '_blank');
         });
     </script>
 </body>
