@@ -48,10 +48,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        /* Transiciones suaves wizard */
-        .step-transition {
-            transition: all 0.4s ease-in-out;
-        }
     </style>
 </head>
 <body class="bg-luxuryBg text-white antialiased selection:bg-luxuryBtn selection:text-white">
@@ -150,7 +146,7 @@
         </div>
     </section>
 
-    <!-- 3. SECCIÓN DE SERVICIOS -->
+    <!-- 3. SECCIÓN DE SERVICIOS (Actualizada dinámicamente con tus fotos subidas) -->
     <section id="servicios" class="py-28 px-6 relative bg-luxuryBg/50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
@@ -160,10 +156,13 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Tarjeta Servicio 1: Bodas -->
                 <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
                     <div class="relative h-72 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img id="service-img-bodas" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Exclusivo</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -174,10 +173,12 @@
                     </div>
                 </div>
 
+                <!-- Tarjeta Servicio 2: Corporativos -->
                 <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
                     <div class="relative h-72 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img id="service-img-corporativos" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Executive</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -188,10 +189,12 @@
                     </div>
                 </div>
 
+                <!-- Tarjeta Servicio 3: Fiestas Privadas & Cumpleaños/BabyShower -->
                 <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
                     <div class="relative h-72 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <img id="service-img-privados" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Private VIP</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -305,7 +308,6 @@
         <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-            <!-- Encabezado de Progreso -->
             <div class="flex justify-between items-center mb-10 pb-6 border-b border-white/10">
                 <div>
                     <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Experiencia Interactiva</h2>
@@ -316,46 +318,39 @@
                 </div>
             </div>
 
-            <!-- CONTENEDOR DE PASOS WIZARD -->
             <div id="wizard-container" class="min-h-[400px]">
-
-                <!-- PASO 1: Tipo de Evento (Con Fotos y Hover Expandido) -->
+                <!-- PASO 1 -->
                 <div class="wizard-step" data-step="1">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">¿Qué tipo de evento deseas realizar?</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        
                         <div onclick="selectOption(1, 'Bodas', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
                             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Bodas</span>
                             </div>
                         </div>
-
                         <div onclick="selectOption(1, 'Gender Reveal', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
                             <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Gender Reveal</span>
                             </div>
                         </div>
-
                         <div onclick="selectOption(1, 'Cumpleaños', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
                             <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Cumpleaños</span>
                             </div>
                         </div>
-
                         <div onclick="selectOption(1, 'Corporativos', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
                             <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Corporativos</span>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- PASO 2: Cantidad de Personas -->
+                <!-- PASO 2 -->
                 <div class="wizard-step hidden" data-step="2">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">¿Cuántas personas asistirán a tu evento?</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -378,7 +373,7 @@
                     </div>
                 </div>
 
-                <!-- PASO 3: Fecha del Evento -->
+                <!-- PASO 3 -->
                 <div class="wizard-step hidden" data-step="3">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona la fecha estimada de tu evento</h4>
                     <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 text-center space-y-4">
@@ -387,7 +382,7 @@
                     </div>
                 </div>
 
-                <!-- PASO 4: Locaciones -->
+                <!-- PASO 4 -->
                 <div class="wizard-step hidden" data-step="4">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu locación preferida</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -398,7 +393,6 @@
                                 <p class="text-xs text-gray-400">Vistas panorámicas y arquitectura moderna</p>
                             </div>
                         </div>
-
                         <div onclick="selectOption(4, 'Casa el Arroyo', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🌿</div>
                             <div>
@@ -406,7 +400,6 @@
                                 <p class="text-xs text-gray-400">Jardines naturales y elegancia al aire libre</p>
                             </div>
                         </div>
-
                         <div onclick="selectOption(4, 'Nova Caracas', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🏙️</div>
                             <div>
@@ -414,7 +407,6 @@
                                 <p class="text-xs text-gray-400">Salones urbanos vanguardistas de alta gama</p>
                             </div>
                         </div>
-
                         <div onclick="selectOption(4, 'Casa de Ita', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🏰</div>
                             <div>
@@ -425,7 +417,7 @@
                     </div>
                 </div>
 
-                <!-- PASO 5: Presupuesto -->
+                <!-- PASO 5 -->
                 <div class="wizard-step hidden" data-step="5">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu rango de presupuesto estimado</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -444,7 +436,7 @@
                     </div>
                 </div>
 
-                <!-- PASO 6: Datos Personales -->
+                <!-- PASO 6 -->
                 <div class="wizard-step hidden" data-step="6">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Tus datos personales para el contacto directo</h4>
                     <form id="wizard-form-data" onsubmit="submitWizard(event)" class="max-w-md mx-auto space-y-4">
@@ -466,14 +458,14 @@
                     </form>
                 </div>
 
-                <!-- PASO 7: Pantalla de Éxito con Check Verde -->
+                <!-- PASO 7 -->
                 <div class="wizard-step hidden text-center py-10 space-y-6" data-step="7">
                     <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto text-emerald-400 text-4xl animate-bounce">
                         ✓
                     </div>
                     <div class="space-y-2 max-w-lg mx-auto">
                         <h4 class="text-2xl font-bold font-cinzel text-white">¡Gracias por preferirnos!</h4>
-                        <p class="text-sm text-gray-300 leading-relaxed">Una productora ejecutiva se estará comunicando contigo en breve para dar vida a tu evento exclusivo.</p>
+                        <p class="text-sm text-gray-300 leading-relaxed">Una productora ejecutiva se estará comunicando contigo en breve al número <span id="summary-phone" class="text-emerald-400 font-semibold"></span> para dar vida a tu evento exclusivo.</p>
                     </div>
                     <button type="button" onclick="resetWizard()" class="bg-luxuryCard hover:bg-white/10 border border-white/20 px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
                         Diseñar Otro Evento
@@ -482,10 +474,8 @@
 
             </div>
 
-            <!-- Botones de Navegación del Wizard -->
             <div id="wizard-nav-buttons" class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
                 <button type="button" id="prev-btn" onclick="prevStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">Anterior</button>
-                <div id="spacer-prev"></div>
             </div>
         </div>
     </section>
@@ -503,15 +493,13 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS COMPLETOS -->
+    <!-- SCRIPTS -->
     <script>
-        // 1. Menú Móvil
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // 2. Base de datos simulada y Estado de la Galería
         let galleryData = {
             todos: [],
             bodas: [],
@@ -539,8 +527,8 @@
                         <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
-                        <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría</p>
-                        <p class="text-sm text-gray-400 max-w-md">Utiliza el botón de administración superior para subir tus archivos fotográficos.</p>
+                        <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría todavía</p>
+                        <p class="text-sm text-gray-400 max-w-md">Utiliza el botón superior de administración para autenticarte y comenzar a subir tus archivos fotográficos.</p>
                     </div>`;
                 return;
             }
@@ -560,6 +548,26 @@
             });
         }
 
+        // Función clave para actualizar dinámicamente las tarjetas de servicios con tus fotos subidas
+        function updateServicesImages() {
+            if (galleryData.bodas.length > 0) {
+                const latestBodas = galleryData.bodas[galleryData.bodas.length - 1].url;
+                document.getElementById('service-img-bodas').src = latestBodas;
+            }
+            if (galleryData.corporativos.length > 0) {
+                const latestCorp = galleryData.corporativos[galleryData.corporativos.length - 1].url;
+                document.getElementById('service-img-corporativos').src = latestCorp;
+            }
+            // Para la tarjeta de fiestas privadas, toma la más reciente entre cumpleaños y baby shower o corporativos/bodas
+            const privatePool = [...galleryData.cumpleanos, ...galleryData.babyshower];
+            if (privatePool.length > 0) {
+                const latestPrivate = privatePool[privatePool.length - 1].url;
+                document.getElementById('service-img-privados').src = latestPrivate;
+            } else if (galleryData.bodas.length > 0) {
+                document.getElementById('service-img-privados').src = galleryData.bodas[galleryData.bodas.length - 1].url;
+            }
+        }
+
         function filterGallery(category) {
             currentCategoryFilter = category;
             document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
@@ -571,7 +579,6 @@
             renderGallery();
         }
 
-        // Modales Admin Contraseña
         const passModal = document.getElementById('password-modal');
         const uploadModal = document.getElementById('upload-modal');
         const adminPassInput = document.getElementById('admin-pass');
@@ -592,14 +599,12 @@
 
         document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const pass = adminPassInput.value.trim();
-            // Contraseña de ejemplo predeterminada: EventPro2026
-            if (pass === 'EventPro2026') {
+            if (adminPassInput.value.trim() === 'EventPro2026') {
                 closePasswordModal();
                 uploadModal.classList.remove('hidden');
                 uploadModal.classList.add('flex');
             } else {
-                alert('Contraseña incorrecta. Intente nuevamente.');
+                alert('Contraseña incorrecta.');
             }
         });
 
@@ -609,7 +614,7 @@
             const files = fileInput.files;
 
             if (!files || files.length === 0) {
-                alert('Por favor seleccione al menos una imagen.');
+                alert('Seleccione al menos una imagen.');
                 return;
             }
 
@@ -628,16 +633,16 @@
                         categoryName: categoryNameDisplay
                     });
                     renderGallery();
+                    updateServicesImages(); // Actualiza automáticamente la sección de servicios
                 }
                 reader.readAsDataURL(file);
             });
 
             fileInput.value = '';
             closeUploadModal();
-            alert('¡Imágenes subidas y añadidas a la galería exitosamente!');
+            alert('¡Imágenes subidas y sincronizadas con los servicios y la galería exitosamente!');
         }
 
-        // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         function openLightbox(src) {
@@ -650,18 +655,9 @@
             lightbox.classList.remove('flex');
         }
 
-        // 3. WIZARD INTERACTIVO DE COTIZACIÓN
+        // Wizard Interactivo
         let currentStep = 1;
-        let wizardData = {
-            eventType: '',
-            guests: '',
-            date: '',
-            location: '',
-            budget: '',
-            name: '',
-            lastname: '',
-            phone: ''
-        };
+        let wizardData = { eventType: '', guests: '', date: '', location: '', budget: '', name: '', lastname: '', phone: '' };
 
         function updateWizardView() {
             document.querySelectorAll('.wizard-step').forEach(stepEl => {
@@ -672,20 +668,10 @@
                 }
             });
 
-            const indicator = document.getElementById('step-indicator');
+            document.getElementById('step-indicator').textContent = currentStep <= 6 ? `Paso ${currentStep} de 6` : `¡Completado!`;
             const prevBtn = document.getElementById('prev-btn');
-
-            if (currentStep <= 6) {
-                indicator.textContent = `Paso ${currentStep} de 6`;
-            } else {
-                indicator.textContent = `¡Completado!`;
-            }
-
-            if (currentStep > 1 && currentStep < 7) {
-                prevBtn.classList.remove('hidden');
-            } else {
-                prevBtn.classList.add('hidden');
-            }
+            if (currentStep > 1 && currentStep < 7) prevBtn.classList.remove('hidden');
+            else prevBtn.classList.add('hidden');
         }
 
         function selectOption(step, value, element) {
@@ -694,7 +680,6 @@
             if (step === 4) wizardData.location = value;
             if (step === 5) wizardData.budget = value;
 
-            // Animación de selección visual
             element.parentElement.querySelectorAll('div').forEach(el => {
                 el.classList.remove('border-emerald-400', 'bg-luxuryCard/90', 'ring-2', 'ring-emerald-400');
             });
@@ -708,20 +693,14 @@
 
         function validateDateStep() {
             const dateVal = document.getElementById('event-date-input').value;
-            if (!dateVal) {
-                alert('Por favor selecciona una fecha estimada.');
-                return;
-            }
+            if (!dateVal) { alert('Por favor selecciona una fecha estimada.'); return; }
             wizardData.date = dateVal;
             currentStep++;
             updateWizardView();
         }
 
         function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                updateWizardView();
-            }
+            if (currentStep > 1) { currentStep--; updateWizardView(); }
         }
 
         function submitWizard(e) {
@@ -730,25 +709,18 @@
             wizardData.lastname = document.getElementById('w-lastname').value.trim();
             wizardData.phone = document.getElementById('w-phone').value.trim();
 
+            document.getElementById('summary-phone').textContent = wizardData.phone;
             currentStep = 7;
             updateWizardView();
 
-            // Lanzar Confetti de celebración
-            confetti({
-                particleCount: 120,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
 
-            // Enviar a WhatsApp al número corporativo 04123765263
-            const phoneTarget = "584123765263"; // Formato internacional sin símbolos
+            // Número exacto especificado: 04123765263
+            const phoneTarget = "584123765263"; 
             const msg = `*¡Nuevo Cliente desde el Cotizador Interactivo!* 🚀\n\n👤 *Nombre:* ${wizardData.name} ${wizardData.lastname}\n📞 *Teléfono:* ${wizardData.phone}\n🎉 *Tipo de Evento:* ${wizardData.eventType}\n👥 *Invitados:* ${wizardData.guests}\n📅 *Fecha Estimada:* ${wizardData.date}\n🏛️ *Locación:* ${wizardData.location}\n💰 *Presupuesto:* ${wizardData.budget}`;
 
-            const url = `https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`;
-            
-            // Abrir WhatsApp tras un breve retraso para dar tiempo a ver la pantalla de éxito
             setTimeout(() => {
-                window.open(url, '_blank');
+                window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank');
             }, 1500);
         }
 
@@ -759,7 +731,6 @@
             updateWizardView();
         }
 
-        // Inicializar vistas
         renderGallery();
         updateWizardView();
     </script>
