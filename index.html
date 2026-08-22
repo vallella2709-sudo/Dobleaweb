@@ -10,6 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Canvas Confetti CDN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- Supabase JS SDK CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -28,7 +30,7 @@
             }
         }
     </script>
-    <!-- Google Fonts: Cinzel y Plus Jakarta Sans -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -54,7 +56,7 @@
 </head>
 <body class="bg-luxuryBg text-white antialiased selection:bg-luxuryBtn selection:text-white">
 
-    <!-- 1. NAVBAR FIJO / FLOTANTE (Glassmorphism) -->
+    <!-- NAVBAR -->
     <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#inicio" class="text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2">
@@ -92,7 +94,7 @@
         </div>
     </header>
 
-    <!-- 2. HERO SECTION CON FOTOS DE ENTRADA PROTEGIDAS -->
+    <!-- HERO SECTION -->
     <section id="inicio" class="relative min-h-screen flex items-center pt-28 pb-20 px-6 overflow-hidden">
         <div class="absolute top-1/4 left-10 w-96 h-96 bg-emerald-900/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -101,7 +103,7 @@
             <div class="lg:col-span-7 space-y-8 z-10">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-xs tracking-widest uppercase">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Exclusividad & Alta Gama en Eventos
+                    Exclusividad & Alta Costura en Eventos
                 </div>
                 
                 <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
@@ -122,13 +124,12 @@
                 </div>
             </div>
 
-            <!-- Columna Derecha: Contenedor con 4 fotos protegidas por contraseña -->
+            <!-- Contenedor Hero Sincronizado -->
             <div class="lg:col-span-5 relative">
                 <div class="relative mx-auto max-w-md lg:max-w-none">
                     <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
                     <div class="relative grid grid-cols-2 gap-4 p-4 glass-card rounded-2xl shadow-2xl">
                         
-                        <!-- Foto Hero 1 -->
                         <div class="relative overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
                             <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
@@ -136,7 +137,6 @@
                             </button>
                         </div>
 
-                        <!-- Foto Hero 2 -->
                         <div class="relative overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
                             <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
@@ -144,7 +144,6 @@
                             </button>
                         </div>
 
-                        <!-- Foto Hero 3 -->
                         <div class="relative overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
                             <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
@@ -152,7 +151,6 @@
                             </button>
                         </div>
 
-                        <!-- Foto Hero 4 -->
                         <div class="relative overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
                             <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
@@ -166,10 +164,9 @@
         </div>
     </section>
 
-    <!-- Inputs ocultos seguros -->
     <input type="file" id="hero-file-input" accept="image/*" class="hidden" onchange="handleHeroFileSelect(event)">
 
-    <!-- 3. SECCIÓN DE SERVICIOS -->
+    <!-- SERVICIOS -->
     <section id="servicios" class="py-28 px-6 relative bg-luxuryBg/50">
         <div class="max-w-7xl mx-auto">
             <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
@@ -227,10 +224,9 @@
         </div>
     </section>
 
-    <!-- 4. SECCIÓN DE GALERÍA -->
+    <!-- GALERÍA -->
     <section id="galeria" class="py-28 px-6 relative">
         <div class="max-w-7xl mx-auto">
-            
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div>
                     <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Portafolio Visual</h2>
@@ -242,12 +238,11 @@
                         <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
-                        Admin
+                        Subir Mis Fotografías (Admin)
                     </button>
                 </div>
             </div>
 
-            <!-- Pestañas de Filtrado -->
             <div class="flex flex-wrap gap-3 mb-10 border-b border-white/10 pb-6">
                 <button onclick="filterGallery('todos')" class="gallery-tab-btn active-tab bg-luxuryBtn text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-emerald-500/30">Todos</button>
                 <button onclick="filterGallery('bodas')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Bodas</button>
@@ -256,73 +251,59 @@
                 <button onclick="filterGallery('babyshower')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Baby Shower & Gender Reveal</button>
             </div>
 
-            <!-- Grid de Galería -->
             <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div id="empty-gallery-state" class="col-span-full py-20 px-6 text-center glass-card rounded-3xl border border-dashed border-white/20 flex flex-col items-center justify-center space-y-4">
                     <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
-                    <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría todavía</p>
-                    <p class="text-sm text-gray-400 max-w-md">Utiliza el botón superior de administración para autenticarte y comenzar a subir tus archivos fotográficos.</p>
+                    <p class="text-lg font-semibold text-white font-cinzel">Sincronizando con Supabase...</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Modal Universal de Contraseña (Protege Hero y Galería) -->
+    <!-- Modal de Contraseña -->
     <div id="password-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative">
             <h3 class="text-xl font-bold mb-2 font-cinzel text-emerald-400">Acceso Restringido</h3>
-            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador para realizar modificaciones.</p>
-            
+            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador.</p>
             <form id="auth-form" class="space-y-4">
                 <input type="password" id="admin-pass" required placeholder="Contraseña" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 hover:bg-white/25 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Cancelar</button>
-                    <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Validar</button>
+                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase">Validar</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Modal Selector de Categoría y Archivos (Galería) -->
+    <!-- Modal Upload Galería -->
     <div id="upload-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-lg w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
-            <h3 class="text-xl font-bold font-cinzel text-emerald-400">Subir Fotografías al Portafolio</h3>
-            
+            <h3 class="text-xl font-bold font-cinzel text-emerald-400">Subir Fotografías a la Nube</h3>
             <div class="space-y-4">
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-2">Seleccione la categoría destino:</label>
-                    <select id="upload-category" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        <option value="bodas">Bodas</option>
-                        <option value="corporativos">Corporativos</option>
-                        <option value="cumpleanos">Cumpleaños</option>
-                        <option value="babyshower">Baby Shower & Gender Reveal</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-2">Seleccionar imágenes:</label>
-                    <input type="file" id="admin-file-input" accept="image/*" multiple class="w-full text-xs text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-luxuryBtn file:text-white hover:file:bg-luxuryBtnHover cursor-pointer">
-                </div>
+                <select id="upload-category" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
+                    <option value="bodas">Bodas</option>
+                    <option value="corporativos">Corporativos</option>
+                    <option value="cumpleanos">Cumpleaños</option>
+                    <option value="babyshower">Baby Shower & Gender Reveal</option>
+                </select>
+                <input type="file" id="admin-file-input" accept="image/*" multiple class="w-full text-xs text-gray-400">
             </div>
-
             <div class="flex gap-3 pt-4">
-                <button type="button" onclick="closeUploadModal()" class="flex-1 bg-white/10 hover:bg-white/25 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Cerrar</button>
-                <button type="button" onclick="processUploadFiles()" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Guardar en Galería</button>
+                <button type="button" onclick="closeUploadModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase">Cerrar</button>
+                <button type="button" onclick="processUploadFiles()" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase">Subir a Supabase</button>
             </div>
         </div>
     </div>
 
-    <!-- Lightbox Modal -->
+    <!-- Lightbox -->
     <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white text-4xl hover:text-emerald-400 transition-colors">&times;</button>
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white text-4xl hover:text-emerald-400">&times;</button>
         <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10">
     </div>
 
-    <!-- 5. WIZARD INTERACTIVO DE COTIZACIÓN -->
+    <!-- COTIZADOR WIZARD -->
     <section id="cotizador-section" class="py-28 px-6 relative bg-luxuryCard/20">
         <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -338,30 +319,29 @@
             </div>
 
             <div id="wizard-container" class="min-h-[400px]">
-                <!-- PASO 1 -->
                 <div class="wizard-step" data-step="1">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">¿Qué tipo de evento deseas realizar?</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div onclick="selectOption(1, 'Bodas', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div onclick="selectOption(1, 'Bodas', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Bodas</span>
                             </div>
                         </div>
-                        <div onclick="selectOption(1, 'Gender Reveal', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div onclick="selectOption(1, 'Gender Reveal', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Gender Reveal</span>
                             </div>
                         </div>
-                        <div onclick="selectOption(1, 'Cumpleaños', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div onclick="selectOption(1, 'Cumpleaños', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Cumpleaños</span>
                             </div>
                         </div>
-                        <div onclick="selectOption(1, 'Corporativos', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all duration-300 hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div onclick="selectOption(1, 'Corporativos', this)" class="event-option-card relative h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
                                 <span class="text-sm font-bold font-cinzel text-white">Corporativos</span>
                             </div>
@@ -369,7 +349,6 @@
                     </div>
                 </div>
 
-                <!-- PASO 2 -->
                 <div class="wizard-step hidden" data-step="2">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">¿Cuántas personas asistirán a tu evento?</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -392,7 +371,6 @@
                     </div>
                 </div>
 
-                <!-- PASO 3 -->
                 <div class="wizard-step hidden" data-step="3">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona la fecha estimada de tu evento</h4>
                     <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 text-center space-y-4">
@@ -401,96 +379,61 @@
                     </div>
                 </div>
 
-                <!-- PASO 4 -->
                 <div class="wizard-step hidden" data-step="4">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu locación preferida</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div onclick="selectOption(4, 'Casa Mirador', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
+                        <div onclick="selectOption(4, 'Casa Mirador', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🏛️</div>
-                            <div>
-                                <h5 class="font-bold text-base font-cinzel">Casa Mirador</h5>
-                                <p class="text-xs text-gray-400">Vistas panorámicas y arquitectura moderna</p>
-                            </div>
+                            <div><h5 class="font-bold text-base font-cinzel">Casa Mirador</h5><p class="text-xs text-gray-400">Vistas panorámicas</p></div>
                         </div>
-                        <div onclick="selectOption(4, 'Casa el Arroyo', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
+                        <div onclick="selectOption(4, 'Casa el Arroyo', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🌿</div>
-                            <div>
-                                <h5 class="font-bold text-base font-cinzel">Casa el Arroyo</h5>
-                                <p class="text-xs text-gray-400">Jardines naturales y elegancia al aire libre</p>
-                            </div>
+                            <div><h5 class="font-bold text-base font-cinzel">Casa el Arroyo</h5><p class="text-xs text-gray-400">Jardines naturales</p></div>
                         </div>
-                        <div onclick="selectOption(4, 'Nova Caracas', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
+                        <div onclick="selectOption(4, 'Nova Caracas', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🏙️</div>
-                            <div>
-                                <h5 class="font-bold text-base font-cinzel">Nova Caracas</h5>
-                                <p class="text-xs text-gray-400">Salones urbanos vanguardistas de alta gama</p>
-                            </div>
+                            <div><h5 class="font-bold text-base font-cinzel">Nova Caracas</h5><p class="text-xs text-gray-400">Salones urbanos</p></div>
                         </div>
-                        <div onclick="selectOption(4, 'Casa de Ita', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 hover:scale-[1.02] transition-all flex items-center gap-4 shadow-lg">
+                        <div onclick="selectOption(4, 'Casa de Ita', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
                             <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold">🏰</div>
-                            <div>
-                                <h5 class="font-bold text-base font-cinzel">Casa de Ita</h5>
-                                <p class="text-xs text-gray-400">Exclusividad histórica y lujo clásico</p>
-                            </div>
+                            <div><h5 class="font-bold text-base font-cinzel">Casa de Ita</h5><p class="text-xs text-gray-400">Exclusividad histórica</p></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- PASO 5 -->
                 <div class="wizard-step hidden" data-step="5">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu rango de presupuesto estimado</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div onclick="selectOption(5, '$2,000 - $5,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 hover:scale-105 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">💎</span>
-                            <span class="font-bold text-emerald-400">$2,000 - $5,000</span>
+                        <div onclick="selectOption(5, '$2,000 - $5,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
+                            <span class="text-3xl">💎</span><span class="font-bold text-emerald-400">$2,000 - $5,000</span>
                         </div>
-                        <div onclick="selectOption(5, '$5,000 - $10,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 hover:scale-105 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">👑</span>
-                            <span class="font-bold text-emerald-400">$5,000 - $10,000</span>
+                        <div onclick="selectOption(5, '$5,000 - $10,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
+                            <span class="text-3xl">👑</span><span class="font-bold text-emerald-400">$5,000 - $10,000</span>
                         </div>
-                        <div onclick="selectOption(5, 'Más de $10,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 hover:scale-105 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">🌟</span>
-                            <span class="font-bold text-emerald-400">Más de $10,000</span>
+                        <div onclick="selectOption(5, 'Más de $10,000', this)" class="p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
+                            <span class="text-3xl">🌟</span><span class="font-bold text-emerald-400">Más de $10,000</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- PASO 6 -->
                 <div class="wizard-step hidden" data-step="6">
                     <h4 class="text-lg font-semibold mb-6 text-center font-cinzel">Tus datos personales para el contacto directo</h4>
                     <form id="wizard-form-data" onsubmit="submitWizard(event)" class="max-w-md mx-auto space-y-4">
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre *</label>
-                            <input type="text" id="w-name" required placeholder="Ej. Victoria" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Apellido *</label>
-                            <input type="text" id="w-lastname" required placeholder="Ej. Sterling" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Número de Teléfono *</label>
-                            <input type="tel" id="w-phone" required placeholder="Ej. +58 412..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500">
-                        </div>
-                        <button type="submit" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-4 rounded-xl font-semibold text-xs uppercase tracking-[0.2em] transition-all shadow-xl">
-                            Enviar Cotización por WhatsApp
-                        </button>
+                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre *</label><input type="text" id="w-name" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
+                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Apellido *</label><input type="text" id="w-lastname" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
+                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Número de Teléfono *</label><input type="tel" id="w-phone" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
+                        <button type="submit" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-4 rounded-xl font-semibold text-xs uppercase tracking-[0.2em] transition-all shadow-xl">Enviar Cotización por WhatsApp</button>
                     </form>
                 </div>
 
-                <!-- PASO 7 -->
                 <div class="wizard-step hidden text-center py-10 space-y-6" data-step="7">
-                    <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto text-emerald-400 text-4xl animate-bounce">
-                        ✓
-                    </div>
+                    <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto text-emerald-400 text-4xl animate-bounce">✓</div>
                     <div class="space-y-2 max-w-lg mx-auto">
                         <h4 class="text-2xl font-bold font-cinzel text-white">¡Gracias por preferirnos!</h4>
                         <p class="text-sm text-gray-300 leading-relaxed">Una productora ejecutiva se estará comunicando contigo en breve al número <span id="summary-phone" class="text-emerald-400 font-semibold"></span> para dar vida a tu evento exclusivo.</p>
                     </div>
-                    <button type="button" onclick="resetWizard()" class="bg-luxuryCard hover:bg-white/10 border border-white/20 px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
-                        Diseñar Otro Evento
-                    </button>
+                    <button type="button" onclick="resetWizard()" class="bg-luxuryCard hover:bg-white/10 border border-white/20 px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">Diseñar Otro Evento</button>
                 </div>
-
             </div>
 
             <div id="wizard-nav-buttons" class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
@@ -504,24 +447,26 @@
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <p class="font-cinzel text-white text-sm tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
             <p>© 2026 DobleA Luxury Productions. Todos los derechos reservados.</p>
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-emerald-400 transition-colors">Privacidad</a>
-                <a href="#" class="hover:text-emerald-400 transition-colors">Términos VIP</a>
-                <a href="#" class="hover:text-emerald-400 transition-colors">Instagram</a>
-            </div>
+            <div class="flex gap-6"><a href="#">Privacidad</a><a href="#">Términos VIP</a><a href="#">Instagram</a></div>
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- SCRIPT DE SUPABASE Y CONTROL -->
     <script>
+        // CONFIGURA TUS CREDENCIALES DE SUPABASE AQUÍ:
+        const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const BUCKET_NAME = 'doblea-eventos';
+
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // Sistema de autenticación universal unificado
         let activeHeroSlot = 1;
-        let authTargetType = ''; // 'hero' o 'gallery'
+        let authTargetType = ''; 
         const heroFileInput = document.getElementById('hero-file-input');
 
         function openPasswordModal(type = 'gallery', slotNum = 1) {
@@ -557,19 +502,22 @@
             }
         });
 
-        function handleHeroFileSelect(event) {
+        // Subir foto del Hero directamente a Supabase Cloud Storage
+        async function handleHeroFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imgElement = document.getElementById(`hero-img-${activeHeroSlot}`);
-                if (imgElement) {
-                    imgElement.src = e.target.result;
-                }
+            const fileName = `hero_slot_${activeHeroSlot}_${Date.now()}`;
+            const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
+
+            if (error) {
+                alert('Error al subir a Supabase: ' + error.message);
+                return;
             }
-            reader.readAsDataURL(file);
-            heroFileInput.value = '';
+
+            const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+            document.getElementById(`hero-img-${activeHeroSlot}`).src = publicUrlData.publicUrl;
+            alert('¡Foto de entrada actualizada globalmente en la nube!');
         }
 
         let galleryData = {
@@ -579,8 +527,39 @@
             cumpleanos: [],
             babyshower: []
         };
-
         let currentCategoryFilter = 'todos';
+
+        // Cargar galería sincronizada desde Supabase
+        async function fetchGalleryFromSupabase() {
+            const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).list('', { limit: 100 });
+            if (error) {
+                console.error('Error al sincronizar galería:', error);
+                return;
+            }
+
+            galleryData = { todos: [], bodas: [], corporativos: [], cumpleanos: [], babyshower: [] };
+
+            data.forEach(file => {
+                if (file.name === '.emptyFolderPlaceholder') return;
+                if (file.name.startsWith('hero_')) return; // Ignorar fotos del hero
+
+                const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(file.name);
+                const imageUrl = publicUrlData.publicUrl;
+
+                // Detectar categoría basada en el prefijo del nombre del archivo (ej: bodas_foto.jpg)
+                let category = 'bodas';
+                let catName = 'Bodas';
+                if (file.name.includes('corporativo')) { category = 'corporativos'; catName = 'Corporativos'; }
+                else if (file.name.includes('cumpleanos')) { category = 'cumpleanos'; catName = 'Cumpleaños'; }
+                else if (file.name.includes('babyshower')) { category = 'babyshower'; catName = 'Baby Shower & Gender Reveal'; }
+
+                const item = { url: imageUrl, categoryName: catName };
+                galleryData[category].push(item);
+            });
+
+            renderGallery();
+            updateServicesImages();
+        }
 
         function renderGallery() {
             const grid = document.getElementById('gallery-grid');
@@ -599,8 +578,7 @@
                         <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
-                        <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría todavía</p>
-                        <p class="text-sm text-gray-400 max-w-md">Utiliza el botón superior de administración para autenticarte y comenzar a subir tus archivos fotográficos.</p>
+                        <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría</p>
                     </div>`;
                 return;
             }
@@ -647,71 +625,47 @@
         }
 
         function closeUploadModal() {
-            const uploadModal = document.getElementById('upload-modal');
-            uploadModal.classList.add('hidden');
-            uploadModal.classList.remove('flex');
+            document.getElementById('upload-modal').classList.add('hidden');
+            document.getElementById('upload-modal').classList.remove('flex');
         }
 
-        function processUploadFiles() {
+        // Subir galería masiva a Supabase
+        async function processUploadFiles() {
             const categorySelect = document.getElementById('upload-category').value;
             const fileInput = document.getElementById('admin-file-input');
             const files = fileInput.files;
 
-            if (!files || files.length === 0) {
-                alert('Seleccione al menos una imagen.');
-                return;
-            }
+            if (!files || files.length === 0) return alert('Seleccione al menos una imagen.');
 
-            let categoryNameDisplay = {
-                bodas: 'Bodas',
-                corporativos: 'Corporativos',
-                cumpleanos: 'Cumpleaños',
-                babyshower: 'Baby Shower & Gender Reveal'
-            }[categorySelect];
-
-            Array.from(files).forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    galleryData[categorySelect].push({
-                        url: e.target.result,
-                        categoryName: categoryNameDisplay
-                    });
-                    renderGallery();
-                    updateServicesImages();
+            for (let file of files) {
+                const fileName = `${categorySelect}_${Date.now()}_${file.name}`;
+                const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
+                if (error) {
+                    alert('Error al subir: ' + error.message);
+                    return;
                 }
-                reader.readAsDataURL(file);
-            });
+            }
 
             fileInput.value = '';
             closeUploadModal();
-            alert('¡Imágenes subidas y sincronizadas con los servicios y la galería exitosamente!');
+            alert('¡Imágenes subidas a Supabase con éxito!');
+            fetchGalleryFromSupabase();
         }
 
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        function openLightbox(src) {
-            lightboxImg.src = src;
-            lightbox.classList.remove('hidden');
-            lightbox.classList.add('flex');
-        }
-        function closeLightbox() {
-            lightbox.classList.add('hidden');
-            lightbox.classList.remove('flex');
-        }
+        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.remove('hidden'); lightbox.classList.add('flex'); }
+        function closeLightbox() { lightbox.classList.add('hidden'); lightbox.classList.remove('flex'); }
 
-        // Wizard Interactivo
+        // Wizard de Cotización
         let currentStep = 1;
         let wizardData = { eventType: '', guests: '', date: '', location: '', budget: '', name: '', lastname: '', phone: '' };
 
         function updateWizardView() {
             document.querySelectorAll('.wizard-step').forEach(stepEl => {
-                if (parseInt(stepEl.getAttribute('data-step')) === currentStep) {
-                    stepEl.classList.remove('hidden');
-                } else {
-                    stepEl.classList.add('hidden');
-                }
+                if (parseInt(stepEl.getAttribute('data-step')) === currentStep) stepEl.classList.remove('hidden');
+                else stepEl.classList.add('hidden');
             });
-
             document.getElementById('step-indicator').textContent = currentStep <= 6 ? `Paso ${currentStep} de 6` : `¡Completado!`;
             const prevBtn = document.getElementById('prev-btn');
             if (currentStep > 1 && currentStep < 7) prevBtn.classList.remove('hidden');
@@ -729,23 +683,18 @@
             });
             element.classList.add('border-emerald-400', 'bg-luxuryCard/90', 'ring-2', 'ring-emerald-400');
 
-            setTimeout(() => {
-                currentStep++;
-                updateWizardView();
-            }, 350);
+            setTimeout(() => { currentStep++; updateWizardView(); }, 350);
         }
 
         function validateDateStep() {
             const dateVal = document.getElementById('event-date-input').value;
-            if (!dateVal) { alert('Por favor selecciona una fecha estimada.'); return; }
+            if (!dateVal) { alert('Selecciona una fecha.'); return; }
             wizardData.date = dateVal;
             currentStep++;
             updateWizardView();
         }
 
-        function prevStep() {
-            if (currentStep > 1) { currentStep--; updateWizardView(); }
-        }
+        function prevStep() { if (currentStep > 1) { currentStep--; updateWizardView(); } }
 
         function submitWizard(e) {
             e.preventDefault();
@@ -762,9 +711,7 @@
             const phoneTarget = "584123765263"; 
             const msg = `*¡Nuevo Cliente desde el Cotizador Interactivo!* 🚀\n\n👤 *Nombre:* ${wizardData.name} ${wizardData.lastname}\n📞 *Teléfono:* ${wizardData.phone}\n🎉 *Tipo de Evento:* ${wizardData.eventType}\n👥 *Invitados:* ${wizardData.guests}\n📅 *Fecha Estimada:* ${wizardData.date}\n🏛️ *Locación:* ${wizardData.location}\n💰 *Presupuesto:* ${wizardData.budget}`;
 
-            setTimeout(() => {
-                window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank');
-            }, 1500);
+            setTimeout(() => { window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank'); }, 1500);
         }
 
         function resetWizard() {
@@ -774,7 +721,8 @@
             updateWizardView();
         }
 
-        renderGallery();
+        // Iniciar la app cargando la nube
+        fetchGalleryFromSupabase();
         updateWizardView();
     </script>
 </body>
