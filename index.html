@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
-    <link rel="icon" type="image/png" href="logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DobleA | Productora de Eventos de Alta Gama</title>
+    <!-- Favicon / Logo en la pestaña del navegador -->
+    <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Canvas Confetti CDN -->
@@ -91,7 +92,7 @@
         </div>
     </header>
 
-    <!-- 2. HERO SECTION CON FOTOS DE ENTRADA PERSONALIZABLES -->
+    <!-- 2. HERO SECTION CON FOTOS DE ENTRADA PROTEGIDAS -->
     <section id="inicio" class="relative min-h-screen flex items-center pt-28 pb-20 px-6 overflow-hidden">
         <div class="absolute top-1/4 left-10 w-96 h-96 bg-emerald-900/10 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -121,7 +122,7 @@
                 </div>
             </div>
 
-            <!-- Columna Derecha: Contenedor con 4 fotos de entrada personalizables -->
+            <!-- Columna Derecha: Contenedor con 4 fotos protegidas por contraseña -->
             <div class="lg:col-span-5 relative">
                 <div class="relative mx-auto max-w-md lg:max-w-none">
                     <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
@@ -130,7 +131,7 @@
                         <!-- Foto Hero 1 -->
                         <div class="relative overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
                             <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="triggerHeroUpload(1)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
+                            <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
                                 Cambiar foto
                             </button>
                         </div>
@@ -138,7 +139,7 @@
                         <!-- Foto Hero 2 -->
                         <div class="relative overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
                             <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="triggerHeroUpload(2)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
+                            <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
                                 Cambiar foto
                             </button>
                         </div>
@@ -146,7 +147,7 @@
                         <!-- Foto Hero 3 -->
                         <div class="relative overflow-hidden rounded-xl h-40 border border-white/10 shadow-lg group">
                             <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="triggerHeroUpload(3)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
+                            <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
                                 Cambiar foto
                             </button>
                         </div>
@@ -154,7 +155,7 @@
                         <!-- Foto Hero 4 -->
                         <div class="relative overflow-hidden rounded-xl h-64 border border-white/10 shadow-lg group">
                             <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="triggerHeroUpload(4)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
+                            <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all opacity-0 group-hover:opacity-100">
                                 Cambiar foto
                             </button>
                         </div>
@@ -165,7 +166,7 @@
         </div>
     </section>
 
-    <!-- Input oculto para cambiar fotos de la entrada del Hero -->
+    <!-- Inputs ocultos seguros -->
     <input type="file" id="hero-file-input" accept="image/*" class="hidden" onchange="handleHeroFileSelect(event)">
 
     <!-- 3. SECCIÓN DE SERVICIOS -->
@@ -226,7 +227,7 @@
         </div>
     </section>
 
-    <!-- 4. SECCIÓN DE GALERÍA CON PESTAÑAS Y CONTRASEÑA DE SUBIDA -->
+    <!-- 4. SECCIÓN DE GALERÍA -->
     <section id="galeria" class="py-28 px-6 relative">
         <div class="max-w-7xl mx-auto">
             
@@ -237,7 +238,7 @@
                 </div>
                 
                 <div class="flex items-center gap-4">
-                    <button onclick="openPasswordModal()" class="cursor-pointer bg-luxuryBtn hover:bg-luxuryBtnHover border border-emerald-500/40 text-white px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 shadow-xl">
+                    <button onclick="openPasswordModal('gallery')" class="cursor-pointer bg-luxuryBtn hover:bg-luxuryBtnHover border border-emerald-500/40 text-white px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-2 shadow-xl">
                         <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
@@ -246,7 +247,7 @@
                 </div>
             </div>
 
-            <!-- Pestañas de Filtrado de Galerías -->
+            <!-- Pestañas de Filtrado -->
             <div class="flex flex-wrap gap-3 mb-10 border-b border-white/10 pb-6">
                 <button onclick="filterGallery('todos')" class="gallery-tab-btn active-tab bg-luxuryBtn text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-emerald-500/30">Todos</button>
                 <button onclick="filterGallery('bodas')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Bodas</button>
@@ -270,14 +271,14 @@
         </div>
     </section>
 
-    <!-- Modal de Contraseña para Subir Fotos -->
+    <!-- Modal Universal de Contraseña (Protege Hero y Galería) -->
     <div id="password-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative">
             <h3 class="text-xl font-bold mb-2 font-cinzel text-emerald-400">Acceso Restringido</h3>
-            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador para subir imágenes a la galería.</p>
+            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador para realizar modificaciones.</p>
             
             <form id="auth-form" class="space-y-4">
-                <input type="password" id="admin-pass" required placeholder="Contraseña" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                <input type="password" id="admin-pass" required placeholder="Contraseña (ej. EventPro2026)" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <div class="flex gap-3 pt-2">
                     <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 hover:bg-white/25 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Cancelar</button>
                     <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-colors">Validar</button>
@@ -286,7 +287,7 @@
         </div>
     </div>
 
-    <!-- Modal Selector de Categoría y Archivos -->
+    <!-- Modal Selector de Categoría y Archivos (Galería) -->
     <div id="upload-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-lg w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
             <h3 class="text-xl font-bold font-cinzel text-emerald-400">Subir Fotografías al Portafolio</h3>
@@ -518,14 +519,43 @@
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // Lógica para cambiar las fotos del Hero en tiempo real
+        // Sistema de autenticación universal unificado
         let activeHeroSlot = 1;
+        let authTargetType = ''; // 'hero' o 'gallery'
         const heroFileInput = document.getElementById('hero-file-input');
 
-        function triggerHeroUpload(slotNum) {
+        function openPasswordModal(type = 'gallery', slotNum = 1) {
+            authTargetType = type;
             activeHeroSlot = slotNum;
-            heroFileInput.click();
+            document.getElementById('admin-pass').value = '';
+            const modal = document.getElementById('password-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
+
+        function closePasswordModal() {
+            const modal = document.getElementById('password-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pass = document.getElementById('admin-pass').value.trim();
+            
+            if (pass === 'EventPro2026') {
+                closePasswordModal();
+                if (authTargetType === 'hero') {
+                    heroFileInput.click();
+                } else if (authTargetType === 'gallery') {
+                    const uploadModal = document.getElementById('upload-modal');
+                    uploadModal.classList.remove('hidden');
+                    uploadModal.classList.add('flex');
+                }
+            } else {
+                alert('Contraseña incorrecta. Acceso denegado.');
+            }
+        });
 
         function handleHeroFileSelect(event) {
             const file = event.target.files[0];
@@ -616,34 +646,11 @@
             renderGallery();
         }
 
-        const passModal = document.getElementById('password-modal');
-        const uploadModal = document.getElementById('upload-modal');
-        const adminPassInput = document.getElementById('admin-pass');
-
-        function openPasswordModal() {
-            adminPassInput.value = '';
-            passModal.classList.remove('hidden');
-            passModal.classList.add('flex');
-        }
-        function closePasswordModal() {
-            passModal.classList.add('hidden');
-            passModal.classList.remove('flex');
-        }
         function closeUploadModal() {
+            const uploadModal = document.getElementById('upload-modal');
             uploadModal.classList.add('hidden');
             uploadModal.classList.remove('flex');
         }
-
-        document.getElementById('auth-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (adminPassInput.value.trim() === 'eventos2026') {
-                closePasswordModal();
-                uploadModal.classList.remove('hidden');
-                uploadModal.classList.add('flex');
-            } else {
-                alert('Contraseña incorrecta.');
-            }
-        });
 
         function processUploadFiles() {
             const categorySelect = document.getElementById('upload-category').value;
