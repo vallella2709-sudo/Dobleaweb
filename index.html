@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productora de Eventos - Estilo Elegante</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        azulOscuro: '#0B192C',
+                        azulClaro: '#1E3E62',
+                        verdeOscurito: '#1B4D3E',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-azulOscuro text-white font-sans antialiased selection:bg-verdeOscurito selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+        <div class="text-2xl font-bold tracking-wider text-white">
+            EVENT<span class="text-emerald-400">PRO</span>
+        </div>
+        <nav class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+            <a href="#inicio" class="hover:text-white transition">About</a>
+            <a href="#servicios" class="hover:text-white transition">Services</a>
+            <a href="#cotizador" class="hover:text-white transition">Gallery / Contact</a>
+        </nav>
+        <a href="#cotizador" class="bg-verdeOscurito hover:bg-emerald-700 text-white px-5 py-2.5 rounded-full text-sm font-medium transition shadow-lg">
+            Book Consultation
+        </a>
+    </header>
+
+    <!-- Hero Section (Basado en la referencia) -->
+    <section id="inicio" class="max-w-7xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <!-- Texto Principal -->
+        <div class="space-y-6">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                Create <span class="text-emerald-400">Unforgettable</span> Events With Style
+            </h1>
+            <p class="text-gray-300 text-base md:text-lg max-w-lg leading-relaxed">
+                Luxury weddings, corporate events, birthday celebrations and grand experiences planned with elegance and perfection.
+            </p>
+            <div>
+                <a href="#cotizador" class="inline-block bg-verdeOscurito hover:bg-emerald-700 text-white font-medium px-8 py-3.5 rounded-xl transition shadow-xl">
+                    Book Consultation
+                </a>
+            </div>
+        </div>
+
+        <!-- Tarjeta Visual / Imagen en el Hero -->
+        <div class="relative">
+            <div class="bg-azulClaro p-4 rounded-3xl shadow-2xl border border-blue-900/50">
+                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800" alt="Evento de lujo" class="rounded-2xl object-cover w-full h-[350px] md:h-[420px]">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="max-w-7xl mx-auto px-6 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white">Our Services</h2>
+            <p class="text-gray-400 mt-2 text-sm md:text-base">Experiencias memorables diseñadas a tu medida</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Servicio 1 -->
+            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" alt="Luxury Weddings" class="h-48 w-full object-cover">
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Luxury Weddings</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Elegant weddings with premium décor and flawless planning.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio 2 -->
+            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
+                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=600" alt="Corporate Events" class="h-48 w-full object-cover">
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Corporate Events</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Professional conferences, launches and networking events.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio 3 -->
+            <div class="bg-azulClaro rounded-2xl overflow-hidden shadow-xl border border-blue-900/40 flex flex-col">
+                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=600" alt="Birthday Parties" class="h-48 w-full object-cover">
+                <div class="p-6 flex flex-col flex-grow justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 text-emerald-300">Birthday Parties</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed">Creative celebrations tailored to every age and style.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cotizador / Formulario de WhatsApp -->
+    <section id="cotizador" class="max-w-xl mx-auto px-6 py-16">
+        <div class="bg-azulClaro p-8 rounded-3xl shadow-2xl border border-blue-900/60">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-white">Solicita tu Presupuesto</h2>
+                <p class="text-gray-300 text-sm mt-1">Completa los datos para coordinar tu evento vía WhatsApp</p>
+            </div>
+            
+            <form id="eventForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-gray-200">Nombre del Cliente</label>
+                    <input type="text" id="nombre" required class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Ej. Carlos Pérez">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-gray-200">Tipo de Evento</label>
+                    <select id="tipoEvento" class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white">
+                        <option value="Boda">Boda</option>
+                        <option value="XV Años">XV Años</option>
+                        <option value="Corporativo">Evento Corporativo</option>
+                        <option value="Cumpleaños / Fiesta Privada">Cumpleaños / Fiesta Privada</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-gray-200">Presupuesto Promedio ($ USD)</label>
+                    <input type="number" id="presupuesto" required class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Ej. 1500">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2 text-gray-200">Anotaciones Adicionales</label>
+                    <textarea id="anotaciones" rows="3" class="w-full px-4 py-3 bg-azulOscuro rounded-xl border border-blue-900 focus:outline-none focus:border-emerald-400 text-white placeholder-gray-500" placeholder="Fecha estimada, invitados, detalles extra..."></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-verdeOscurito hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl transition duration-200 shadow-lg flex items-center justify-center space-x-2">
+                    <span>Enviar Solicitud por WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-azulClaro border-t border-blue-900/40 py-8 text-center text-sm text-gray-400">
+        <p>&copy; 2026 EventPro Productora. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script de Envío a WhatsApp -->
+    <script>
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const tipoEvento = document.getElementById('tipoEvento').value;
+            const presupuesto = document.getElementById('presupuesto').value;
+            const anotaciones = document.getElementById('anotaciones').value || "Ninguna";
+
+            // Reemplaza este número con el WhatsApp real de tu cliente (código de país + número sin símbolos)
+            const numeroWhatsApp = "584120000000"; 
+
+            const mensaje = `*¡Tienes un futuro cliente procedente de la página!* 🚀\n\n` +
+                            `👤 *Nombre:* ${nombre}\n` +
+                            `🎉 *Tipo de evento:* ${tipoEvento}\n` +
+                            `💰 *Presupuesto promedio:* $${presupuesto}\n` +
+                            `📝 *Anotaciones:* ${anotaciones}`;
+
+            const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        });
+    </script>
+</body>
+</html>
