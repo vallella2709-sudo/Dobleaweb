@@ -164,8 +164,6 @@
         </div>
     </section>
 
-    <input type="file" id="hero-file-input" accept="image/*" class="hidden" onchange="handleHeroFileSelect(event)">
-
     <!-- SERVICIOS -->
     <section id="servicios" class="py-28 px-6 relative bg-luxuryBg/50">
         <div class="max-w-7xl mx-auto">
@@ -277,6 +275,35 @@
         </div>
     </div>
 
+    <!-- Modal Selector Hero (Subir nueva o elegir de la base de datos) -->
+    <div id="hero-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-xl w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 class="text-xl font-bold font-cinzel text-emerald-400" id="hero-modal-title">Actualizar Foto del Hero</h3>
+                <button onclick="closeHeroModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+
+            <!-- Opción 1: Subir archivo nuevo -->
+            <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-2">
+                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Opción A: Subir nueva imagen</h4>
+                <input type="file" id="hero-custom-file" accept="image/*" class="w-full text-xs text-gray-300 py-2">
+                <button type="button" onclick="uploadNewHeroImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all">Subir y Seleccionar</button>
+            </div>
+
+            <!-- Opción 2: Elegir de la base de datos existente -->
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1">
+                <h4 class="text-xs uppercase tracking-widest text-gray-300 font-semibold sticky top-0 bg-luxuryCard/90 py-1 backdrop-blur-md">Opción B: Elegir de las fotos ya subidas</h4>
+                <div id="hero-existing-grid" class="grid grid-cols-3 gap-3">
+                    <!-- Se llena con las fotos de la tabla galeria -->
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-white/10 flex justify-end">
+                <button type="button" onclick="closeHeroModal()" class="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl text-xs uppercase font-semibold">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Admin / Gestor de Galería -->
     <div id="upload-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-3xl w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
@@ -285,7 +312,6 @@
                 <button onclick="closeUploadModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
 
-            <!-- Formulario para subir nueva foto -->
             <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-3">
                 <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Subir Nueva Fotografía</h4>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -302,12 +328,9 @@
                 </div>
             </div>
 
-            <!-- Listado de fotos actuales para organizar orden o eliminar -->
             <div class="flex-1 overflow-y-auto space-y-3 pr-2">
                 <h4 class="text-xs uppercase tracking-widest text-gray-300 font-semibold sticky top-0 bg-luxuryCard/90 py-1 backdrop-blur-md">Imágenes Existentes (Edita su orden o elimínalas)</h4>
-                <div id="admin-images-list" class="space-y-2">
-                    <!-- Se llena dinámicamente -->
-                </div>
+                <div id="admin-images-list" class="space-y-2"></div>
             </div>
 
             <div class="pt-2 border-t border-white/10 flex justify-end">
@@ -485,7 +508,6 @@
 
         let activeHeroSlot = 1;
         let authTargetType = ''; 
-        const heroFileInput = document.getElementById('hero-file-input');
 
         function openPasswordModal(type = 'gallery', slotNum = 1) {
             authTargetType = type;
@@ -509,7 +531,7 @@
             if (pass === 'eventos2026') {
                 closePasswordModal();
                 if (authTargetType === 'hero') {
-                    heroFileInput.click();
+                    openHeroModal();
                 } else if (authTargetType === 'gallery') {
                     openUploadModal();
                 }
@@ -517,6 +539,94 @@
                 alert('Contraseña incorrecta. Acceso denegado.');
             }
         });
+
+        // Abrir modal selector del Hero (Subir nueva o elegir existente)
+        async function openHeroModal() {
+            document.getElementById('hero-modal-title').textContent = `Actualizar Foto del Hero (Espacio ${activeHeroSlot})`;
+            const modal = document.getElementById('hero-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Cargar fotos de la base de datos para elegir
+            const grid = document.getElementById('hero-existing-grid');
+            grid.innerHTML = '<p class="col-span-3 text-xs text-gray-400 text-center py-4">Cargando imágenes...</p>';
+
+            const { data, error } = await supabaseClient.from('galeria').select('*').order('id', { ascending: false });
+            grid.innerHTML = '';
+
+            if (error || !data || data.length === 0) {
+                grid.innerHTML = '<p class="col-span-3 text-xs text-gray-400 text-center py-4">No hay fotos en la galería aún.</p>';
+                return;
+            }
+
+            data.forEach(item => {
+                const imgCard = document.createElement('div');
+                imgCard.className = 'relative h-24 rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-emerald-400 group';
+                imgCard.innerHTML = `<img src="${item.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">`;
+                imgCard.addEventListener('click', () => selectExistingHeroImage(item.url));
+                grid.appendChild(imgCard);
+            });
+        }
+
+        function closeHeroModal() {
+            const modal = document.getElementById('hero-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Opción A: Subir nueva foto para el Hero
+        async function uploadNewHeroImage() {
+            const fileInput = document.getElementById('hero-custom-file');
+            const file = fileInput.files[0];
+            if (!file) return alert('Selecciona una imagen.');
+
+            const fileName = `hero_${activeHeroSlot}_${Date.now()}`;
+            const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
+
+            if (error) {
+                alert('Error al subir: ' + error.message);
+                return;
+            }
+
+            const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+            fileInput.value = '';
+            await saveHeroConfig(publicUrlData.publicUrl);
+        }
+
+        // Opción B: Elegir una foto ya existente
+        async function selectExistingHeroImage(url) {
+            await saveHeroConfig(url);
+        }
+
+        // Guardar configuración del Hero en Supabase de forma permanente
+        async function saveHeroConfig(url) {
+            // Upsert en la tabla hero_config
+            const { error } = await supabaseClient.from('hero_config').upsert([
+                { slot_id: activeHeroSlot, url: url }
+            ], { onConflict: 'slot_id' });
+
+            if (error) {
+                alert('Error al guardar configuración: ' + error.message);
+                return;
+            }
+
+            document.getElementById(`hero-img-${activeHeroSlot}`).src = url;
+            closeHeroModal();
+            alert('¡Imagen del Hero actualizada permanentemente!');
+        }
+
+        // Cargar las configuraciones del Hero guardadas al abrir la web
+        async function fetchHeroConfig() {
+            const { data, error } = await supabaseClient.from('hero_config').select('*');
+            if (error || !data) return;
+
+            data.forEach(config => {
+                const imgElement = document.getElementById(`hero-img-${config.slot_id}`);
+                if (imgElement) {
+                    imgElement.src = config.url;
+                }
+            });
+        }
 
         async function openUploadModal() {
             const uploadModal = document.getElementById('upload-modal');
@@ -529,41 +639,19 @@
             const uploadModal = document.getElementById('upload-modal');
             uploadModal.classList.add('hidden');
             uploadModal.classList.remove('flex');
-            fetchGalleryFromSupabase(); // Refrescar la web principal al cerrar
-        }
-
-        // Subir foto del Hero
-        async function handleHeroFileSelect(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const fileName = `hero_slot_${activeHeroSlot}_${Date.now()}`;
-            const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
-
-            if (error) {
-                alert('Error al subir a Supabase: ' + error.message);
-                return;
-            }
-
-            const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
-            document.getElementById(`hero-img-${activeHeroSlot}`).src = publicUrlData.publicUrl;
-            alert('¡Foto de entrada actualizada globalmente en la nube!');
+            fetchGalleryFromSupabase();
         }
 
         let globalGalleryItems = [];
         let currentCategoryFilter = 'todos';
 
-        // Cargar galería desde la tabla "galeria" ordenada por el campo "orden"
         async function fetchGalleryFromSupabase() {
             const { data, error } = await supabaseClient
                 .from('galeria')
                 .select('*')
                 .order('orden', { ascending: true });
 
-            if (error) {
-                console.error('Error al sincronizar galería:', error);
-                return;
-            }
+            if (error) return;
 
             globalGalleryItems = data || [];
             renderGallery();
@@ -634,7 +722,6 @@
             renderGallery();
         }
 
-        // Subir nueva foto al Bucket y registrarla con categoría y orden en la tabla
         async function processUploadFiles() {
             const category = document.getElementById('upload-category').value;
             const fileInput = document.getElementById('admin-file-input');
@@ -652,7 +739,6 @@
 
             const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
             
-            // Insertar en la tabla galeria con orden por defecto 0
             const { error: dbError } = await supabaseClient.from('galeria').insert([
                 { url: publicUrlData.publicUrl, categoria: category, orden: 0 }
             ]);
@@ -667,7 +753,6 @@
             await loadAdminImagesList();
         }
 
-        // Cargar lista interactiva en el modal admin para ordenar y borrar
         async function loadAdminImagesList() {
             const { data, error } = await supabaseClient.from('galeria').select('*').order('orden', { ascending: true });
             const container = document.getElementById('admin-images-list');
@@ -779,6 +864,7 @@
         }
 
         // Inicializar aplicación
+        fetchHeroConfig();
         fetchGalleryFromSupabase();
         updateWizardView();
     </script>
