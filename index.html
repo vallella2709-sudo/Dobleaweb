@@ -180,7 +180,7 @@
                     <div class="relative h-72 overflow-hidden">
                         <img id="service-img-bodas" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Exclusivo</span>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Exclusivo</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -195,7 +195,7 @@
                     <div class="relative h-72 overflow-hidden">
                         <img id="service-img-corporativos" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Executive</span>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Executive</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -210,7 +210,7 @@
                     <div class="relative h-72 overflow-hidden">
                         <img id="service-img-privados" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/80 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Private VIP</span>
+                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Private VIP</span>
                     </div>
                     <div class="p-8 flex-1 flex flex-col justify-between space-y-4">
                         <div>
@@ -238,17 +238,17 @@
                         <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
-                        Subir Mis Fotografías (Admin)
+                        Administrar Galería (Admin)
                     </button>
                 </div>
             </div>
 
             <div class="flex flex-wrap gap-3 mb-10 border-b border-white/10 pb-6">
-                <button onclick="filterGallery('todos')" class="gallery-tab-btn active-tab bg-luxuryBtn text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-emerald-500/30">Todos</button>
-                <button onclick="filterGallery('bodas')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Bodas</button>
-                <button onclick="filterGallery('corporativos')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Corporativos</button>
-                <button onclick="filterGallery('cumpleanos')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Cumpleaños</button>
-                <button onclick="filterGallery('babyshower')" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Baby Shower & Gender Reveal</button>
+                <button onclick="filterGallery('todos', this)" class="gallery-tab-btn active-tab bg-luxuryBtn text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-emerald-500/30">Todos</button>
+                <button onclick="filterGallery('bodas', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Bodas</button>
+                <button onclick="filterGallery('corporativos', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Corporativos</button>
+                <button onclick="filterGallery('cumpleanos', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Cumpleaños</button>
+                <button onclick="filterGallery('babyshower', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10">Baby Shower & Gender Reveal</button>
             </div>
 
             <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -256,7 +256,7 @@
                     <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
-                    <p class="text-lg font-semibold text-white font-cinzel">Sincronizando con Supabase...</p>
+                    <p class="text-lg font-semibold text-white font-cinzel">Cargando galería desde Supabase...</p>
                 </div>
             </div>
         </div>
@@ -277,22 +277,41 @@
         </div>
     </div>
 
-    <!-- Modal Upload Galería -->
-    <div id="upload-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-lg w-full p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
-            <h3 class="text-xl font-bold font-cinzel text-emerald-400">Subir Fotografías a la Nube</h3>
-            <div class="space-y-4">
-                <select id="upload-category" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
-                    <option value="bodas">Bodas</option>
-                    <option value="corporativos">Corporativos</option>
-                    <option value="cumpleanos">Cumpleaños</option>
-                    <option value="babyshower">Baby Shower & Gender Reveal</option>
-                </select>
-                <input type="file" id="admin-file-input" accept="image/*" multiple class="w-full text-xs text-gray-400">
+    <!-- Modal Admin / Gestor de Galería -->
+    <div id="upload-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-3xl w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 class="text-xl font-bold font-cinzel text-emerald-400">Gestor y Administrador de Galería</h3>
+                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-            <div class="flex gap-3 pt-4">
-                <button type="button" onclick="closeUploadModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase">Cerrar</button>
-                <button type="button" onclick="processUploadFiles()" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase">Subir a Supabase</button>
+
+            <!-- Formulario para subir nueva foto -->
+            <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-3">
+                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Subir Nueva Fotografía</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <select id="upload-category" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
+                        <option value="bodas">Bodas</option>
+                        <option value="corporativos">Corporativos</option>
+                        <option value="cumpleanos">Cumpleaños</option>
+                        <option value="babyshower">Baby Shower & Gender Reveal</option>
+                    </select>
+                    <input type="file" id="admin-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-2">
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" onclick="processUploadFiles()" class="bg-luxuryBtn hover:bg-luxuryBtnHover px-6 py-2.5 rounded-xl text-xs uppercase font-semibold transition-all shadow-lg">Subir Imagen</button>
+                </div>
+            </div>
+
+            <!-- Listado de fotos actuales para organizar orden o eliminar -->
+            <div class="flex-1 overflow-y-auto space-y-3 pr-2">
+                <h4 class="text-xs uppercase tracking-widest text-gray-300 font-semibold sticky top-0 bg-luxuryCard/90 py-1 backdrop-blur-md">Imágenes Existentes (Edita su orden o elimínalas)</h4>
+                <div id="admin-images-list" class="space-y-2">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+
+            <div class="pt-2 border-t border-white/10 flex justify-end">
+                <button type="button" onclick="closeUploadModal()" class="bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-xl text-xs uppercase font-semibold transition-all">Cerrar y Actualizar Web</button>
             </div>
         </div>
     </div>
@@ -453,7 +472,6 @@
 
     <!-- SCRIPT DE SUPABASE Y CONTROL -->
     <script>
-        // CONFIGURA TUS CREDENCIALES DE SUPABASE AQUÍ:
         const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
         
@@ -493,22 +511,34 @@
                 if (authTargetType === 'hero') {
                     heroFileInput.click();
                 } else if (authTargetType === 'gallery') {
-                    const uploadModal = document.getElementById('upload-modal');
-                    uploadModal.classList.remove('hidden');
-                    uploadModal.classList.add('flex');
+                    openUploadModal();
                 }
             } else {
                 alert('Contraseña incorrecta. Acceso denegado.');
             }
         });
 
-        // Subir foto del Hero directamente a Supabase Cloud Storage
+        async function openUploadModal() {
+            const uploadModal = document.getElementById('upload-modal');
+            uploadModal.classList.remove('hidden');
+            uploadModal.classList.add('flex');
+            await loadAdminImagesList();
+        }
+
+        function closeUploadModal() {
+            const uploadModal = document.getElementById('upload-modal');
+            uploadModal.classList.add('hidden');
+            uploadModal.classList.remove('flex');
+            fetchGalleryFromSupabase(); // Refrescar la web principal al cerrar
+        }
+
+        // Subir foto del Hero
         async function handleHeroFileSelect(event) {
             const file = event.target.files[0];
             if (!file) return;
 
             const fileName = `hero_slot_${activeHeroSlot}_${Date.now()}`;
-            const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
+            const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
 
             if (error) {
                 alert('Error al subir a Supabase: ' + error.message);
@@ -520,43 +550,22 @@
             alert('¡Foto de entrada actualizada globalmente en la nube!');
         }
 
-        let galleryData = {
-            todos: [],
-            bodas: [],
-            corporativos: [],
-            cumpleanos: [],
-            babyshower: []
-        };
+        let globalGalleryItems = [];
         let currentCategoryFilter = 'todos';
 
-        // Cargar galería sincronizada desde Supabase
+        // Cargar galería desde la tabla "galeria" ordenada por el campo "orden"
         async function fetchGalleryFromSupabase() {
-            const { data, error } = await supabaseClient.storage.from(BUCKET_NAME).list('', { limit: 100 });
+            const { data, error } = await supabaseClient
+                .from('galeria')
+                .select('*')
+                .order('orden', { ascending: true });
+
             if (error) {
                 console.error('Error al sincronizar galería:', error);
                 return;
             }
 
-            galleryData = { todos: [], bodas: [], corporativos: [], cumpleanos: [], babyshower: [] };
-
-            data.forEach(file => {
-                if (file.name === '.emptyFolderPlaceholder') return;
-                if (file.name.startsWith('hero_')) return; // Ignorar fotos del hero
-
-                const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(file.name);
-                const imageUrl = publicUrlData.publicUrl;
-
-                // Detectar categoría basada en el prefijo del nombre del archivo (ej: bodas_foto.jpg)
-                let category = 'bodas';
-                let catName = 'Bodas';
-                if (file.name.includes('corporativo')) { category = 'corporativos'; catName = 'Corporativos'; }
-                else if (file.name.includes('cumpleanos')) { category = 'cumpleanos'; catName = 'Cumpleaños'; }
-                else if (file.name.includes('babyshower')) { category = 'babyshower'; catName = 'Baby Shower & Gender Reveal'; }
-
-                const item = { url: imageUrl, categoryName: catName };
-                galleryData[category].push(item);
-            });
-
+            globalGalleryItems = data || [];
             renderGallery();
             updateServicesImages();
         }
@@ -565,11 +574,9 @@
             const grid = document.getElementById('gallery-grid');
             grid.innerHTML = '';
 
-            let itemsToDisplay = [];
-            if (currentCategoryFilter === 'todos') {
-                itemsToDisplay = [...galleryData.bodas, ...galleryData.corporativos, ...galleryData.cumpleanos, ...galleryData.babyshower];
-            } else {
-                itemsToDisplay = galleryData[currentCategoryFilter];
+            let itemsToDisplay = globalGalleryItems;
+            if (currentCategoryFilter !== 'todos') {
+                itemsToDisplay = globalGalleryItems.filter(item => item.categoria === currentCategoryFilter);
             }
 
             if (itemsToDisplay.length === 0) {
@@ -583,13 +590,20 @@
                 return;
             }
 
+            const categoryLabels = {
+                bodas: 'Bodas',
+                corporativos: 'Corporativos',
+                cumpleanos: 'Cumpleaños',
+                babyshower: 'Baby Shower & Gender Reveal'
+            };
+
             itemsToDisplay.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'gallery-item relative h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10 shadow-lg transition-all duration-500 hover:border-emerald-500/50';
                 card.innerHTML = `
                     <img src="${item.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-luxuryBg/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">${item.categoryName}</p>
+                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">${categoryLabels[item.categoria] || item.categoria}</p>
                         <p class="text-lg font-bold font-cinzel">Producción Exclusiva</p>
                     </div>
                 `;
@@ -599,57 +613,100 @@
         }
 
         function updateServicesImages() {
-            if (galleryData.bodas.length > 0) {
-                document.getElementById('service-img-bodas').src = galleryData.bodas[galleryData.bodas.length - 1].url;
-            }
-            if (galleryData.corporativos.length > 0) {
-                document.getElementById('service-img-corporativos').src = galleryData.corporativos[galleryData.corporativos.length - 1].url;
-            }
-            const privatePool = [...galleryData.cumpleanos, ...galleryData.babyshower];
-            if (privatePool.length > 0) {
-                document.getElementById('service-img-privados').src = privatePool[privatePool.length - 1].url;
-            } else if (galleryData.bodas.length > 0) {
-                document.getElementById('service-img-privados').src = galleryData.bodas[galleryData.bodas.length - 1].url;
-            }
+            const bodasItems = globalGalleryItems.filter(i => i.categoria === 'bodas');
+            const corpItems = globalGalleryItems.filter(i => i.categoria === 'corporativos');
+            const privItems = globalGalleryItems.filter(i => i.categoria === 'cumpleanos' || i.categoria === 'babyshower');
+
+            if (bodasItems.length > 0) document.getElementById('service-img-bodas').src = bodasItems[0].url;
+            if (corpItems.length > 0) document.getElementById('service-img-corporativos').src = corpItems[0].url;
+            if (privItems.length > 0) document.getElementById('service-img-privados').src = privItems[0].url;
+            else if (bodasItems.length > 1) document.getElementById('service-img-privados').src = bodasItems[1].url;
         }
 
-        function filterGallery(category) {
+        function filterGallery(category, btnElement) {
             currentCategoryFilter = category;
             document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
                 btn.classList.remove('bg-luxuryBtn', 'text-white', 'border-emerald-500/30');
                 btn.classList.add('bg-luxuryCard', 'text-gray-300', 'border-white/10');
             });
-            event.target.classList.remove('bg-luxuryCard', 'text-gray-300', 'border-white/10');
-            event.target.classList.add('bg-luxuryBtn', 'text-white', 'border-emerald-500/30');
+            btnElement.classList.remove('bg-luxuryCard', 'text-gray-300', 'border-white/10');
+            btnElement.classList.add('bg-luxuryBtn', 'text-white', 'border-emerald-500/30');
             renderGallery();
         }
 
-        function closeUploadModal() {
-            document.getElementById('upload-modal').classList.add('hidden');
-            document.getElementById('upload-modal').classList.remove('flex');
-        }
-
-        // Subir galería masiva a Supabase
+        // Subir nueva foto al Bucket y registrarla con categoría y orden en la tabla
         async function processUploadFiles() {
-            const categorySelect = document.getElementById('upload-category').value;
+            const category = document.getElementById('upload-category').value;
             const fileInput = document.getElementById('admin-file-input');
-            const files = fileInput.files;
+            const file = fileInput.files[0];
 
-            if (!files || files.length === 0) return alert('Seleccione al menos una imagen.');
+            if (!file) return alert('Selecciona una imagen.');
 
-            for (let file of files) {
-                const fileName = `${categorySelect}_${Date.now()}_${file.name}`;
-                const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
-                if (error) {
-                    alert('Error al subir: ' + error.message);
-                    return;
-                }
+            const fileName = `galeria_${Date.now()}_${file.name}`;
+            const { error: uploadError } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
+
+            if (uploadError) {
+                alert('Error al subir archivo: ' + uploadError.message);
+                return;
+            }
+
+            const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+            
+            // Insertar en la tabla galeria con orden por defecto 0
+            const { error: dbError } = await supabaseClient.from('galeria').insert([
+                { url: publicUrlData.publicUrl, categoria: category, orden: 0 }
+            ]);
+
+            if (dbError) {
+                alert('Error al guardar en base de datos: ' + dbError.message);
+                return;
             }
 
             fileInput.value = '';
-            closeUploadModal();
-            alert('¡Imágenes subidas a Supabase con éxito!');
-            fetchGalleryFromSupabase();
+            alert('¡Imagen agregada con éxito!');
+            await loadAdminImagesList();
+        }
+
+        // Cargar lista interactiva en el modal admin para ordenar y borrar
+        async function loadAdminImagesList() {
+            const { data, error } = await supabaseClient.from('galeria').select('*').order('orden', { ascending: true });
+            const container = document.getElementById('admin-images-list');
+            container.innerHTML = '';
+
+            if (error || !data || data.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No hay imágenes en la base de datos.</p>';
+                return;
+            }
+
+            data.forEach((item) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 bg-luxuryBg p-3 rounded-xl border border-white/10';
+                row.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.url}" class="w-12 h-12 object-cover rounded-lg border border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-emerald-400 uppercase">${item.categoria}</span>
+                            <div class="flex items-center gap-2 mt-1">
+                                <label class="text-[10px] text-gray-400">Orden:</label>
+                                <input type="number" value="${item.orden}" onchange="updateImageOrder(${item.id}, this.value)" class="w-16 bg-luxuryCard border border-white/20 rounded px-2 py-0.5 text-xs text-center text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="deleteGalleryImage(${item.id})" class="bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white px-3 py-1.5 rounded-lg text-xs transition-all border border-red-500/30">Eliminar</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        async function updateImageOrder(id, newOrder) {
+            await supabaseClient.from('galeria').update({ orden: parseInt(newOrder) || 0 }).eq('id', id);
+        }
+
+        async function deleteGalleryImage(id) {
+            if (!confirm('¿Estás seguro de eliminar esta foto?')) return;
+            const { error } = await supabaseClient.from('galeria').delete().eq('id', id);
+            if (error) alert('Error al eliminar: ' + error.message);
+            else await loadAdminImagesList();
         }
 
         const lightbox = document.getElementById('lightbox');
@@ -721,7 +778,7 @@
             updateWizardView();
         }
 
-        // Iniciar la app cargando la nube
+        // Inicializar aplicación
         fetchGalleryFromSupabase();
         updateWizardView();
     </script>
