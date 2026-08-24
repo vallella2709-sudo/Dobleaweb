@@ -207,7 +207,7 @@
             <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         </section>
 
-        <!-- ================= 3. SECCIÓN COTIZACIÓN INTERACTIVA ================= -->
+        <!-- ================= 3. SECCIÓN COTIZACIÓN INTERACTIVA (CON BOTÓN DE CAMBIO DE FOTO) ================= -->
         <section id="view-cotizacion" class="page-view max-w-3xl mx-auto px-4 sm:px-6 w-full">
             <div class="mb-4">
                 <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/90 hover:bg-luxuryCard px-4 py-2.5 rounded-full border border-white/10 transition-all cursor-pointer active:scale-95 shadow-sm">
@@ -254,7 +254,9 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
                     <div class="space-y-3 text-gray-300 font-light text-xs sm:text-sm leading-relaxed">
-                        <p>En <strong class="text-white font-cinzel">DobleA</strong> "Puedes comunicarte con nosotros através de nuestras redes sociales IG @dobleaproduciones  correo: aaproduccionesve@gmail.com " </p>
+                        <p>En <strong class="text-white font-cinzel">DobleA</strong> transformamos espacios ordinarios en escenarios extraordinarios. Contamos con una trayectoria consolidada en la ejecución de bodas de alta costura, cumbres corporativas y celebraciones privadas de gran prestigio.</p>
+                        <p>Nuestro equipo multidisciplinario cuida cada detalle milimétricamente: desde la arquitectura lumínica y la alta cocina hasta la ambientación floral y la coordinación en tiempo real.</p>
+                    </div>
                     <div class="relative h-56 sm:h-64 rounded-xl overflow-hidden border border-white/10 shadow-lg">
                         <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Sobre nosotros" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/80 via-transparent to-transparent flex items-end p-4">
@@ -317,6 +319,23 @@
         </div>
     </div>
 
+    <!-- Modal Dinámico para Cambiar Foto de Cotización Interactiva (Pide la misma clave admin) -->
+    <div id="interactive-img-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <div>
+                    <h3 class="text-base font-bold font-cinzel text-emerald-400">Cambiar Foto de Opción</h3>
+                    <p id="interactive-modal-key-label" class="text-[10px] text-gray-300 uppercase tracking-wider font-semibold"></p>
+                </div>
+                <button onclick="closeInteractiveImgModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div class="bg-luxuryBg/60 p-3 rounded-xl border border-white/10 space-y-3">
+                <input type="file" id="interactive-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-1">
+                <button type="button" onclick="uploadNewInteractiveImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all cursor-pointer">Subir y Reemplazar</button>
+            </div>
+        </div>
+    </div>
+
     <div id="service-quote-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-md w-full p-5 sm:p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-4">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -370,7 +389,7 @@
         <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-3">
             <h3 class="text-base font-bold font-cinzel text-emerald-400">Especifique su preferencia</h3>
             <p class="text-[11px] text-gray-300">Indique qué opción personalizada desea agregar.</p>
-            <input type="text" id="custom-option-text" placeholder="Escriba aquí..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
+            <input type="text" id="custom-option-text" placeholder="Escriba hierba, etc..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
             <div class="flex gap-2 pt-1">
                 <button type="button" onclick="closeOtherModal()" class="flex-1 bg-white/10 py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
                 <button type="button" onclick="saveOtherOption()" class="flex-1 bg-luxuryBtn py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Agregar</button>
@@ -378,7 +397,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT GENERAL -->
+    <!-- SCRIPT GENERAL Y CONEXIÓN CON SUPABASE -->
     <script>
         const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
@@ -398,7 +417,6 @@
             if (target) {
                 target.classList.add('active-view');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Si la vista es cotización, asegurar renderizado inicial inmediato
                 if(viewId === 'cotizacion') {
                     renderWizardStep();
                 }
@@ -436,7 +454,7 @@
                     <div class="relative h-44 sm:h-52 overflow-hidden">
                         <img src="${imgUrl}" alt="${srv.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <button onclick="openPasswordModal('service', '${srv.keyName}')" class="absolute top-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20 transition-all">Cambiar foto</button>
+                        <button onclick="openPasswordModal('service', '${srv.keyName}')" class="absolute top-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20 transition-all cursor-pointer">Cambiar foto</button>
                     </div>
                     <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
                         <h4 class="text-base sm:text-lg font-bold font-cinzel text-white">${srv.name}</h4>
@@ -452,11 +470,13 @@
         let authTargetType = '';
         let activeHeroSlot = 1;
         let activeServiceKey = '';
+        let activeInteractiveKey = '';
 
         function openPasswordModal(type, param) {
             authTargetType = type;
             if (type === 'hero') activeHeroSlot = param;
             if (type === 'service') activeServiceKey = param;
+            if (type === 'interactive') activeInteractiveKey = param;
             document.getElementById('admin-pass').value = '';
             const modal = document.getElementById('password-modal');
             modal.classList.remove('hidden');
@@ -471,6 +491,7 @@
                 closePasswordModal();
                 if (authTargetType === 'hero') openHeroModal();
                 else if (authTargetType === 'service') openServiceImgModal();
+                else if (authTargetType === 'interactive') openInteractiveImgModal();
             } else { alert('Contraseña incorrecta.'); }
         });
 
@@ -529,6 +550,34 @@
             closeServiceImgModal();
             renderServicesGrid();
             alert('¡Actualizado con éxito!');
+        }
+
+        // ================= CAMBIAR FOTO INTERACTIVA CON CLAVE =================
+        function openInteractiveImgModal() {
+            document.getElementById('interactive-modal-key-label').textContent = `Clave: ${activeInteractiveKey}`;
+            const modal = document.getElementById('interactive-img-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeInteractiveImgModal() { document.getElementById('interactive-img-modal').classList.add('hidden'); document.getElementById('interactive-img-modal').classList.remove('flex'); }
+
+        async function uploadNewInteractiveImage() {
+            const fileInput = document.getElementById('interactive-file-input');
+            const file = fileInput.files[0];
+            if (!file) return alert('Selecciona una imagen.');
+            const fileName = `opt_${activeInteractiveKey}_${Date.now()}`;
+            const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
+            if (error) return alert('Error al subir: ' + error.message);
+            const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+
+            // Guardar en la tabla interactive_images que creamos con el query
+            await supabaseClient.from('interactive_images').upsert([{ key_name: activeInteractiveKey, url: publicUrlData.publicUrl }], { onConflict: 'key_name' });
+            
+            optionImagesDefault[activeInteractiveKey] = publicUrlData.publicUrl;
+            fileInput.value = '';
+            closeInteractiveImgModal();
+            renderWizardStep();
+            alert('¡Foto de la opción interactiva actualizada!');
         }
 
         let selectedServiceToQuote = '';
@@ -604,6 +653,16 @@
             trio_cuerdas: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80&w=600'
         };
 
+        async function fetchInteractiveImagesDB() {
+            const { data } = await supabaseClient.from('interactive_images').select('*');
+            if (data) {
+                data.forEach(item => {
+                    optionImagesDefault[item.key_name] = item.url;
+                });
+            }
+            renderWizardStep();
+        }
+
         function getKeyName(text) {
             return text.toLowerCase()
                 .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -659,10 +718,11 @@
                     const k = getKeyName(opt);
                     const img = optionImagesDefault[k] || optionImagesDefault.tipo_evento;
                     const isSelected = userSelection.tipoEvento === opt;
-                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 active:scale-95 shadow-md">
-                                <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform">
-                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent"></div>
-                                <div class="relative z-10 font-cinzel font-bold text-[11px] sm:text-xs text-white flex items-center justify-between w-full">
+                    html += `<div class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 shadow-md">
+                                <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-50 cursor-pointer" onclick="setWizardChoice('tipoEvento', '${opt}', this)">
+                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent pointer-events-none"></div>
+                                <button onclick="openPasswordModal('interactive', '${k}')" class="absolute top-1.5 right-1.5 z-20 bg-black/75 hover:bg-luxuryBtn text-white text-[8px] uppercase px-1.5 py-0.5 rounded border border-white/20">Cambiar</button>
+                                <div class="relative z-10 font-cinzel font-bold text-[11px] sm:text-xs text-white flex items-center justify-between w-full cursor-pointer pointer-events-auto" onclick="setWizardChoice('tipoEvento', '${opt}', this)">
                                     <span>${opt}</span>
                                     <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400 text-luxuryBg' : 'border-white/40'} flex items-center justify-center text-[8px]">${isSelected ? '✓' : ''}</span>
                                 </div>
@@ -673,11 +733,12 @@
             } else if (wizardStep === 2) {
                 container.innerHTML = `
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
-                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2 group">
                             <img src="${optionImagesDefault.personas}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
                                 <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">2. ¿Cantidad de personas?</h4>
                             </div>
+                            <button onclick="openPasswordModal('interactive', 'personas')" class="absolute top-2 right-2 bg-black/75 hover:bg-luxuryBtn text-white text-[9px] uppercase px-2 py-1 rounded border border-white/20">Cambiar foto</button>
                         </div>
                         <input type="number" id="w-persons-input" min="1" value="${userSelection.personas || ''}" placeholder="Ej. 120 invitados" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
                         <button type="button" onclick="savePersonsStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
@@ -685,11 +746,12 @@
             } else if (wizardStep === 3) {
                 container.innerHTML = `
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3 text-center">
-                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2 group">
                             <img src="${optionImagesDefault.fecha}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
                                 <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">3. Seleccione la fecha del evento</h4>
                             </div>
+                            <button onclick="openPasswordModal('interactive', 'fecha')" class="absolute top-2 right-2 bg-black/75 hover:bg-luxuryBtn text-white text-[9px] uppercase px-2 py-1 rounded border border-white/20">Cambiar foto</button>
                         </div>
                         <input type="date" id="w-date-input" value="${userSelection.fecha || ''}" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3.5 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
                         <button type="button" onclick="saveDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
@@ -697,11 +759,12 @@
             } else if (wizardStep === 4) {
                 container.innerHTML = `
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
-                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2 group">
                             <img src="${optionImagesDefault.presupuesto}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
                                 <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">4. Presupuesto estimado</h4>
                             </div>
+                            <button onclick="openPasswordModal('interactive', 'presupuesto')" class="absolute top-2 right-2 bg-black/75 hover:bg-luxuryBtn text-white text-[9px] uppercase px-2 py-1 rounded border border-white/20">Cambiar foto</button>
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <button type="button" onclick="setWizardChoice('presupuesto', '5000-10.000$', null); nextWizardStep();" class="p-3.5 rounded-xl glass-card border border-white/10 hover:border-emerald-500 text-[11px] font-bold uppercase cursor-pointer active:scale-95">5.000 - 10.000$</button>
@@ -761,10 +824,11 @@
                 const img = optionImagesDefault[k] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600';
                 const isSelected = userSelection[categoryKey].includes(item);
                 
-                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 active:scale-95 shadow-md">
-                            <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent"></div>
-                            <div class="relative z-10 w-full flex items-center justify-between text-[10px] sm:text-[11px] font-bold uppercase">
+                html += `<div class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 shadow-md">
+                            <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 cursor-pointer" onclick="toggleMultiChoice('${categoryKey}', '${item}', this)">
+                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent pointer-events-none"></div>
+                            <button onclick="openPasswordModal('interactive', '${k}')" class="absolute top-1 right-1 z-20 bg-black/75 hover:bg-luxuryBtn text-white text-[7px] uppercase px-1.5 py-0.5 rounded border border-white/20">Cambiar</button>
+                            <div class="relative z-10 w-full flex items-center justify-between text-[10px] sm:text-[11px] font-bold uppercase cursor-pointer pointer-events-auto" onclick="toggleMultiChoice('${categoryKey}', '${item}', this)">
                                 <span class="truncate pr-1 text-white">${item}</span>
                                 <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400 text-luxuryBg' : 'border-white/40'} flex items-center justify-center text-[8px] shrink-0">${isSelected ? '✓' : ''}</span>
                             </div>
@@ -780,10 +844,11 @@
             const img = optionImagesDefault[k] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600';
             const isSelected = userSelection[categoryKey].includes(item);
 
-            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-18 sm:h-20 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-1.5 active:scale-95 shadow-md">
-                        <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent"></div>
-                        <div class="relative z-10 w-full flex items-center justify-between text-[9px] sm:text-[10px] font-bold uppercase">
+            return `<div class="relative h-18 sm:h-20 rounded-xl overflow-hidden glass-card border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-1.5 shadow-md">
+                        <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 cursor-pointer" onclick="toggleMultiChoice('${categoryKey}', '${item}', this)">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent pointer-events-none"></div>
+                        <button onclick="openPasswordModal('interactive', '${k}')" class="absolute top-1 right-1 z-20 bg-black/75 hover:bg-luxuryBtn text-white text-[7px] uppercase px-1.5 py-0.5 rounded border border-white/20">Cambiar</button>
+                        <div class="relative z-10 w-full flex items-center justify-between text-[9px] sm:text-[10px] font-bold uppercase cursor-pointer pointer-events-auto" onclick="toggleMultiChoice('${categoryKey}', '${item}', this)">
                             <span class="truncate pr-1 text-white">${item}</span>
                             <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400 text-luxuryBg' : 'border-white/40'} flex items-center justify-center text-[8px] shrink-0">${isSelected ? '✓' : ''}</span>
                         </div>
@@ -882,10 +947,10 @@
             }, 1000);
         }
 
-        // Inicialización y renderizado inmediato al cargar la página
+        // Inicialización y carga de imágenes interactivas guardadas en Supabase
         fetchHeroConfig();
         fetchServicesImages();
-        renderWizardStep();
+        fetchInteractiveImagesDB();
     </script>
 </body>
 </html>
