@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DobleA | Productora de Eventos de Alta Gama</title>
-    <!-- Favicon / Logo en la pestaña del navegador -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,38 +43,58 @@
             font-family: 'Cinzel', serif;
         }
         .glass-nav {
-            background: rgba(11, 25, 44, 0.9);
+            background: rgba(11, 25, 44, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-card {
-            background: rgba(30, 62, 98, 0.6);
-            backdrop-filter: blur(10px);
+            background: rgba(30, 62, 98, 0.55);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Clases para transición de vistas mediante Navbar */
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            transform: translateY(15px);
+        }
+        .page-view.active-view {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Ocultar barra de desplazamiento manteniendo funcionalidad */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
 <body class="bg-luxuryBg text-white antialiased selection:bg-luxuryBtn selection:text-white">
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR FIJO CON NAVEGACIÓN ENTRE SECCIONES -->
     <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <a href="#inicio" class="text-xl sm:text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2">
+            <a href="#" onclick="switchView('hero')" class="text-xl sm:text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2 cursor-pointer">
                 DOBLE<span class="text-emerald-400 font-light">A</span>
             </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider">
-                <a href="#inicio" class="text-gray-300 hover:text-white transition-colors">INICIO</a>
-                <a href="#servicios" class="text-gray-300 hover:text-white transition-colors">SERVICIOS</a>
-                <a href="#galeria" class="text-gray-300 hover:text-white transition-colors">GALERÍA</a>
-                <a href="#cotizador-section" class="text-gray-300 hover:text-white transition-colors">COTIZADOR</a>
+                <button onclick="switchView('hero')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="hero">Inicio</button>
+                <button onclick="switchView('servicios')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="servicios">Servicios</button>
+                <button onclick="switchView('cotizacion')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="cotizacion">Cotización</button>
+                <button onclick="switchView('sobre-nosotros')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="sobre-nosotros">Sobre nosotros</button>
             </nav>
 
             <div class="hidden md:block">
-                <a href="#cotizador-section" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-widest transition-all shadow-lg hover:shadow-emerald-900/30 border border-emerald-600/30">
-                    Agenda tu evento
-                </a>
+                <button onclick="switchView('cotizacion')" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-widest transition-all shadow-lg hover:shadow-emerald-900/30 border border-emerald-600/30 cursor-pointer">
+                    Cotizar Ahora
+                </button>
             </div>
 
             <button id="menu-btn" class="md:hidden text-white focus:outline-none p-2">
@@ -84,194 +104,210 @@
             </button>
         </div>
 
+        <!-- Menú Móvil -->
         <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4">
-            <a href="#inicio" class="block text-gray-300 hover:text-white tracking-wider">INICIO</a>
-            <a href="#servicios" class="block text-gray-300 hover:text-white tracking-wider">SERVICIOS</a>
-            <a href="#galeria" class="block text-gray-300 hover:text-white tracking-wider">GALERÍA</a>
-            <a href="#cotizador-section" class="block text-gray-300 hover:text-white tracking-wider">COTIZADOR</a>
-            <a href="#cotizador-section" class="block text-center bg-luxuryBtn text-white py-3 rounded-full text-xs font-semibold uppercase tracking-widest">
-                Agenda tu evento
-            </a>
+            <button onclick="switchView('hero'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Inicio</button>
+            <button onclick="switchView('servicios'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Servicios</button>
+            <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Cotización</button>
+            <button onclick="switchView('sobre-nosotros'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Sobre nosotros</button>
+            <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="block w-full text-center bg-luxuryBtn text-white py-3 rounded-full text-xs font-semibold uppercase tracking-widest">
+                Cotizar Ahora
+            </button>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section id="inicio" class="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 overflow-hidden">
-        <div class="absolute top-1/4 left-10 w-72 sm:w-96 h-72 sm:h-96 bg-emerald-900/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-10 right-10 w-72 sm:w-96 h-72 sm:h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- CONTENEDOR PRINCIPAL DE VISTAS (SIN SCROLL VERTICAL GENERAL) -->
+    <main class="pt-28 pb-16 min-h-screen flex flex-col justify-center">
 
-        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-7 space-y-6 sm:space-y-8 z-10 text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-[11px] sm:text-xs tracking-widest uppercase mx-auto lg:mx-0">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Exclusividad & Alta Costura en Eventos
+        <!-- ================= 1. SECCIÓN HERO (PRINCIPAL) ================= -->
+        <section id="view-hero" class="page-view active-view max-w-7xl mx-auto px-4 sm:px-6 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-[11px] sm:text-xs tracking-widest uppercase mx-auto lg:mx-0">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Productora de Eventos de Alta Gama
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.15]">
+                        Creamos Experiencias <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-emerald-400 font-light italic">Inolvidables</span>
+                    </h1>
+                    
+                    <p class="text-gray-300 text-base sm:text-lg font-light max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                        Diseñamos, producimos y ejecutamos eventos exclusivos para clientes que buscan la perfección absoluta. Tu visión llevada a una dimensión extraordinaria.
+                    </p>
+
+                    <!-- Las tres opciones principales elegantes -->
+                    <div class="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0">
+                        <button onclick="switchView('servicios')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                            <span class="block text-xl mb-1">✨</span>
+                            <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Servicios</span>
+                        </button>
+                        <button onclick="switchView('cotizacion')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                            <span class="block text-xl mb-1">📋</span>
+                            <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Cotización</span>
+                        </button>
+                        <button onclick="switchView('sobre-nosotros')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                            <span class="block text-xl mb-1">🏛️</span>
+                            <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Sobre nosotros</span>
+                        </button>
+                    </div>
                 </div>
-                
-                <h1 class="text-3xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-[1.15]">
-                    Creamos Experiencias <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-emerald-400 font-light italic">Inolvidables</span>
-                </h1>
-                
-                <p class="text-gray-300 text-base sm:text-xl font-light max-w-2xl leading-relaxed mx-auto lg:mx-0">
-                    Diseñamos, producimos y ejecutamos eventos de alta gama para clientes que no aceptan menos que la perfección absoluta. Tu visión, llevada a una dimensión extraordinaria.
-                </p>
 
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 pt-2">
-                    <a href="#cotizador-section" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase text-center transition-all shadow-xl hover:shadow-emerald-900/40 border border-emerald-500/35">
-                        Agenda tu evento
-                    </a>
-                    <a href="#galeria" class="glass-card hover:bg-white/10 text-white px-8 py-4 rounded-full text-sm font-medium tracking-widest uppercase text-center transition-all border border-white/15">
-                        Explorar Galería
-                    </a>
-                </div>
-            </div>
+                <!-- Galería Hero Sincronizada con Supabase (hero1, hero2, hero3, hero4) -->
+                <div class="lg:col-span-5 relative w-full">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
+                        <div class="relative grid grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 glass-card rounded-2xl shadow-2xl">
+                            
+                            <div class="relative overflow-hidden rounded-xl h-48 sm:h-56 border border-white/10 shadow-lg group">
+                                <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="hero1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            </div>
 
-            <!-- Contenedor Hero Sincronizado -->
-            <div class="lg:col-span-5 relative w-full">
-                <div class="relative mx-auto max-w-md lg:max-w-none">
-                    <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
-                    <div class="relative grid grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 glass-card rounded-2xl shadow-2xl">
-                        
-                        <div class="relative overflow-hidden rounded-xl h-52 sm:h-64 border border-white/10 shadow-lg group">
-                            <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">
-                                Cambiar
-                            </button>
+                            <div class="relative overflow-hidden rounded-xl h-32 sm:h-36 border border-white/10 shadow-lg group">
+                                <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="hero2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            </div>
+
+                            <div class="relative overflow-hidden rounded-xl h-32 sm:h-36 border border-white/10 shadow-lg group">
+                                <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="hero3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            </div>
+
+                            <div class="relative overflow-hidden rounded-xl h-48 sm:h-56 border border-white/10 shadow-lg group">
+                                <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" alt="hero4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            </div>
+
                         </div>
-
-                        <div class="relative overflow-hidden rounded-xl h-36 sm:h-40 border border-white/10 shadow-lg group">
-                            <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">
-                                Cambiar
-                            </button>
-                        </div>
-
-                        <div class="relative overflow-hidden rounded-xl h-36 sm:h-40 border border-white/10 shadow-lg group">
-                            <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">
-                                Cambiar
-                            </button>
-                        </div>
-
-                        <div class="relative overflow-hidden rounded-xl h-52 sm:h-64 border border-white/10 shadow-lg group">
-                            <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                            <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">
-                                Cambiar
-                            </button>
-                        </div>
-
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- ================= 2. SECCIÓN SERVICIOS ================= -->
+        <section id="view-servicios" class="page-view max-w-7xl mx-auto px-4 sm:px-6 w-full">
+            <!-- Botón Atrás Superior -->
+            <div class="mb-6">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+                    ← Volver al Inicio
+                </button>
+            </div>
+
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Exclusividad & Estilo</h2>
+                <h3 class="text-3xl sm:text-4xl font-bold tracking-tight font-cinzel">Nuestros Servicios</h3>
+                <p class="text-gray-300 font-light text-sm sm:text-base">Seleccione el servicio de su interés para cotizarlo directamente con nuestros especialistas.</p>
+            </div>
+
+            <!-- Grid de los 8 servicios requeridos -->
+            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Se inyectarán dinámicamente vía JS con soporte de imagen editable y efecto hover -->
+            </div>
+        </section>
+
+        <!-- ================= 3. SECCIÓN COTIZACIÓN (INTERACTIVA WIZARD) ================= -->
+        <section id="view-cotizacion" class="page-view max-w-4xl mx-auto px-4 sm:px-6 w-full">
+            <!-- Botón Atrás Superior -->
+            <div class="mb-6">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+                    ← Volver al Inicio
+                </button>
+            </div>
+
+            <div class="glass-card rounded-3xl p-6 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 pb-6 border-b border-white/10 gap-4">
+                    <div>
+                        <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Configurador Inteligente</h2>
+                        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight font-cinzel mt-1">Cotización Interactiva</h3>
+                    </div>
+                    <div>
+                        <span id="wizard-step-indicator" class="text-xs font-semibold text-emerald-400 uppercase tracking-widest bg-luxuryBg px-4 py-2 rounded-full border border-white/10">Paso 1 de 10</span>
+                    </div>
+                </div>
+
+                <div id="wizard-container" class="min-h-[380px]">
+                    <!-- Aquí se renderizan dinámicamente los 10 pasos de la cotización interactiva -->
+                </div>
+
+                <div class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
+                    <button type="button" id="wizard-prev-btn" onclick="prevWizardStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">Anterior</button>
+                    <div id="wizard-next-container" class="ml-auto"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4. SECCIÓN SOBRE NOSOTROS ================= -->
+        <section id="view-sobre-nosotros" class="page-view max-w-5xl mx-auto px-4 sm:px-6 w-full">
+            <!-- Botón Atrás Superior -->
+            <div class="mb-6">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+                    ← Volver al Inicio
+                </button>
+            </div>
+
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl space-y-8">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Nuestra Esencia</h2>
+                    <h3 class="text-3xl sm:text-4xl font-bold tracking-tight font-cinzel">Sobre Nosotros</h3>
+                    <p class="text-gray-300 font-light text-sm">El estándar de oro en producción y diseño de eventos exclusivos.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4 text-gray-300 font-light text-sm sm:text-base leading-relaxed">
+                        <p>En <strong class="text-white font-cinzel">DobleA</strong> transformamos espacios ordinarios en escenarios extraordinarios. Contamos con una trayectoria consolidada en la ejecución de bodas de alta costura, cumbres corporativas de nivel internacional y celebraciones privadas de gran prestigio.</p>
+                        <p>Nuestro equipo multidisciplinario cuida cada detalle milimétricamente: desde la arquitectura lumínica y la alta cocina hasta la ambientación floral y la coordinación logística en tiempo real.</p>
+                    </div>
+                    <div class="relative h-72 rounded-2xl overflow-hidden border border-white/10 shadow-xl group">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Sobre nosotros" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/80 via-transparent to-transparent flex items-end p-6">
+                            <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest">Excelencia & Distinción</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/10 text-center">
+                    <div class="p-4 glass-card rounded-2xl border border-white/5">
+                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">+10 Años</span>
+                        <span class="text-xs uppercase tracking-wider text-gray-400">De Trayectoria</span>
+                    </div>
+                    <div class="p-4 glass-card rounded-2xl border border-white/5">
+                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">+500</span>
+                        <span class="text-xs uppercase tracking-wider text-gray-400">Eventos Exclusivos</span>
+                    </div>
+                    <div class="p-4 glass-card rounded-2xl border border-white/5">
+                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">100%</span>
+                        <span class="text-xs uppercase tracking-wider text-gray-400">Satisfacción VIP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER GENERAL -->
+    <footer class="py-8 px-6 border-t border-white/10 text-xs text-gray-400 bg-luxuryBg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <p class="font-cinzel text-white text-sm tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
+            <p>© 2026 DobleA Luxury Productions. Todos los derechos reservados.</p>
+            <div class="flex gap-6"><a href="#" onclick="switchView('hero')">Inicio</a><a href="#" onclick="switchView('servicios')">Servicios</a><a href="#" onclick="switchView('cotizacion')">Cotización</a></div>
         </div>
-    </section>
+    </footer>
 
-    <!-- SERVICIOS -->
-    <section id="servicios" class="py-24 sm:py-28 px-4 sm:px-6 relative bg-luxuryBg/50">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
-                <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Nuestra Especialidad</h2>
-                <h3 class="text-3xl sm:text-5xl font-bold tracking-tight">Servicios de Alta Gama</h3>
-                <p class="text-gray-300 font-light text-sm sm:text-base">Diseñados minuciosamente para superar las expectativas más exigentes del mercado global.</p>
-            </div>
+    <!-- MODALES DE CONFIGURACIÓN Y CONTRASEÑA -->
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
-                    <div class="relative h-64 sm:h-72 overflow-hidden">
-                        <img id="service-img-bodas" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Exclusivo</span>
-                    </div>
-                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-4">
-                        <div>
-                            <h4 class="text-xl sm:text-2xl font-bold mb-3 font-cinzel">Bodas de Lujo</h4>
-                            <p class="text-gray-300 text-sm font-light leading-relaxed">Locaciones históricas, diseño floral de alta costura y gastronomía con estrellas Michelin.</p>
-                        </div>
-                        <a href="#cotizador-section" class="inline-flex items-center gap-2 text-emerald-400 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">Cotizar este servicio <span>→</span></a>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
-                    <div class="relative h-64 sm:h-72 overflow-hidden">
-                        <img id="service-img-corporativos" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Executive</span>
-                    </div>
-                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-4">
-                        <div>
-                            <h4 class="text-xl sm:text-2xl font-bold mb-3 font-cinzel">Eventos Corporativos</h4>
-                            <p class="text-gray-300 text-sm font-light leading-relaxed">Cumbres ejecutivas y lanzamientos globales que proyectan autoridad e innovación.</p>
-                        </div>
-                        <a href="#cotizador-section" class="inline-flex items-center gap-2 text-emerald-400 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">Cotizar este servicio <span>→</span></a>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col">
-                    <div class="relative h-64 sm:h-72 overflow-hidden">
-                        <img id="service-img-privados" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
-                        <span class="absolute top-4 right-4 bg-luxuryBg/85 backdrop-blur-md text-emerald-400 text-xs px-3 py-1 rounded-full border border-white/10 uppercase tracking-widest">Private VIP</span>
-                    </div>
-                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-4">
-                        <div>
-                            <h4 class="text-xl sm:text-2xl font-bold mb-3 font-cinzel">Fiestas Privadas & VIP</h4>
-                            <p class="text-gray-300 text-sm font-light leading-relaxed">Estrictos protocolos de confidencialidad, espectáculos personalizados y diseño lumínico único.</p>
-                        </div>
-                        <a href="#cotizador-section" class="inline-flex items-center gap-2 text-emerald-400 text-xs font-semibold tracking-widest uppercase pt-4 border-t border-white/10">Cotizar este servicio <span>→</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALERÍA -->
-    <section id="galeria" class="py-24 sm:py-28 px-4 sm:px-6 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-                <div>
-                    <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Portafolio Visual</h2>
-                    <h3 class="text-3xl sm:text-5xl font-bold tracking-tight mt-2">Galería Cinematográfica</h3>
-                </div>
-                
-                <div class="flex items-center">
-                    <button onclick="openPasswordModal('gallery')" class="w-full sm:w-auto cursor-pointer bg-luxuryBtn hover:bg-luxuryBtnHover border border-emerald-500/40 text-white px-6 sm:px-8 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xl">
-                        <svg class="w-4 h-4 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                        Administrar Galería
-                    </button>
-                </div>
-            </div>
-
-            <!-- Botones de filtro de galería con desplazamiento horizontal suave en móviles -->
-            <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar border-b border-white/10">
-                <button onclick="filterGallery('todos', this)" class="gallery-tab-btn active-tab bg-luxuryBtn text-white px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-emerald-500/30 whitespace-nowrap">Todos</button>
-                <button onclick="filterGallery('bodas', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10 whitespace-nowrap">Bodas</button>
-                <button onclick="filterGallery('corporativos', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10 whitespace-nowrap">Corporativos</button>
-                <button onclick="filterGallery('cumpleanos', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10 whitespace-nowrap">Cumpleaños</button>
-                <button onclick="filterGallery('babyshower', this)" class="gallery-tab-btn bg-luxuryCard text-gray-300 hover:text-white px-4 sm:px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all border border-white/10 whitespace-nowrap">Baby Shower & Gender Reveal</button>
-            </div>
-
-            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div id="empty-gallery-state" class="col-span-full py-20 px-6 text-center glass-card rounded-3xl border border-dashed border-white/20 flex flex-col items-center justify-center space-y-4">
-                    <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <p class="text-lg font-semibold text-white font-cinzel">Cargando galería desde Supabase...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal de Contraseña -->
+    <!-- Modal de Contraseña Admin -->
     <div id="password-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative">
-            <h3 class="text-xl font-bold mb-2 font-cinzel text-emerald-400">Acceso Restringido</h3>
-            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña de administrador.</p>
+            <h3 class="text-xl font-bold mb-2 font-cinzel text-emerald-400">Acceso de Administrador</h3>
+            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña para modificar las imágenes del sistema.</p>
             <form id="auth-form" class="space-y-4">
                 <input type="password" id="admin-pass" required placeholder="Contraseña" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold">Cancelar</button>
-                    <button type="submit" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase font-semibold">Validar</button>
+                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Validar</button>
                 </div>
             </form>
         </div>
@@ -281,235 +317,177 @@
     <div id="hero-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
             <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 class="text-lg sm:text-xl font-bold font-cinzel text-emerald-400" id="hero-modal-title">Actualizar Foto del Hero</h3>
+                <h3 class="text-lg font-bold font-cinzel text-emerald-400" id="hero-modal-title">Actualizar Foto del Hero</h3>
                 <button onclick="closeHeroModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-
             <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-2">
-                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Opción A: Subir nueva imagen</h4>
+                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Subir nueva imagen</h4>
                 <input type="file" id="hero-custom-file" accept="image/*" class="w-full text-xs text-gray-300 py-2">
-                <button type="button" onclick="uploadNewHeroImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all">Subir y Seleccionar</button>
+                <button type="button" onclick="uploadNewHeroImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all cursor-pointer">Subir y Guardar</button>
             </div>
-
-            <div class="flex-1 overflow-y-auto space-y-2 pr-1">
-                <h4 class="text-xs uppercase tracking-widest text-gray-300 font-semibold sticky top-0 bg-luxuryCard/90 py-1 backdrop-blur-md">Opción B: Elegir de las fotos ya subidas</h4>
-                <div id="hero-existing-grid" class="grid grid-cols-3 gap-3"></div>
-            </div>
-
             <div class="pt-2 border-t border-white/10 flex justify-end">
-                <button type="button" onclick="closeHeroModal()" class="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl text-xs uppercase font-semibold">Cancelar</button>
+                <button type="button" onclick="closeHeroModal()" class="bg-white/10 px-6 py-2 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cerrar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Admin Galería -->
-    <div id="upload-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-3xl w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
+    <!-- Modal Selector de Imagen para Servicios -->
+    <div id="service-img-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
             <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 class="text-lg sm:text-xl font-bold font-cinzel text-emerald-400">Administrador de Galería</h3>
-                <button onclick="closeUploadModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+                <h3 class="text-lg font-bold font-cinzel text-emerald-400" id="service-modal-title">Cambiar Imagen de Servicio</h3>
+                <button onclick="closeServiceImgModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-
             <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-3">
-                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Subir Nueva Fotografía</h4>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <select id="upload-category" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
-                        <option value="bodas">Bodas</option>
-                        <option value="corporativos">Corporativos</option>
-                        <option value="cumpleanos">Cumpleaños</option>
-                        <option value="babyshower">Baby Shower & Gender Reveal</option>
+                <input type="file" id="service-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-2">
+                <button type="button" onclick="uploadNewServiceImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all cursor-pointer">Actualizar Portada</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Mini Formulario de Cotización para Servicio Específico -->
+    <div id="service-quote-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 animate-in fade-in zoom-in duration-300">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                <div>
+                    <h3 class="text-lg font-bold font-cinzel text-emerald-400">Cotizar Servicio</h3>
+                    <p id="modal-service-name-label" class="text-xs text-gray-300 uppercase tracking-wider font-semibold"></p>
+                </div>
+                <button onclick="closeServiceQuoteModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <form id="service-quote-form" onsubmit="submitServiceQuote(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre *</label>
+                    <input type="text" id="sq-name" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Apellido *</label>
+                    <input type="text" id="sq-lastname" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Tipo de Evento *</label>
+                    <select id="sq-event-type" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        <option value="Boda">Boda</option>
+                        <option value="Bautizo">Bautizo</option>
+                        <option value="Primera Comunion">Primera Comunion</option>
+                        <option value="Corporativo">Corporativo</option>
+                        <option value="Cumpleaños">Cumpleaños</option>
+                        <option value="Gender reveal">Gender reveal</option>
+                        <option value="Baby Shower">Baby Shower</option>
                     </select>
-                    <input type="file" id="admin-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-2">
                 </div>
-                <div class="flex justify-end">
-                    <button type="button" onclick="processUploadFiles()" class="bg-luxuryBtn hover:bg-luxuryBtnHover px-6 py-2.5 rounded-xl text-xs uppercase font-semibold transition-all shadow-lg">Subir Imagen</button>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Cantidad de Personas *</label>
+                    <input type="number" id="sq-persons" min="1" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Ej. 150">
                 </div>
-            </div>
+                <div>
+                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Número de WhatsApp de Destino *</label>
+                    <select id="sq-phone-target" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                        <option value="584242056147">0424-2056147</option>
+                        <option value="584123765263">0412-3765263</option>
+                    </select>
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeServiceQuoteModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Atrás</button>
+                    <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer shadow-lg">Enviar a WhatsApp</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-            <div class="flex-1 overflow-y-auto space-y-3 pr-2">
-                <h4 class="text-xs uppercase tracking-widest text-gray-300 font-semibold sticky top-0 bg-luxuryCard/90 py-1 backdrop-blur-md">Imágenes Existentes (Orden / Eliminar)</h4>
-                <div id="admin-images-list" class="space-y-2"></div>
-            </div>
-
-            <div class="pt-2 border-t border-white/10 flex justify-end">
-                <button type="button" onclick="closeUploadModal()" class="bg-white/10 hover:bg-white/20 px-6 py-2.5 rounded-xl text-xs uppercase font-semibold transition-all">Cerrar y Actualizar</button>
+    <!-- Modal "Otro" para Cotización Interactiva -->
+    <div id="other-input-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-4">
+            <h3 class="text-lg font-bold font-cinzel text-emerald-400">Especifique su preferencia</h3>
+            <p class="text-xs text-gray-300">Indique qué opción personalizada desea agregar a su cotización.</p>
+            <input type="text" id="custom-option-text" placeholder="Escriba aquí..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+            <div class="flex gap-3 pt-2">
+                <button type="button" onclick="closeOtherModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
+                <button type="button" onclick="saveOtherOption()" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Agregar</button>
             </div>
         </div>
     </div>
 
-    <!-- Lightbox -->
-    <div id="lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
-        <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-4xl hover:text-emerald-400">&times;</button>
-        <img id="lightbox-img" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl border border-white/10">
-    </div>
-
-    <!-- COTIZADOR WIZARD -->
-    <section id="cotizador-section" class="py-24 sm:py-28 px-4 sm:px-6 relative bg-luxuryCard/20">
-        <div class="max-w-4xl mx-auto glass-card rounded-3xl p-6 sm:p-14 border border-white/10 shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 sm:mb-10 pb-6 border-b border-white/10 gap-4">
-                <div>
-                    <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Experiencia Interactiva</h2>
-                    <h3 class="text-xl sm:text-3xl font-bold tracking-tight font-cinzel mt-1">Agenda tu evento</h3>
-                </div>
-                <div>
-                    <span id="step-indicator" class="text-xs font-semibold text-emerald-400 uppercase tracking-widest bg-luxuryBg px-4 py-2 rounded-full border border-white/10">Paso 1 de 6</span>
-                </div>
-            </div>
-
-            <div id="wizard-container" class="min-h-[350px]">
-                <div class="wizard-step" data-step="1">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">¿Qué tipo de evento deseas realizar?</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div onclick="selectOption(1, 'Bodas', this)" class="event-option-card relative h-48 sm:h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
-                                <span class="text-sm font-bold font-cinzel text-white">Bodas</span>
-                            </div>
-                        </div>
-                        <div onclick="selectOption(1, 'Gender Reveal', this)" class="event-option-card relative h-48 sm:h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
-                                <span class="text-sm font-bold font-cinzel text-white">Gender Reveal</span>
-                            </div>
-                        </div>
-                        <div onclick="selectOption(1, 'Cumpleaños', this)" class="event-option-card relative h-48 sm:h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
-                                <span class="text-sm font-bold font-cinzel text-white">Cumpleaños</span>
-                            </div>
-                        </div>
-                        <div onclick="selectOption(1, 'Corporativos', this)" class="event-option-card relative h-48 sm:h-56 rounded-2xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:scale-105 hover:border-emerald-500 shadow-lg">
-                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent flex flex-col justify-end p-4">
-                                <span class="text-sm font-bold font-cinzel text-white">Corporativos</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wizard-step hidden" data-step="2">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">¿Cuántas personas asistirán a tu evento?</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div onclick="selectOption(2, '50 - 100 Invitados', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">👥</span>
-                            <span class="font-semibold text-sm">50 - 100 Invitados</span>
-                        </div>
-                        <div onclick="selectOption(2, '100 - 250 Invitados', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">🥂</span>
-                            <span class="font-semibold text-sm">100 - 250 Invitados</span>
-                        </div>
-                        <div onclick="selectOption(2, '250 - 500 Invitados', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">✨</span>
-                            <span class="font-semibold text-sm">250 - 500 Invitados</span>
-                        </div>
-                        <div onclick="selectOption(2, 'Más de 500 Invitados (Gala)', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 transition-all shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">🌟</span>
-                            <span class="font-semibold text-sm">Más de 500 (Gala VIP)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wizard-step hidden" data-step="3">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">Selecciona la fecha estimada de tu evento</h4>
-                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 text-center space-y-4">
-                        <input type="date" id="event-date-input" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-4 text-white text-center focus:outline-none focus:border-emerald-500 text-lg">
-                        <button type="button" onclick="validateDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3.5 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all">Continuar</button>
-                    </div>
-                </div>
-
-                <div class="wizard-step hidden" data-step="4">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu locación preferida</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div onclick="selectOption(4, 'Casa Mirador', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
-                            <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold shrink-0">🏛️</div>
-                            <div><h5 class="font-bold text-base font-cinzel">Casa Mirador</h5><p class="text-xs text-gray-400">Vistas panorámicas</p></div>
-                        </div>
-                        <div onclick="selectOption(4, 'Casa el Arroyo', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
-                            <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold shrink-0">🌿</div>
-                            <div><h5 class="font-bold text-base font-cinzel">Casa el Arroyo</h5><p class="text-xs text-gray-400">Jardines naturales</p></div>
-                        </div>
-                        <div onclick="selectOption(4, 'Nova Caracas', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
-                            <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold shrink-0">🏙️</div>
-                            <div><h5 class="font-bold text-base font-cinzel">Nova Caracas</h5><p class="text-xs text-gray-400">Salones urbanos</p></div>
-                        </div>
-                        <div onclick="selectOption(4, 'Casa de Ita', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 hover:border-emerald-500 transition-all flex items-center gap-4 shadow-lg">
-                            <div class="w-12 h-12 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 font-bold shrink-0">🏰</div>
-                            <div><h5 class="font-bold text-base font-cinzel">Casa de Ita</h5><p class="text-xs text-gray-400">Exclusividad histórica</p></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wizard-step hidden" data-step="5">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">Selecciona tu rango de presupuesto estimado</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div onclick="selectOption(5, '$2,000 - $5,000', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">💎</span><span class="font-bold text-emerald-400 text-sm sm:text-base">$2,000 - $5,000</span>
-                        </div>
-                        <div onclick="selectOption(5, '$5,000 - $10,000', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">👑</span><span class="font-bold text-emerald-400 text-sm sm:text-base">$5,000 - $10,000</span>
-                        </div>
-                        <div onclick="selectOption(5, 'Más de $10,000', this)" class="p-5 sm:p-6 rounded-2xl glass-card cursor-pointer border border-white/10 text-center hover:border-emerald-500 shadow-lg flex flex-col items-center justify-center space-y-3">
-                            <span class="text-3xl">🌟</span><span class="font-bold text-emerald-400 text-sm sm:text-base">Más de $10,000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="wizard-step hidden" data-step="6">
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">Tus datos personales para el contacto directo</h4>
-                    <form id="wizard-form-data" onsubmit="submitWizard(event)" class="max-w-md mx-auto space-y-4">
-                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre *</label><input type="text" id="w-name" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
-                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Apellido *</label><input type="text" id="w-lastname" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
-                        <div><label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Número de Teléfono *</label><input type="tel" id="w-phone" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-emerald-500"></div>
-                        <button type="submit" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-4 rounded-xl font-semibold text-xs uppercase tracking-[0.2em] transition-all shadow-xl">Enviar Cotización por WhatsApp</button>
-                    </form>
-                </div>
-
-                <div class="wizard-step hidden text-center py-10 space-y-6" data-step="7">
-                    <div class="w-20 h-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center mx-auto text-emerald-400 text-4xl animate-bounce">✓</div>
-                    <div class="space-y-2 max-w-lg mx-auto">
-                        <h4 class="text-2xl font-bold font-cinzel text-white">¡Gracias por preferirnos!</h4>
-                        <p class="text-sm text-gray-300 leading-relaxed">Una productora ejecutiva se estará comunicando contigo en breve al número <span id="summary-phone" class="text-emerald-400 font-semibold"></span> para dar vida a tu evento exclusivo.</p>
-                    </div>
-                    <button type="button" onclick="resetWizard()" class="bg-luxuryCard hover:bg-white/10 border border-white/20 px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">Diseñar Otro Evento</button>
-                </div>
-            </div>
-
-            <div id="wizard-nav-buttons" class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
-                <button type="button" id="prev-btn" onclick="prevStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">Anterior</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="py-12 px-6 border-t border-white/10 text-xs text-gray-400">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <p class="font-cinzel text-white text-sm tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
-            <p>© 2026 DobleA Luxury Productions. Todos los derechos reservados.</p>
-            <div class="flex gap-6"><a href="#">Privacidad</a><a href="#">Términos VIP</a><a href="#">Instagram</a></div>
-        </div>
-    </footer>
-
-    <!-- SCRIPT DE SUPABASE Y CONTROL -->
+    <!-- SCRIPT GENERAL Y CONEXIÓN CON SUPABASE -->
     <script>
         const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
-        
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const BUCKET_NAME = 'DobleA';
+        const BUCKET_NAME = 'img'; // Carpeta de Supabase orientada al repositorio
 
+        // Control de menú móvil
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        function toggleMobileMenu() { mobileMenu.classList.add('hidden'); }
 
+        // Navegación entre vistas sin scroll vertical general (por Navbar)
+        function switchView(viewId) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            const target = document.getElementById(`view-${viewId}`);
+            if (target) {
+                target.classList.add('active-view');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // ================= CONFIGURACIÓN DE SERVICIOS =================
+        const servicesList = [
+            { id: 'cathering', name: 'Cathering', keyName: 'cathering', defaultImg: 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=800' },
+            { id: 'mobiliario', name: 'Mobiliario', keyName: 'mobiliario', defaultImg: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800' },
+            { id: 'locaciones', name: 'Locaciones', keyName: 'locaciones', defaultImg: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=800' },
+            { id: 'carpas_toldos', name: 'Carpas y toldos', keyName: 'carpas_toldos', defaultImg: 'https://images.unsplash.com/photo-1478144592153-4751a8435d8d?auto=format&fit=crop&q=80&w=800' },
+            { id: 'sonido_iluminacion_pantallas', name: 'Sonido, iluminación y pantallas', keyName: 'sonido_iluminacion_pantallas', defaultImg: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800' },
+            { id: 'decoracion_floristeria', name: 'Decoración y floristería', keyName: 'decoracion_floristeria', defaultImg: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=800' },
+            { id: 'tortas_dulces', name: 'Tortas y dulces', keyName: 'tortas_dulces', defaultImg: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&q=80&w=800' },
+            { id: 'musica_en_vivo', name: 'Música en vivo', keyName: 'musica_en_vivo', defaultImg: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800' }
+        ];
+
+        let serviceImagesDB = {};
+
+        async function fetchServicesImages() {
+            const { data } = await supabaseClient.from('service_images').select('*');
+            if (data) {
+                data.forEach(item => { serviceImagesDB[item.key_name] = item.url; });
+            }
+            renderServicesGrid();
+        }
+
+        function renderServicesGrid() {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = '';
+            servicesList.forEach(srv => {
+                const imgUrl = serviceImagesDB[srv.keyName] || srv.defaultImg;
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col shadow-xl';
+                card.innerHTML = `
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="${imgUrl}" alt="${srv.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
+                        <button onclick="openPasswordModal('service', '${srv.keyName}')" class="absolute top-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20 transition-all">Cambiar foto</button>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <h4 class="text-lg font-bold font-cinzel text-white">${srv.name}</h4>
+                        <button onclick="openServiceQuoteModal('${srv.name}')" class="w-full text-center bg-luxuryCard hover:bg-luxuryBtn text-emerald-400 hover:text-white py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border border-emerald-500/30 cursor-pointer">
+                            Cotizar este servicio
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ================= GESTIÓN DE MODALES DE ADMIN / FOTOS =================
+        let authTargetType = '';
         let activeHeroSlot = 1;
-        let authTargetType = ''; 
+        let activeServiceKey = '';
 
-        function openPasswordModal(type = 'gallery', slotNum = 1) {
+        function openPasswordModal(type, param) {
             authTargetType = type;
-            activeHeroSlot = slotNum;
+            if (type === 'hero') activeHeroSlot = param;
+            if (type === 'service') activeServiceKey = param;
             document.getElementById('admin-pass').value = '';
             const modal = document.getElementById('password-modal');
             modal.classList.remove('hidden');
@@ -525,337 +503,378 @@
         document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const pass = document.getElementById('admin-pass').value.trim();
-            
             if (pass === 'eventos2026') {
                 closePasswordModal();
                 if (authTargetType === 'hero') {
                     openHeroModal();
-                } else if (authTargetType === 'gallery') {
-                    openUploadModal();
+                } else if (authTargetType === 'service') {
+                    openServiceImgModal();
                 }
             } else {
-                alert('Contraseña incorrecta. Acceso denegado.');
+                alert('Contraseña incorrecta.');
             }
         });
 
-        async function openHeroModal() {
-            document.getElementById('hero-modal-title').textContent = `Actualizar Hero (Espacio ${activeHeroSlot})`;
+        function openHeroModal() {
+            document.getElementById('hero-modal-title').textContent = `Actualizar Hero (hero${activeHeroSlot})`;
             const modal = document.getElementById('hero-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            const grid = document.getElementById('hero-existing-grid');
-            grid.innerHTML = '<p class="col-span-3 text-xs text-gray-400 text-center py-4">Cargando...</p>';
-
-            const { data, error } = await supabaseClient.from('galeria').select('*').order('id', { ascending: false });
-            grid.innerHTML = '';
-
-            if (error || !data || data.length === 0) {
-                grid.innerHTML = '<p class="col-span-3 text-xs text-gray-400 text-center py-4">No hay fotos en galería.</p>';
-                return;
-            }
-
-            data.forEach(item => {
-                const imgCard = document.createElement('div');
-                imgCard.className = 'relative h-20 rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-emerald-400 group';
-                imgCard.innerHTML = `<img src="${item.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform">`;
-                imgCard.addEventListener('click', () => selectExistingHeroImage(item.url));
-                grid.appendChild(imgCard);
-            });
         }
-
-        function closeHeroModal() {
-            const modal = document.getElementById('hero-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
+        function closeHeroModal() { document.getElementById('hero-modal').classList.add('hidden'); document.getElementById('hero-modal').classList.remove('flex'); }
 
         async function uploadNewHeroImage() {
             const fileInput = document.getElementById('hero-custom-file');
             const file = fileInput.files[0];
             if (!file) return alert('Selecciona una imagen.');
-
-            const fileName = `hero_${activeHeroSlot}_${Date.now()}`;
+            const fileName = `hero${activeHeroSlot}_${Date.now()}`;
             const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
-
-            if (error) {
-                alert('Error al subir: ' + error.message);
-                return;
-            }
-
+            if (error) return alert('Error al subir: ' + error.message);
             const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
+            
+            await supabaseClient.from('hero_config').upsert([{ slot_id: activeHeroSlot, url: publicUrlData.publicUrl }], { onConflict: 'slot_id' });
+            document.getElementById(`hero-img-${activeHeroSlot}`).src = publicUrlData.publicUrl;
             fileInput.value = '';
-            await saveHeroConfig(publicUrlData.publicUrl);
-        }
-
-        async function selectExistingHeroImage(url) {
-            await saveHeroConfig(url);
-        }
-
-        async function saveHeroConfig(url) {
-            const { error } = await supabaseClient.from('hero_config').upsert([
-                { slot_id: activeHeroSlot, url: url }
-            ], { onConflict: 'slot_id' });
-
-            if (error) {
-                alert('Error al guardar configuración: ' + error.message);
-                return;
-            }
-
-            document.getElementById(`hero-img-${activeHeroSlot}`).src = url;
             closeHeroModal();
-            alert('¡Imagen del Hero actualizada permanentemente!');
+            alert('¡Imagen del Hero actualizada!');
         }
 
         async function fetchHeroConfig() {
-            const { data, error } = await supabaseClient.from('hero_config').select('*');
-            if (error || !data) return;
-
-            data.forEach(config => {
-                const imgElement = document.getElementById(`hero-img-${config.slot_id}`);
-                if (imgElement) {
-                    imgElement.src = config.url;
-                }
-            });
-        }
-
-        async function openUploadModal() {
-            const uploadModal = document.getElementById('upload-modal');
-            uploadModal.classList.remove('hidden');
-            uploadModal.classList.add('flex');
-            await loadAdminImagesList();
-        }
-
-        function closeUploadModal() {
-            const uploadModal = document.getElementById('upload-modal');
-            uploadModal.classList.add('hidden');
-            uploadModal.classList.remove('flex');
-            fetchGalleryFromSupabase();
-        }
-
-        let globalGalleryItems = [];
-        let currentCategoryFilter = 'todos';
-
-        async function fetchGalleryFromSupabase() {
-            const { data, error } = await supabaseClient
-                .from('galeria')
-                .select('*')
-                .order('orden', { ascending: true });
-
-            if (error) return;
-
-            globalGalleryItems = data || [];
-            renderGallery();
-            updateServicesImages();
-        }
-
-        function renderGallery() {
-            const grid = document.getElementById('gallery-grid');
-            grid.innerHTML = '';
-
-            let itemsToDisplay = globalGalleryItems;
-            if (currentCategoryFilter !== 'todos') {
-                itemsToDisplay = globalGalleryItems.filter(item => item.categoria === currentCategoryFilter);
+            const { data } = await supabaseClient.from('hero_config').select('*');
+            if (data) {
+                data.forEach(cfg => {
+                    const el = document.getElementById(`hero-img-${cfg.slot_id}`);
+                    if (el) el.src = cfg.url;
+                });
             }
-
-            if (itemsToDisplay.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full py-20 px-6 text-center glass-card rounded-3xl border border-dashed border-white/20 flex flex-col items-center justify-center space-y-4">
-                        <div class="w-16 h-16 rounded-full bg-luxuryBg flex items-center justify-center text-emerald-400 border border-white/10">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <p class="text-lg font-semibold text-white font-cinzel">No hay fotos en esta categoría</p>
-                    </div>`;
-                return;
-            }
-
-            const categoryLabels = {
-                bodas: 'Bodas',
-                corporativos: 'Corporativos',
-                cumpleanos: 'Cumpleaños',
-                babyshower: 'Baby Shower & Gender Reveal'
-            };
-
-            itemsToDisplay.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'gallery-item relative h-72 sm:h-80 rounded-2xl overflow-hidden glass-card group cursor-pointer border border-white/10 shadow-lg transition-all duration-500 hover:border-emerald-500/50';
-                card.innerHTML = `
-                    <img src="${item.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/90 via-luxuryBg/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <p class="text-xs text-emerald-400 tracking-widest uppercase font-semibold">${categoryLabels[item.categoria] || item.categoria}</p>
-                        <p class="text-lg font-bold font-cinzel">Producción Exclusiva</p>
-                    </div>
-                `;
-                card.addEventListener('click', () => openLightbox(item.url));
-                grid.appendChild(card);
-            });
         }
 
-        function updateServicesImages() {
-            const bodasItems = globalGalleryItems.filter(i => i.categoria === 'bodas');
-            const corpItems = globalGalleryItems.filter(i => i.categoria === 'corporativos');
-            const privItems = globalGalleryItems.filter(i => i.categoria === 'cumpleanos' || i.categoria === 'babyshower');
-
-            if (bodasItems.length > 0) document.getElementById('service-img-bodas').src = bodasItems[0].url;
-            if (corpItems.length > 0) document.getElementById('service-img-corporativos').src = corpItems[0].url;
-            if (privItems.length > 0) document.getElementById('service-img-privados').src = privItems[0].url;
-            else if (bodasItems.length > 1) document.getElementById('service-img-privados').src = bodasItems[1].url;
+        function openServiceImgModal() {
+            document.getElementById('service-modal-title').textContent = `Actualizar foto para: ${activeServiceKey}`;
+            const modal = document.getElementById('service-img-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
+        function closeServiceImgModal() { document.getElementById('service-img-modal').classList.add('hidden'); document.getElementById('service-img-modal').classList.remove('flex'); }
 
-        function filterGallery(category, btnElement) {
-            currentCategoryFilter = category;
-            document.querySelectorAll('.gallery-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-luxuryBtn', 'text-white', 'border-emerald-500/30');
-                btn.classList.add('bg-luxuryCard', 'text-gray-300', 'border-white/10');
-            });
-            btnElement.classList.remove('bg-luxuryCard', 'text-gray-300', 'border-white/10');
-            btnElement.classList.add('bg-luxuryBtn', 'text-white', 'border-emerald-500/30');
-            renderGallery();
-        }
-
-        async function processUploadFiles() {
-            const category = document.getElementById('upload-category').value;
-            const fileInput = document.getElementById('admin-file-input');
+        async function uploadNewServiceImage() {
+            const fileInput = document.getElementById('service-file-input');
             const file = fileInput.files[0];
-
             if (!file) return alert('Selecciona una imagen.');
-
-            const fileName = `galeria_${Date.now()}_${file.name}`;
-            const { error: uploadError } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file);
-
-            if (uploadError) {
-                alert('Error al subir archivo: ' + uploadError.message);
-                return;
-            }
-
+            const fileName = `${activeServiceKey}_${Date.now()}`;
+            const { error } = await supabaseClient.storage.from(BUCKET_NAME).upload(fileName, file, { upsert: true });
+            if (error) return alert('Error al subir: ' + error.message);
             const { data: publicUrlData } = supabaseClient.storage.from(BUCKET_NAME).getPublicUrl(fileName);
-            
-            const { error: dbError } = await supabaseClient.from('galeria').insert([
-                { url: publicUrlData.publicUrl, categoria: category, orden: 0 }
-            ]);
 
-            if (dbError) {
-                alert('Error al guardar en base de datos: ' + dbError.message);
-                return;
-            }
-
+            await supabaseClient.from('service_images').upsert([{ key_name: activeServiceKey, url: publicUrlData.publicUrl }], { onConflict: 'key_name' });
+            serviceImagesDB[activeServiceKey] = publicUrlData.publicUrl;
             fileInput.value = '';
-            alert('¡Imagen agregada con éxito!');
-            await loadAdminImagesList();
+            closeServiceImgModal();
+            renderServicesGrid();
+            alert('¡Portada de servicio actualizada con éxito!');
         }
 
-        async function loadAdminImagesList() {
-            const { data, error } = await supabaseClient.from('galeria').select('*').order('orden', { ascending: true });
-            const container = document.getElementById('admin-images-list');
+        // ================= COTIZAR SERVICIO ESPECÍFICO =================
+        let selectedServiceToQuote = '';
+        function openServiceQuoteModal(serviceName) {
+            selectedServiceToQuote = serviceName;
+            document.getElementById('modal-service-name-label').textContent = `Servicio: ${serviceName}`;
+            const modal = document.getElementById('service-quote-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        function closeServiceQuoteModal() {
+            const modal = document.getElementById('service-quote-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function submitServiceQuote(e) {
+            e.preventDefault();
+            const name = document.getElementById('sq-name').value.trim();
+            const lastname = document.getElementById('sq-lastname').value.trim();
+            const eventType = document.getElementById('sq-event-type').value;
+            const persons = document.getElementById('sq-persons').value.trim();
+            const phoneTarget = document.getElementById('sq-phone-target').value;
+
+            const msg = `*Cotización de Servicio Específico* 📋\n\n✨ *Servicio:* ${selectedServiceToQuote}\n👤 *Nombre:* ${name} ${lastname}\n🎉 *Tipo de Evento:* ${eventType}\n👥 *Cantidad de Personas:* ${persons}`;
+            
+            closeServiceQuoteModal();
+            window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ================= COTIZACIÓN INTERACTIVA (WIZARD DE 10 PASOS) =================
+        // Nombres clave de imágenes solicitadas para cotización interactiva:
+        // tipo_evento, personas, fecha, presupuesto, catering, mobiliario, locaciones, carpas, sonido, decoracion, tortas, musica
+        const interactiveImages = {
+            tipo_evento: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600',
+            personas: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
+            fecha: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600',
+            presupuesto: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600',
+            catering: 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=600',
+            mobiliario: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=600',
+            locaciones: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=600',
+            carpas: 'https://images.unsplash.com/photo-1478144592153-4751a8435d8d?auto=format&fit=crop&q=80&w=600',
+            sonido: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=600',
+            decoracion: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=600',
+            tortas: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&q=80&w=600',
+            musica: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600'
+        };
+
+        let wizardStep = 1;
+        const totalWizardSteps = 10;
+        let userSelection = {
+            tipoEvento: '',
+            personas: '',
+            fecha: '',
+            presupuesto: '',
+            catering: [],
+            mobiliario: [],
+            locaciones: [],
+            carpas: [],
+            sonido: [],
+            decoracion: [],
+            tortas: [],
+            musica: []
+        };
+
+        let activeOtherCategory = '';
+
+        function renderWizardStep() {
+            const container = document.getElementById('wizard-container');
+            document.getElementById('wizard-step-indicator').textContent = `Paso ${wizardStep} de ${totalWizardSteps}`;
+            const prevBtn = document.getElementById('wizard-prev-btn');
+            const nextContainer = document.getElementById('wizard-next-container');
+            
+            if (wizardStep > 1) prevBtn.classList.remove('hidden');
+            else prevBtn.classList.add('hidden');
+
+            nextContainer.innerHTML = '';
             container.innerHTML = '';
 
-            if (error || !data || data.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No hay imágenes en la base de datos.</p>';
-                return;
+            // Animación suave de entrada
+            container.classList.add('animate-in', 'fade-in', 'duration-300');
+
+            if (wizardStep === 1) {
+                // Tipo de evento
+                const options = ['Boda', 'Bautizo', 'Primera Comunion', 'Corporativo', 'Cumpleaños', 'Gender reveal', 'Baby Shower'];
+                let html = `<h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">1. Seleccione el tipo de evento</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">`;
+                options.forEach(opt => {
+                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="relative h-32 rounded-xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:border-emerald-500 p-3 flex flex-col justify-end ${userSelection.tipoEvento === opt ? 'border-emerald-400 ring-2 ring-emerald-400' : ''}">
+                                <img src="${interactiveImages.tipo_evento}" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform">
+                                <div class="relative z-10 font-cinzel font-bold text-xs sm:text-sm">${opt}</div>
+                            </div>`;
+                });
+                html += `</div>`;
+                container.innerHTML = html;
+            } else if (wizardStep === 2) {
+                // Cantidad de personas
+                container.innerHTML = `
+                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">2. ¿Cantidad de personas?</h4>
+                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4">
+                        <img src="${interactiveImages.personas}" class="w-full h-36 object-cover rounded-xl mb-3">
+                        <input type="number" id="w-persons-input" min="1" value="${userSelection.personas || ''}" placeholder="Ej. 120" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3 text-white text-center focus:outline-none focus:border-emerald-500 text-lg">
+                        <button type="button" onclick="savePersonsStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Continuar</button>
+                    </div>`;
+            } else if (wizardStep === 3) {
+                // Fecha
+                container.innerHTML = `
+                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">3. Seleccione la fecha del evento</h4>
+                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4 text-center">
+                        <img src="${interactiveImages.fecha}" class="w-full h-36 object-cover rounded-xl mb-3">
+                        <input type="date" id="w-date-input" value="${userSelection.fecha || ''}" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-4 text-white text-center focus:outline-none focus:border-emerald-500 text-lg">
+                        <button type="button" onclick="saveDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Continuar</button>
+                    </div>`;
+            } else if (wizardStep === 4) {
+                // Presupuesto
+                container.innerHTML = `
+                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">4. Presupuesto estimado</h4>
+                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4">
+                        <img src="${interactiveImages.presupuesto}" class="w-full h-32 object-cover rounded-xl mb-2">
+                        <div class="grid grid-cols-2 gap-3">
+                            <button type="button" onclick="setWizardChoice('presupuesto', '5000-10.000$', null); nextWizardStep();" class="p-4 rounded-xl glass-card border border-white/10 hover:border-emerald-500 text-xs font-bold uppercase cursor-pointer">5.000 - 10.000$</button>
+                            <input type="text" id="custom-budget-input" placeholder="Otro monto ($)" value="${userSelection.presupuesto && userSelection.presupuesto !== '5000-10.000$' ? userSelection.presupuesto : ''}" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 text-xs text-white text-center focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <button type="button" onclick="saveBudgetInput()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Guardar y Continuar</button>
+                    </div>`;
+            } else if (wizardStep === 5) {
+                // Catering (múltiple + Otro)
+                const items = ['pasapalos frios', 'pasapalos calientes', 'buffet', 'carne en vara', 'estacion de cierre', 'mesa de charcuteria y embutido'];
+                container.innerHTML = renderMultiCheckboxStep('Catering', 'catering', items, interactiveImages.catering);
+            } else if (wizardStep === 6) {
+                // Mobiliario (múltiple + Otro)
+                const items = ['sillas tiffany', 'sillas chivary', 'sillas de madera', 'silla américa', 'mesas cuadradas de madera', 'mesas redonda de madera', 'mesas cuadradas forradas', 'mesas de vidrio', 'areas lounch'];
+                container.innerHTML = renderMultiCheckboxStep('Mobiliario', 'mobiliario', items, interactiveImages.mobiliario);
+            } else if (wizardStep === 7) {
+                // Locaciones (múltiple + Otro)
+                const items = ['Mirador', 'Casa de Ita', 'Neo Caracas', 'Casa el Arroyo'];
+                container.innerHTML = renderMultiCheckboxStep('Locaciones', 'locaciones', items, interactiveImages.locaciones);
+            } else if (wizardStep === 8) {
+                // Carpas y toldos (múltiple + Otro)
+                const items = ['toldos desde 4x6', 'carpas desde 10x15'];
+                container.innerHTML = renderMultiCheckboxStep('Carpas y toldos', 'carpas', items, interactiveImages.carpas);
+            } else if (wizardStep === 9) {
+                // Sonido, iluminación y pantallas (múltiple + Otro)
+                const items = ['montaje pequeño', 'montaje sencillo', 'montaje grande'];
+                container.innerHTML = renderMultiCheckboxStep('Sonido, iluminación y pantallas', 'sonido', items, interactiveImages.sonido);
+            } else if (wizardStep === 10) {
+                // Última página de opciones y envío final (Decoración, Tortas, Música en vivo)
+                const decos = ['arreglos florales', 'centros de mesa', 'decoracion con globos'];
+                const tortas = ['torta pequeña', 'torta de dos pisos', 'torta de tres pisos', 'mini dulces'];
+                const musica = ['Musica bailable', 'saxofonista', 'violinista', 'trio de cuerdas'];
+
+                container.innerHTML = `
+                    <h4 class="text-base sm:text-lg font-semibold mb-4 text-center font-cinzel">10. Detalles Finales de Ambientación</h4>
+                    <div class="space-y-6 max-h-[320px] overflow-y-auto pr-2">
+                        <div>
+                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Decoración y Floristería</h5>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${decos.map(i => renderCheckboxCard('decoracion', i)).join('')}</div>
+                        </div>
+                        <div>
+                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Tortas y Dulces</h5>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${tortas.map(i => renderCheckboxCard('tortas', i)).join('')}</div>
+                        </div>
+                        <div>
+                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Música en Vivo</h5>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${musica.map(i => renderCheckboxCard('musica', i)).join('')}</div>
+                        </div>
+                    </div>`;
+                nextContainer.innerHTML = `<button type="button" onclick="finalizeInteractiveQuote()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-8 py-3 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg cursor-pointer">Finalizar y Enviar WhatsApp</button>`;
             }
 
-            data.forEach((item) => {
-                const row = document.createElement('div');
-                row.className = 'flex items-center justify-between gap-3 bg-luxuryBg p-3 rounded-xl border border-white/10';
-                row.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <img src="${item.url}" class="w-12 h-12 object-cover rounded-lg border border-white/10 shrink-0">
-                        <div>
-                            <span class="text-xs font-bold text-emerald-400 uppercase">${item.categoria}</span>
-                            <div class="flex items-center gap-2 mt-1">
-                                <label class="text-[10px] text-gray-400">Orden:</label>
-                                <input type="number" value="${item.orden}" onchange="updateImageOrder(${item.id}, this.value)" class="w-16 bg-luxuryCard border border-white/20 rounded px-2 py-0.5 text-xs text-center text-white focus:outline-none focus:border-emerald-500">
-                            </div>
-                        </div>
-                    </div>
-                    <button onclick="deleteGalleryImage(${item.id})" class="bg-red-500/20 hover:bg-red-500 text-red-300 hover:text-white px-3 py-1.5 rounded-lg text-xs transition-all border border-red-500/30">Eliminar</button>
-                `;
-                container.appendChild(row);
+            if (wizardStep < 10 && wizardStep !== 2 && wizardStep !== 3 && wizardStep !== 4) {
+                nextContainer.innerHTML = `<button type="button" onclick="nextWizardStep()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider cursor-pointer">Siguiente →</button>`;
+            }
+        }
+
+        function renderMultiCheckboxStep(title, categoryKey, items, imgUrl) {
+            let html = `<h4 class="text-base sm:text-lg font-semibold mb-4 text-center font-cinzel">${title}</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">`;
+            items.forEach(item => {
+                const isSelected = userSelection[categoryKey].includes(item);
+                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-3 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'} text-xs font-semibold uppercase transition-all flex items-center justify-between">
+                            <span>${item}</span>
+                            <span class="w-4 h-4 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[10px] text-luxuryBg">${isSelected ? '✓' : ''}</span>
+                        </div>`;
             });
+            html += `</div>
+                     <button type="button" onclick="openOtherModalFor('${categoryKey}')" class="w-full bg-luxuryCard hover:bg-white/10 border border-dashed border-emerald-500/40 text-emerald-400 py-2.5 rounded-xl text-xs uppercase font-semibold tracking-wider cursor-pointer">+ Otro (Escribir preferencia)</button>`;
+            return html;
         }
 
-        async function updateImageOrder(id, newOrder) {
-            await supabaseClient.from('galeria').update({ orden: parseInt(newOrder) || 0 }).eq('id', id);
+        function renderCheckboxCard(categoryKey, item) {
+            const isSelected = userSelection[categoryKey].includes(item);
+            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-2.5 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'} text-[11px] font-semibold uppercase transition-all flex items-center justify-between">
+                        <span class="truncate">${item}</span>
+                        <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[9px] text-luxuryBg shrink-0">${isSelected ? '✓' : ''}</span>
+                    </div>`;
         }
 
-        async function deleteGalleryImage(id) {
-            if (!confirm('¿Estás seguro de eliminar esta foto?')) return;
-            const { error } = await supabaseClient.from('galeria').delete().eq('id', id);
-            if (error) alert('Error al eliminar: ' + error.message);
-            else await loadAdminImagesList();
+        function setWizardChoice(key, value, element) {
+            userSelection[key] = value;
+            if (element) {
+                element.parentElement.querySelectorAll('div').forEach(d => d.classList.remove('border-emerald-400', 'ring-2', 'ring-emerald-400'));
+                element.classList.add('border-emerald-400', 'ring-2', 'ring-emerald-400');
+            }
+            setTimeout(() => { nextWizardStep(); }, 300);
         }
 
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        function openLightbox(src) { lightboxImg.src = src; lightbox.classList.remove('hidden'); lightbox.classList.add('flex'); }
-        function closeLightbox() { lightbox.classList.add('hidden'); lightbox.classList.remove('flex'); }
-
-        let currentStep = 1;
-        let wizardData = { eventType: '', guests: '', date: '', location: '', budget: '', name: '', lastname: '', phone: '' };
-
-        function updateWizardView() {
-            document.querySelectorAll('.wizard-step').forEach(stepEl => {
-                if (parseInt(stepEl.getAttribute('data-step')) === currentStep) stepEl.classList.remove('hidden');
-                else stepEl.classList.add('hidden');
-            });
-            document.getElementById('step-indicator').textContent = currentStep <= 6 ? `Paso ${currentStep} de 6` : `¡Completado!`;
-            const prevBtn = document.getElementById('prev-btn');
-            if (currentStep > 1 && currentStep < 7) prevBtn.classList.remove('hidden');
-            else prevBtn.classList.add('hidden');
+        function savePersonsStep() {
+            const val = document.getElementById('w-persons-input').value.trim();
+            if (!val) return alert('Indique la cantidad de personas.');
+            userSelection.personas = val;
+            nextWizardStep();
         }
 
-        function selectOption(step, value, element) {
-            if (step === 1) wizardData.eventType = value;
-            if (step === 2) wizardData.guests = value;
-            if (step === 4) wizardData.location = value;
-            if (step === 5) wizardData.budget = value;
-
-            element.parentElement.querySelectorAll('div').forEach(el => {
-                el.classList.remove('border-emerald-400', 'bg-luxuryCard/90', 'ring-2', 'ring-emerald-400');
-            });
-            element.classList.add('border-emerald-400', 'bg-luxuryCard/90', 'ring-2', 'ring-emerald-400');
-
-            setTimeout(() => { currentStep++; updateWizardView(); }, 350);
+        function saveDateStep() {
+            const val = document.getElementById('w-date-input').value;
+            if (!val) return alert('Seleccione una fecha.');
+            userSelection.fecha = val;
+            nextWizardStep();
         }
 
-        function validateDateStep() {
-            const dateVal = document.getElementById('event-date-input').value;
-            if (!dateVal) { alert('Selecciona una fecha.'); return; }
-            wizardData.date = dateVal;
-            currentStep++;
-            updateWizardView();
+        function saveBudgetInput() {
+            const customVal = document.getElementById('custom-budget-input').value.trim();
+            if (customVal) userSelection.presupuesto = customVal + '$';
+            if (!userSelection.presupuesto) return alert('Seleccione o ingrese un presupuesto.');
+            nextWizardStep();
         }
 
-        function prevStep() { if (currentStep > 1) { currentStep--; updateWizardView(); } }
-
-        function submitWizard(e) {
-            e.preventDefault();
-            wizardData.name = document.getElementById('w-name').value.trim();
-            wizardData.lastname = document.getElementById('w-lastname').value.trim();
-            wizardData.phone = document.getElementById('w-phone').value.trim();
-
-            document.getElementById('summary-phone').textContent = wizardData.phone;
-            currentStep = 7;
-            updateWizardView();
-
-            confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-
-            const phoneTarget = "584123765263"; 
-            const msg = `*¡Nuevo Cliente desde el Cotizador Interactivo!* 🚀\n\n👤 *Nombre:* ${wizardData.name} ${wizardData.lastname}\n📞 *Teléfono:* ${wizardData.phone}\n🎉 *Tipo de Evento:* ${wizardData.eventType}\n👥 *Invitados:* ${wizardData.guests}\n📅 *Fecha Estimada:* ${wizardData.date}\n🏛️ *Locación:* ${wizardData.location}\n💰 *Presupuesto:* ${wizardData.budget}`;
-
-            setTimeout(() => { window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank'); }, 1500);
+        function toggleMultiChoice(categoryKey, item, element) {
+            const idx = userSelection[categoryKey].indexOf(item);
+            if (idx > -1) {
+                userSelection[categoryKey].splice(idx, 1);
+            } else {
+                userSelection[categoryKey].push(item);
+            }
+            renderWizardStep();
         }
 
-        function resetWizard() {
-            currentStep = 1;
-            wizardData = { eventType: '', guests: '', date: '', location: '', budget: '', name: '', lastname: '', phone: '' };
-            document.getElementById('wizard-form-data').reset();
-            updateWizardView();
+        function openOtherModalFor(categoryKey) {
+            activeOtherCategory = categoryKey;
+            document.getElementById('custom-option-text').value = '';
+            const m = document.getElementById('other-input-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
+        }
+        function closeOtherModal() {
+            document.getElementById('other-input-modal').classList.add('hidden');
+            document.getElementById('other-input-modal').classList.remove('flex');
+        }
+        function saveOtherOption() {
+            const txt = document.getElementById('custom-option-text').value.trim();
+            if (txt && activeOtherCategory) {
+                if (!userSelection[activeOtherCategory].includes(txt)) {
+                    userSelection[activeOtherCategory].push(txt);
+                }
+            }
+            closeOtherModal();
+            renderWizardStep();
         }
 
+        function nextWizardStep() {
+            if (wizardStep < totalWizardSteps) {
+                wizardStep++;
+                renderWizardStep();
+            }
+        }
+        function prevWizardStep() {
+            if (wizardStep > 1) {
+                wizardStep--;
+                renderWizardStep();
+            }
+        }
+
+        function finalizeInteractiveQuote() {
+            // Animación de check verde elegante y confetis
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.5 } });
+
+            const summaryMsg = `*Resumen de Cotización Interactiva DobleA* 🌟\n\n` +
+                `🎉 *Evento:* ${userSelection.tipoEvento || 'No especificado'}\n` +
+                `👥 *Personas:* ${userSelection.personas || 'No especificado'}\n` +
+                `📅 *Fecha:* ${userSelection.fecha || 'No especificada'}\n` +
+                `💰 *Presupuesto:* ${userSelection.presupuesto || 'No especificado'}\n` +
+                `🍽️ *Catering:* ${userSelection.catering.join(', ') || 'Ninguno'}\n` +
+                `🪑 *Mobiliario:* ${userSelection.mobiliario.join(', ') || 'Ninguno'}\n` +
+                `🏛️ *Locaciones:* ${userSelection.locaciones.join(', ') || 'Ninguna'}\n` +
+                `⛺ *Carpas y toldos:* ${userSelection.carpas.join(', ') || 'Ninguno'}\n` +
+                `🎧 *Sonido/Iluminación:* ${userSelection.sonido.join(', ') || 'Ninguno'}\n` +
+                `💐 *Decoración:* ${userSelection.decoracion.join(', ') || 'Ninguna'}\n` +
+                `🎂 *Tortas y dulces:* ${userSelection.tortas.join(', ') || 'Ninguno'}\n` +
+                `🎻 *Música en vivo:* ${userSelection.musica.join(', ') || 'Ninguna'}`;
+
+            const phoneTarget = "584242056147"; // Número solicitado
+
+            setTimeout(() => {
+                window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(summaryMsg)}`, '_blank');
+            }, 1200);
+        }
+
+        // Inicialización al cargar la página
         fetchHeroConfig();
-        fetchGalleryFromSupabase();
-        updateWizardView();
+        fetchServicesImages();
+        renderWizardStep();
     </script>
 </body>
 </html>
