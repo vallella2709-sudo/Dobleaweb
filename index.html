@@ -79,8 +79,8 @@
     <!-- NAVBAR FIJO MOBILE-OPTIMIZED -->
     <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 sm:h-20 flex items-center justify-between">
-            <a href="#" onclick="switchView('hero')" class="text-lg sm:text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2 cursor-pointer">
-                DOBLE<span class="text-emerald-400 font-light">A</span>
+            <a href="#" onclick="switchView('hero')" class="flex items-center cursor-pointer py-2">
+                <img src="logo.png" alt="DobleA Logo" class="h-10 sm:h-12 w-auto object-contain">
             </a>
 
             <!-- Menú Escritorio -->
@@ -271,7 +271,9 @@
     <!-- FOOTER GENERAL -->
     <footer class="py-6 px-4 border-t border-white/10 text-[11px] text-gray-400 bg-luxuryBg text-center">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p class="font-cinzel text-white text-xs tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
+            <div class="flex items-center">
+                <img src="logo.png" alt="DobleA Logo" class="h-6 w-auto object-contain">
+            </div>
             <p>© 2026 DobleA Luxury Productions. Todos los derechos reservados.</p>
             <div class="flex gap-4"><a href="#" onclick="switchView('hero')">Inicio</a><a href="#" onclick="switchView('servicios')">Servicios</a><a href="#" onclick="switchView('cotizacion')">Cotización</a></div>
         </div>
@@ -431,7 +433,8 @@
             { id: 'sonido_iluminacion_pantallas', name: 'Sonido, iluminación y pantallas', keyName: 'sonido_iluminacion_pantallas', defaultImg: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800' },
             { id: 'decoracion_floristeria', name: 'Decoración y floristería', keyName: 'decoracion_floristeria', defaultImg: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=800' },
             { id: 'tortas_dulces', name: 'Tortas y dulces', keyName: 'tortas_dulces', defaultImg: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&q=80&w=800' },
-            { id: 'musica_en_vivo', name: 'Música en vivo', keyName: 'musica_en_vivo', defaultImg: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800' }
+            { id: 'musica_en_vivo', name: 'Música en vivo', keyName: 'musica_en_vivo', defaultImg: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800' },
+            { id: 'dj', name: 'DJ', keyName: 'dj', defaultImg: 'https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?auto=format&fit=crop&q=80&w=800' }
         ];
 
         let serviceImagesDB = {};
