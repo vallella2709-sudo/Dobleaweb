@@ -207,7 +207,7 @@
             <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         </section>
 
-        <!-- ================= 3. SECCIÓN COTIZACIÓN INTERACTIVA (CADA OPCIÓN TIENE SU PROPIA FOTO) ================= -->
+        <!-- ================= 3. SECCIÓN COTIZACIÓN INTERACTIVA ================= -->
         <section id="view-cotizacion" class="page-view max-w-3xl mx-auto px-4 sm:px-6 w-full">
             <div class="mb-4">
                 <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/90 hover:bg-luxuryCard px-4 py-2.5 rounded-full border border-white/10 transition-all cursor-pointer active:scale-95 shadow-sm">
@@ -215,23 +215,23 @@
                 </button>
             </div>
 
-            <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-white/10 shadow-2xl relative overflow-hidden">
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div class="flex flex-row justify-between items-center mb-6 pb-4 border-b border-white/10 gap-2">
+                <div class="flex flex-row justify-between items-center mb-4 pb-3 border-b border-white/10 gap-2">
                     <div>
                         <h2 class="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-emerald-400 font-semibold">Configurador Inteligente</h2>
-                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight font-cinzel mt-0.5">Cotización</h3>
+                        <h3 class="text-lg sm:text-2xl font-bold tracking-tight font-cinzel mt-0.5">Cotización</h3>
                     </div>
                     <div>
                         <span id="wizard-step-indicator" class="text-[10px] sm:text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-luxuryBg px-3 py-1.5 rounded-full border border-white/10 whitespace-nowrap">Paso 1 de 10</span>
                     </div>
                 </div>
 
-                <div id="wizard-container" class="min-h-[320px]"></div>
+                <div id="wizard-container" class="min-h-[280px]"></div>
 
-                <div class="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
-                    <button type="button" id="wizard-prev-btn" onclick="prevWizardStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer active:scale-95">Anterior</button>
+                <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
+                    <button type="button" id="wizard-prev-btn" onclick="prevWizardStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer active:scale-95">Anterior</button>
                     <div id="wizard-next-container" class="ml-auto"></div>
                 </div>
             </div>
@@ -380,7 +380,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT GENERAL Y CONFIGURACIÓN DE FOTOS INDIVIDUALES -->
+    <!-- SCRIPT GENERAL -->
     <script>
         const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
@@ -400,6 +400,10 @@
             if (target) {
                 target.classList.add('active-view');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Si la vista es cotización, asegurar renderizado inicial inmediato
+                if(viewId === 'cotizacion') {
+                    renderWizardStep();
+                }
             }
         }
 
@@ -424,6 +428,7 @@
 
         function renderServicesGrid() {
             const grid = document.getElementById('services-grid');
+            if(!grid) return;
             grid.innerHTML = '';
             servicesList.forEach(srv => {
                 const imgUrl = serviceImagesDB[srv.keyName] || srv.defaultImg;
@@ -550,25 +555,13 @@
             window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // ================= COTIZACIÓN INTERACTIVA CON FOTOGRAFÍA INDIVIDUAL POR CADA OPCIÓN =================
-        // Nombres clave únicos para cada sub-opción específica solicitada:
-        // CATERING: pasapalos_frios, pasapalos_calientes, buffet, carne_en_vara, estacion_cierre, mesa_charcuteria
-        // MOBILIARIO: silla_tiffany, silla_chivary, silla_madera, silla_america, mesa_cuadrada_madera, mesa_redonda_madera, mesa_cuadrada_forrada, mesa_vidrio, area_lounge
-        // LOCACIONES: locacion_mirador, locacion_casa_ita, locacion_neo_caracas, locacion_casa_arroyo
-        // CARPAS: toldo_4x6, carpa_10x15
-        // SONIDO: sonido_pequeno, sonido_sencillo, sonido_grande
-        // DECORACION: arreglo_floral, centro_mesa, decoracion_globos
-        // TORTAS: torta_pequena, torta_dos_pisos, torta_tres_pisos, mini_dulces
-        // MUSICA: musica_bailable, saxofonista, violinista, trio_cuerdas
-        
+        // ================= COTIZACIÓN INTERACTIVA =================
         const optionImagesDefault = {
-            // Generales o pasos base
             tipo_evento: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600',
             personas: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
             fecha: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600',
             presupuesto: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600',
             
-            // Catering
             pasapalos_frios: 'https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=600',
             pasapalos_calientes: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600',
             buffet: 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=600',
@@ -576,7 +569,6 @@
             estacion_cierre: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&q=80&w=600',
             mesa_charcuteria: 'https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?auto=format&fit=crop&q=80&w=600',
 
-            // Mobiliario
             silla_tiffany: 'https://images.unsplash.com/photo-1580481077494-e3299ac25e94?auto=format&fit=crop&q=80&w=600',
             silla_chivary: 'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&q=80&w=600',
             silla_madera: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=80&w=600',
@@ -587,43 +579,36 @@
             mesa_vidrio: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=600',
             area_lounge: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=600',
 
-            // Locaciones
             locacion_mirador: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=600',
             locacion_casa_ita: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=600',
             locacion_neo_caracas: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&q=80&w=600',
             locacion_casa_arroyo: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&q=80&w=600',
 
-            // Carpas y Toldos
             toldo_4x6: 'https://images.unsplash.com/photo-1478144592153-4751a8435d8d?auto=format&fit=crop&q=80&w=600',
             carpa_10x15: 'https://images.unsplash.com/photo-1510076857101-729792fc95f0?auto=format&fit=crop&q=80&w=600',
 
-            // Sonido
             sonido_pequeno: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=600',
             sonido_sencillo: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600',
             sonido_grande: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=600',
 
-            // Decoración
             arreglo_floral: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&q=80&w=600',
             centro_mesa: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=600',
             decoracion_globos: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600',
 
-            // Tortas
             torta_pequena: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=600',
             torta_dos_pisos: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&q=80&w=600',
             torta_tres_pisos: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=600',
             mini_dulces: 'https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=600',
 
-            // Música en vivo
             musica_bailable: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=600',
             saxofonista: 'https://images.unsplash.com/photo-1573871668526-a07ffb892a92?auto=format&fit=crop&q=80&w=600',
             violinista: 'https://images.unsplash.com/photo-1612225330812-01a9c6b355ec?auto=format&fit=crop&q=80&w=600',
             trio_cuerdas: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80&w=600'
         };
 
-        // Función auxiliar para transformar texto legible en la llave clave del diccionario
         function getKeyName(text) {
             return text.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // quitar acentos
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                 .replace(/desde /g, '')
                 .replace(/4x6 - /g, '4x6_')
                 .replace(/[^a-z0-9]/g, '_')
@@ -652,31 +637,31 @@
 
         function renderWizardStep() {
             const container = document.getElementById('wizard-container');
-            document.getElementById('wizard-step-indicator').textContent = `Paso ${wizardStep} de ${totalWizardSteps}`;
+            if(!container) return;
+            
+            const indicator = document.getElementById('wizard-step-indicator');
+            if(indicator) indicator.textContent = `Paso ${wizardStep} de ${totalWizardSteps}`;
+            
             const prevBtn = document.getElementById('wizard-prev-btn');
             const nextContainer = document.getElementById('wizard-next-container');
             
-            if (wizardStep > 1) prevBtn.classList.remove('hidden');
-            else prevBtn.classList.add('hidden');
+            if (prevBtn) {
+                if (wizardStep > 1) prevBtn.classList.remove('hidden');
+                else prevBtn.classList.add('hidden');
+            }
 
-            nextContainer.innerHTML = '';
+            if (nextContainer) nextContainer.innerHTML = '';
             container.innerHTML = '';
             container.classList.add('animate-in', 'fade-in', 'duration-300');
 
             if (wizardStep === 1) {
                 const options = ['Boda', 'Bautizo', 'Primera Comunion', 'Corporativo', 'Cumpleaños', 'Gender reveal', 'Baby Shower'];
-                let html = `<div class="mb-3 rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md">
-                                <img src="${optionImagesDefault.tipo_evento}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
-                                    <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">1. Seleccione el tipo de evento</h4>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">`;
+                let html = `<div class="grid grid-cols-2 gap-2">`;
                 options.forEach(opt => {
                     const k = getKeyName(opt);
                     const img = optionImagesDefault[k] || optionImagesDefault.tipo_evento;
                     const isSelected = userSelection.tipoEvento === opt;
-                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="relative h-20 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2.5 active:scale-95 shadow-md">
+                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 active:scale-95 shadow-md">
                                 <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform">
                                 <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/30 to-transparent"></div>
                                 <div class="relative z-10 font-cinzel font-bold text-[11px] sm:text-xs text-white flex items-center justify-between w-full">
@@ -689,37 +674,37 @@
                 container.innerHTML = html;
             } else if (wizardStep === 2) {
                 container.innerHTML = `
-                    <div class="mb-3 rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md">
-                        <img src="${optionImagesDefault.personas}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
-                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">2. ¿Cantidad de personas?</h4>
-                        </div>
-                    </div>
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                            <img src="${optionImagesDefault.personas}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                                <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">2. ¿Cantidad de personas?</h4>
+                            </div>
+                        </div>
                         <input type="number" id="w-persons-input" min="1" value="${userSelection.personas || ''}" placeholder="Ej. 120 invitados" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
                         <button type="button" onclick="savePersonsStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
                     </div>`;
             } else if (wizardStep === 3) {
                 container.innerHTML = `
-                    <div class="mb-3 rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md">
-                        <img src="${optionImagesDefault.fecha}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
-                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">3. Seleccione la fecha del evento</h4>
-                        </div>
-                    </div>
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3 text-center">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                            <img src="${optionImagesDefault.fecha}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                                <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">3. Seleccione la fecha del evento</h4>
+                            </div>
+                        </div>
                         <input type="date" id="w-date-input" value="${userSelection.fecha || ''}" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3.5 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
                         <button type="button" onclick="saveDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
                     </div>`;
             } else if (wizardStep === 4) {
                 container.innerHTML = `
-                    <div class="mb-3 rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md">
-                        <img src="${optionImagesDefault.presupuesto}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
-                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">4. Presupuesto estimado</h4>
-                        </div>
-                    </div>
                     <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
+                        <div class="rounded-xl overflow-hidden h-28 relative border border-white/10 shadow-md mb-2">
+                            <img src="${optionImagesDefault.presupuesto}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                                <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">4. Presupuesto estimado</h4>
+                            </div>
+                        </div>
                         <div class="grid grid-cols-2 gap-2">
                             <button type="button" onclick="setWizardChoice('presupuesto', '5000-10.000$', null); nextWizardStep();" class="p-3.5 rounded-xl glass-card border border-white/10 hover:border-emerald-500 text-[11px] font-bold uppercase cursor-pointer active:scale-95">5.000 - 10.000$</button>
                             <input type="text" id="custom-budget-input" placeholder="Otro ($)" value="${userSelection.presupuesto && userSelection.presupuesto !== '5000-10.000$' ? userSelection.presupuesto : ''}" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-2 text-xs text-white text-center focus:outline-none focus:border-emerald-500">
@@ -747,8 +732,8 @@
                 const musica = ['Musica bailable', 'saxofonista', 'violinista', 'trio de cuerdas'];
 
                 container.innerHTML = `
-                    <h4 class="text-xs sm:text-sm font-semibold mb-3 font-cinzel text-center text-emerald-400">10. Detalles Finales de Ambientación</h4>
-                    <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
+                    <h4 class="text-xs sm:text-sm font-semibold mb-2 font-cinzel text-center text-emerald-400">10. Detalles Finales de Ambientación</h4>
+                    <div class="space-y-3 max-h-[260px] overflow-y-auto pr-1">
                         <div>
                             <h5 class="text-[10px] uppercase text-gray-300 font-semibold mb-1">Decoración y Floristería</h5>
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${decos.map(i => renderImageCardItem('decoracion', i)).join('')}</div>
@@ -762,24 +747,23 @@
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${musica.map(i => renderImageCardItem('musica', i)).join('')}</div>
                         </div>
                     </div>`;
-                nextContainer.innerHTML = `<button type="button" onclick="finalizeInteractiveQuote()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-3 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg cursor-pointer active:scale-95">Finalizar y Enviar WhatsApp</button>`;
+                if(nextContainer) nextContainer.innerHTML = `<button type="button" onclick="finalizeInteractiveQuote()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg cursor-pointer active:scale-95">Finalizar y Enviar WhatsApp</button>`;
             }
 
             if (wizardStep < 10 && wizardStep !== 2 && wizardStep !== 3 && wizardStep !== 4) {
-                nextContainer.innerHTML = `<button type="button" onclick="nextWizardStep()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider cursor-pointer active:scale-95">Siguiente →</button>`;
+                if(nextContainer) nextContainer.innerHTML = `<button type="button" onclick="nextWizardStep()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider cursor-pointer active:scale-95">Siguiente →</button>`;
             }
         }
 
-        // Renderiza tarjetas con foto individual para cada opción interactiva
         function renderImageGridStep(title, categoryKey, items) {
-            let html = `<h4 class="text-xs sm:text-sm font-semibold mb-3 font-cinzel text-emerald-400 text-center">${title}</h4>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-3 max-h-[260px] overflow-y-auto pr-1">`;
+            let html = `<h4 class="text-xs sm:text-sm font-semibold mb-2 font-cinzel text-emerald-400 text-center">${title}</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2 max-h-[240px] overflow-y-auto pr-1">`;
             items.forEach(item => {
                 const k = getKeyName(item);
                 const img = optionImagesDefault[k] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600';
                 const isSelected = userSelection[categoryKey].includes(item);
                 
-                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-24 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 active:scale-95 shadow-md">
+                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-20 sm:h-24 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-2 active:scale-95 shadow-md">
                             <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-500">
                             <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent"></div>
                             <div class="relative z-10 w-full flex items-center justify-between text-[10px] sm:text-[11px] font-bold uppercase">
@@ -798,10 +782,10 @@
             const img = optionImagesDefault[k] || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600';
             const isSelected = userSelection[categoryKey].includes(item);
 
-            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-20 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-1.5 active:scale-95 shadow-md">
+            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="relative h-18 sm:h-20 rounded-xl overflow-hidden glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 ring-2 ring-emerald-400' : 'border-white/10'} group transition-all flex items-end p-1.5 active:scale-95 shadow-md">
                         <img src="${img}" class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent"></div>
-                        <div class="relative z-10 w-full flex items-center justify-between text-[10px] font-bold uppercase">
+                        <div class="relative z-10 w-full flex items-center justify-between text-[9px] sm:text-[10px] font-bold uppercase">
                             <span class="truncate pr-1 text-white">${item}</span>
                             <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400 text-luxuryBg' : 'border-white/40'} flex items-center justify-center text-[8px] shrink-0">${isSelected ? '✓' : ''}</span>
                         </div>
@@ -900,8 +884,10 @@
             }, 1000);
         }
 
+        // Inicialización y renderizado inmediato al cargar la página
         fetchHeroConfig();
         fetchServicesImages();
+        renderWizardStep();
     </script>
 </body>
 </html>
