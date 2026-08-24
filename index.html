@@ -38,34 +38,33 @@
             background-color: #0B192C;
             color: #FFFFFF;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
         h1, h2, h3, h4, .font-cinzel {
             font-family: 'Cinzel', serif;
         }
         .glass-nav {
             background: rgba(11, 25, 44, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
         .glass-card {
-            background: rgba(30, 62, 98, 0.55);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 62, 98, 0.65);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        /* Clases para transición de vistas mediante Navbar */
         .page-view {
             display: none;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
-            transform: translateY(15px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            transform: translateY(10px);
         }
         .page-view.active-view {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
-        /* Ocultar barra de desplazamiento manteniendo funcionalidad */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -77,18 +76,19 @@
 </head>
 <body class="bg-luxuryBg text-white antialiased selection:bg-luxuryBtn selection:text-white">
 
-    <!-- NAVBAR FIJO CON NAVEGACIÓN ENTRE SECCIONES -->
+    <!-- NAVBAR FIJO MOBILE-OPTIMIZED -->
     <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <a href="#" onclick="switchView('hero')" class="text-xl sm:text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2 cursor-pointer">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 sm:h-20 flex items-center justify-between">
+            <a href="#" onclick="switchView('hero')" class="text-lg sm:text-2xl font-bold tracking-widest text-white font-cinzel flex items-center gap-2 cursor-pointer">
                 DOBLE<span class="text-emerald-400 font-light">A</span>
             </a>
 
+            <!-- Menú Escritorio -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider">
-                <button onclick="switchView('hero')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="hero">Inicio</button>
-                <button onclick="switchView('servicios')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="servicios">Servicios</button>
-                <button onclick="switchView('cotizacion')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="cotizacion">Cotización</button>
-                <button onclick="switchView('sobre-nosotros')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer" data-target="sobre-nosotros">Sobre nosotros</button>
+                <button onclick="switchView('hero')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer">Inicio</button>
+                <button onclick="switchView('servicios')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer">Servicios</button>
+                <button onclick="switchView('cotizacion')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer">Cotización</button>
+                <button onclick="switchView('sobre-nosotros')" class="nav-link text-gray-300 hover:text-white transition-colors uppercase cursor-pointer">Sobre nosotros</button>
             </nav>
 
             <div class="hidden md:block">
@@ -97,33 +97,37 @@
                 </button>
             </div>
 
-            <button id="menu-btn" class="md:hidden text-white focus:outline-none p-2">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Botón Hamburguesa Móvil Ampliado para Touch -->
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none p-3 -mr-2 cursor-pointer" aria-label="Abrir menú">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
 
-        <!-- Menú Móvil -->
-        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4">
-            <button onclick="switchView('hero'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Inicio</button>
-            <button onclick="switchView('servicios'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Servicios</button>
-            <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Cotización</button>
-            <button onclick="switchView('sobre-nosotros'); toggleMobileMenu();" class="block w-full text-left text-gray-300 hover:text-white tracking-wider uppercase py-2">Sobre nosotros</button>
-            <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="block w-full text-center bg-luxuryBtn text-white py-3 rounded-full text-xs font-semibold uppercase tracking-widest">
-                Cotizar Ahora
-            </button>
+        <!-- Menú Móvil Desplegable Estilo Pantalla Completa Ligera -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/10 px-6 py-6 space-y-4 shadow-2xl bg-luxuryBg/95 backdrop-blur-xl">
+            <button onclick="switchView('hero'); toggleMobileMenu();" class="block w-full text-left text-gray-200 hover:text-emerald-400 tracking-widest font-cinzel text-base uppercase py-3 border-b border-white/5">Inicio</button>
+            <button onclick="switchView('servicios'); toggleMobileMenu();" class="block w-full text-left text-gray-200 hover:text-emerald-400 tracking-widest font-cinzel text-base uppercase py-3 border-b border-white/5">Servicios</button>
+            <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="block w-full text-left text-gray-200 hover:text-emerald-400 tracking-widest font-cinzel text-base uppercase py-3 border-b border-white/5">Cotización</button>
+            <button onclick="switchView('sobre-nosotros'); toggleMobileMenu();" class="block w-full text-left text-gray-200 hover:text-emerald-400 tracking-widest font-cinzel text-base uppercase py-3">Sobre nosotros</button>
+            <div class="pt-2">
+                <button onclick="switchView('cotizacion'); toggleMobileMenu();" class="w-full text-center bg-luxuryBtn text-white py-3.5 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg">
+                    Cotizar Ahora
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- CONTENEDOR PRINCIPAL DE VISTAS (SIN SCROLL VERTICAL GENERAL) -->
-    <main class="pt-28 pb-16 min-h-screen flex flex-col justify-center">
+    <!-- CONTENEDOR PRINCIPAL DE VISTAS MOBILE OPTIMIZED -->
+    <main class="pt-24 sm:pt-28 pb-20 min-h-screen flex flex-col justify-center">
 
         <!-- ================= 1. SECCIÓN HERO (PRINCIPAL) ================= -->
         <section id="view-hero" class="page-view active-view max-w-7xl mx-auto px-4 sm:px-6 w-full">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-[11px] sm:text-xs tracking-widest uppercase mx-auto lg:mx-0">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-luxuryCard border border-white/10 text-emerald-400 text-[10px] sm:text-xs tracking-widest uppercase mx-auto lg:mx-0 shadow-sm">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                         Productora de Eventos de Alta Gama
                     </div>
@@ -132,154 +136,133 @@
                         Creamos Experiencias <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-emerald-400 font-light italic">Inolvidables</span>
                     </h1>
                     
-                    <p class="text-gray-300 text-base sm:text-lg font-light max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                    <p class="text-gray-300 text-sm sm:text-lg font-light max-w-2xl leading-relaxed mx-auto lg:mx-0">
                         Diseñamos, producimos y ejecutamos eventos exclusivos para clientes que buscan la perfección absoluta. Tu visión llevada a una dimensión extraordinaria.
                     </p>
 
-                    <!-- Las tres opciones principales elegantes -->
-                    <div class="pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-xl mx-auto lg:mx-0">
-                        <button onclick="switchView('servicios')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                    <!-- Las tres opciones principales con excelente tamaño táctil en móvil -->
+                    <div class="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0">
+                        <button onclick="switchView('servicios')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/40 p-3.5 sm:p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg active:scale-95">
                             <span class="block text-xl mb-1">✨</span>
                             <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Servicios</span>
                         </button>
-                        <button onclick="switchView('cotizacion')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                        <button onclick="switchView('cotizacion')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/40 p-3.5 sm:p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg active:scale-95">
                             <span class="block text-xl mb-1">📋</span>
                             <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Cotización</span>
                         </button>
-                        <button onclick="switchView('sobre-nosotros')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/30 hover:border-emerald-400 p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg hover:shadow-emerald-900/20">
+                        <button onclick="switchView('sobre-nosotros')" class="glass-card hover:bg-luxuryCard/90 border border-emerald-500/40 p-3.5 sm:p-4 rounded-2xl text-center transition-all duration-300 group cursor-pointer shadow-lg active:scale-95">
                             <span class="block text-xl mb-1">🏛️</span>
                             <span class="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-white group-hover:text-emerald-300">Sobre nosotros</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Galería Hero Sincronizada con Supabase (hero1, hero2, hero3, hero4) -->
-                <div class="lg:col-span-5 relative w-full">
+                <!-- Galería Hero Sincronizada con Supabase optimizada para pantallas pequeñas -->
+                <div class="lg:col-span-5 relative w-full mt-4 lg:mt-0">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <div class="absolute -inset-4 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/40 opacity-75 blur-lg"></div>
-                        <div class="relative grid grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 glass-card rounded-2xl shadow-2xl">
+                        <div class="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-luxuryCard to-emerald-900/30 opacity-75 blur-md"></div>
+                        <div class="relative grid grid-cols-2 gap-2.5 sm:gap-4 p-3 glass-card rounded-2xl shadow-2xl">
                             
-                            <div class="relative overflow-hidden rounded-xl h-48 sm:h-56 border border-white/10 shadow-lg group">
-                                <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="hero1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            <div class="relative overflow-hidden rounded-xl h-36 sm:h-56 border border-white/10 shadow-md group">
+                                <img id="hero-img-1" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800" alt="hero1" class="w-full h-full object-cover">
+                                <button onclick="openPasswordModal('hero', 1)" class="absolute bottom-1.5 right-1.5 bg-black/80 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20">Cambiar</button>
                             </div>
 
-                            <div class="relative overflow-hidden rounded-xl h-32 sm:h-36 border border-white/10 shadow-lg group">
-                                <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="hero2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            <div class="relative overflow-hidden rounded-xl h-28 sm:h-36 border border-white/10 shadow-md group">
+                                <img id="hero-img-2" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="hero2" class="w-full h-full object-cover">
+                                <button onclick="openPasswordModal('hero', 2)" class="absolute bottom-1.5 right-1.5 bg-black/80 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20">Cambiar</button>
                             </div>
 
-                            <div class="relative overflow-hidden rounded-xl h-32 sm:h-36 border border-white/10 shadow-lg group">
-                                <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="hero3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            <div class="relative overflow-hidden rounded-xl h-28 sm:h-36 border border-white/10 shadow-md group">
+                                <img id="hero-img-3" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800" alt="hero3" class="w-full h-full object-cover">
+                                <button onclick="openPasswordModal('hero', 3)" class="absolute bottom-1.5 right-1.5 bg-black/80 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20">Cambiar</button>
                             </div>
 
-                            <div class="relative overflow-hidden rounded-xl h-48 sm:h-56 border border-white/10 shadow-lg group">
-                                <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" alt="hero4" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-2 right-2 bg-black/80 hover:bg-luxuryBtn text-white text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur-md border border-white/20 transition-all">Cambiar</button>
+                            <div class="relative overflow-hidden rounded-xl h-36 sm:h-56 border border-white/10 shadow-md group">
+                                <img id="hero-img-4" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800" alt="hero4" class="w-full h-full object-cover">
+                                <button onclick="openPasswordModal('hero', 4)" class="absolute bottom-1.5 right-1.5 bg-black/80 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20">Cambiar</button>
                             </div>
 
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
         <!-- ================= 2. SECCIÓN SERVICIOS ================= -->
         <section id="view-servicios" class="page-view max-w-7xl mx-auto px-4 sm:px-6 w-full">
-            <!-- Botón Atrás Superior -->
-            <div class="mb-6">
-                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+            <div class="mb-4">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/90 hover:bg-luxuryCard px-4 py-2.5 rounded-full border border-white/10 transition-all cursor-pointer active:scale-95 shadow-sm">
                     ← Volver al Inicio
                 </button>
             </div>
 
-            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
-                <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Exclusividad & Estilo</h2>
-                <h3 class="text-3xl sm:text-4xl font-bold tracking-tight font-cinzel">Nuestros Servicios</h3>
-                <p class="text-gray-300 font-light text-sm sm:text-base">Seleccione el servicio de su interés para cotizarlo directamente con nuestros especialistas.</p>
+            <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-2">
+                <h2 class="text-[11px] uppercase tracking-[0.3em] text-emerald-400 font-semibold">Exclusividad & Estilo</h2>
+                <h3 class="text-2xl sm:text-4xl font-bold tracking-tight font-cinzel">Nuestros Servicios</h3>
+                <p class="text-gray-300 font-light text-xs sm:text-base">Seleccione el servicio de su interés para cotizarlo directamente vía WhatsApp.</p>
             </div>
 
-            <!-- Grid de los 8 servicios requeridos -->
-            <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Se inyectarán dinámicamente vía JS con soporte de imagen editable y efecto hover -->
-            </div>
+            <!-- Grid optimizado para móvil (1 columna en cel, 2 en tablet, 4 en desktop) -->
+            <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"></div>
         </section>
 
-        <!-- ================= 3. SECCIÓN COTIZACIÓN (INTERACTIVA WIZARD) ================= -->
-        <section id="view-cotizacion" class="page-view max-w-4xl mx-auto px-4 sm:px-6 w-full">
-            <!-- Botón Atrás Superior -->
-            <div class="mb-6">
-                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+        <!-- ================= 3. SECCIÓN COTIZACIÓN (INTERACTIVA WIZARD MOBILE AMIGABLE) ================= -->
+        <section id="view-cotizacion" class="page-view max-w-3xl mx-auto px-4 sm:px-6 w-full">
+            <div class="mb-4">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/90 hover:bg-luxuryCard px-4 py-2.5 rounded-full border border-white/10 transition-all cursor-pointer active:scale-95 shadow-sm">
                     ← Volver al Inicio
                 </button>
             </div>
 
-            <div class="glass-card rounded-3xl p-6 sm:p-12 border border-white/10 shadow-2xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-white/10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 pb-6 border-b border-white/10 gap-4">
+                <div class="flex flex-row justify-between items-center mb-6 pb-4 border-b border-white/10 gap-2">
                     <div>
-                        <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Configurador Inteligente</h2>
-                        <h3 class="text-2xl sm:text-3xl font-bold tracking-tight font-cinzel mt-1">Cotización Interactiva</h3>
+                        <h2 class="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-emerald-400 font-semibold">Configurador Inteligente</h2>
+                        <h3 class="text-xl sm:text-2xl font-bold tracking-tight font-cinzel mt-0.5">Cotización</h3>
                     </div>
                     <div>
-                        <span id="wizard-step-indicator" class="text-xs font-semibold text-emerald-400 uppercase tracking-widest bg-luxuryBg px-4 py-2 rounded-full border border-white/10">Paso 1 de 10</span>
+                        <span id="wizard-step-indicator" class="text-[10px] sm:text-xs font-semibold text-emerald-400 uppercase tracking-wider bg-luxuryBg px-3 py-1.5 rounded-full border border-white/10 whitespace-nowrap">Paso 1 de 10</span>
                     </div>
                 </div>
 
-                <div id="wizard-container" class="min-h-[380px]">
-                    <!-- Aquí se renderizan dinámicamente los 10 pasos de la cotización interactiva -->
-                </div>
+                <div id="wizard-container" class="min-h-[320px]"></div>
 
-                <div class="flex justify-between items-center mt-10 pt-6 border-t border-white/10">
-                    <button type="button" id="wizard-prev-btn" onclick="prevWizardStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer">Anterior</button>
+                <div class="flex justify-between items-center mt-6 pt-4 border-t border-white/10">
+                    <button type="button" id="wizard-prev-btn" onclick="prevWizardStep()" class="hidden bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer active:scale-95">Anterior</button>
                     <div id="wizard-next-container" class="ml-auto"></div>
                 </div>
             </div>
         </section>
 
         <!-- ================= 4. SECCIÓN SOBRE NOSOTROS ================= -->
-        <section id="view-sobre-nosotros" class="page-view max-w-5xl mx-auto px-4 sm:px-6 w-full">
-            <!-- Botón Atrás Superior -->
-            <div class="mb-6">
-                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/80 hover:bg-luxuryCard px-4 py-2 rounded-full border border-white/10 transition-all cursor-pointer">
+        <section id="view-sobre-nosotros" class="page-view max-w-4xl mx-auto px-4 sm:px-6 w-full">
+            <div class="mb-4">
+                <button onclick="switchView('hero')" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-400 bg-luxuryCard/90 hover:bg-luxuryCard px-4 py-2.5 rounded-full border border-white/10 transition-all cursor-pointer active:scale-95 shadow-sm">
                     ← Volver al Inicio
                 </button>
             </div>
 
-            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl space-y-8">
-                <div class="text-center max-w-2xl mx-auto space-y-3">
-                    <h2 class="text-xs uppercase tracking-[0.3em] text-emerald-400 font-semibold">Nuestra Esencia</h2>
-                    <h3 class="text-3xl sm:text-4xl font-bold tracking-tight font-cinzel">Sobre Nosotros</h3>
-                    <p class="text-gray-300 font-light text-sm">El estándar de oro en producción y diseño de eventos exclusivos.</p>
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl space-y-6">
+                <div class="text-center max-w-xl mx-auto space-y-2">
+                    <h2 class="text-[11px] uppercase tracking-[0.3em] text-emerald-400 font-semibold">Nuestra Esencia</h2>
+                    <h3 class="text-2xl sm:text-4xl font-bold tracking-tight font-cinzel">Sobre nosotros</h3>
+                    <p class="text-gray-300 font-light text-xs sm:text-sm">El estándar de oro en producción y diseño de eventos exclusivos.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    <div class="space-y-4 text-gray-300 font-light text-sm sm:text-base leading-relaxed">
-                        <p>En <strong class="text-white font-cinzel">DobleA</strong> transformamos espacios ordinarios en escenarios extraordinarios. Contamos con una trayectoria consolidada en la ejecución de bodas de alta costura, cumbres corporativas de nivel internacional y celebraciones privadas de gran prestigio.</p>
-                        <p>Nuestro equipo multidisciplinario cuida cada detalle milimétricamente: desde la arquitectura lumínica y la alta cocina hasta la ambientación floral y la coordinación logística en tiempo real.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div class="space-y-3 text-gray-300 font-light text-xs sm:text-sm leading-relaxed">
+                        <p>En <strong class="text-white font-cinzel">DobleA</strong> transformamos espacios ordinarios en escenarios extraordinarios. Contamos con una trayectoria consolidada en la ejecución de bodas de alta costura, cumbres corporativas y celebraciones privadas de gran prestigio.</p>
+                        <p>Nuestro equipo multidisciplinario cuida cada detalle milimétricamente: desde la arquitectura lumínica y la alta cocina hasta la ambientación floral y la coordinación en tiempo real.</p>
                     </div>
-                    <div class="relative h-72 rounded-2xl overflow-hidden border border-white/10 shadow-xl group">
-                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Sobre nosotros" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/80 via-transparent to-transparent flex items-end p-6">
-                            <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest">Excelencia & Distinción</span>
+                    <div class="relative h-56 sm:h-64 rounded-xl overflow-hidden border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=800" alt="Sobre nosotros" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg/80 via-transparent to-transparent flex items-end p-4">
+                            <span class="text-emerald-400 text-[10px] font-semibold uppercase tracking-widest">Excelencia & Distinción</span>
                         </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/10 text-center">
-                    <div class="p-4 glass-card rounded-2xl border border-white/5">
-                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">+10 Años</span>
-                        <span class="text-xs uppercase tracking-wider text-gray-400">De Trayectoria</span>
-                    </div>
-                    <div class="p-4 glass-card rounded-2xl border border-white/5">
-                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">+500</span>
-                        <span class="text-xs uppercase tracking-wider text-gray-400">Eventos Exclusivos</span>
-                    </div>
-                    <div class="p-4 glass-card rounded-2xl border border-white/5">
-                        <span class="block text-2xl font-bold font-cinzel text-emerald-400 mb-1">100%</span>
-                        <span class="text-xs uppercase tracking-wider text-gray-400">Satisfacción VIP</span>
                     </div>
                 </div>
             </div>
@@ -288,26 +271,26 @@
     </main>
 
     <!-- FOOTER GENERAL -->
-    <footer class="py-8 px-6 border-t border-white/10 text-xs text-gray-400 bg-luxuryBg">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <p class="font-cinzel text-white text-sm tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
+    <footer class="py-6 px-4 border-t border-white/10 text-[11px] text-gray-400 bg-luxuryBg text-center">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="font-cinzel text-white text-xs tracking-widest">DOBLE<span class="text-emerald-400">A</span></p>
             <p>© 2026 DobleA Luxury Productions. Todos los derechos reservados.</p>
-            <div class="flex gap-6"><a href="#" onclick="switchView('hero')">Inicio</a><a href="#" onclick="switchView('servicios')">Servicios</a><a href="#" onclick="switchView('cotizacion')">Cotización</a></div>
+            <div class="flex gap-4"><a href="#" onclick="switchView('hero')">Inicio</a><a href="#" onclick="switchView('servicios')">Servicios</a><a href="#" onclick="switchView('cotizacion')">Cotización</a></div>
         </div>
     </footer>
 
-    <!-- MODALES DE CONFIGURACIÓN Y CONTRASEÑA -->
+    <!-- MODALES MOBILE-FRIENDLY -->
 
     <!-- Modal de Contraseña Admin -->
-    <div id="password-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative">
-            <h3 class="text-xl font-bold mb-2 font-cinzel text-emerald-400">Acceso de Administrador</h3>
-            <p class="text-xs text-gray-300 mb-6">Introduce la contraseña para modificar las imágenes del sistema.</p>
-            <form id="auth-form" class="space-y-4">
+    <div id="password-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative">
+            <h3 class="text-lg font-bold mb-1 font-cinzel text-emerald-400">Acceso de Administrador</h3>
+            <p class="text-[11px] text-gray-300 mb-4">Introduce la contraseña para modificar las imágenes.</p>
+            <form id="auth-form" class="space-y-3">
                 <input type="password" id="admin-pass" required placeholder="Contraseña" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
-                    <button type="submit" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Validar</button>
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="closePasswordModal()" class="flex-1 bg-white/10 py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
+                    <button type="submit" class="flex-1 bg-luxuryBtn py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Validar</button>
                 </div>
             </form>
         </div>
@@ -315,31 +298,27 @@
 
     <!-- Modal Selector Hero -->
     <div id="hero-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 class="text-lg font-bold font-cinzel text-emerald-400" id="hero-modal-title">Actualizar Foto del Hero</h3>
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-base font-bold font-cinzel text-emerald-400" id="hero-modal-title">Actualizar Foto</h3>
                 <button onclick="closeHeroModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-            <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-2">
-                <h4 class="text-xs uppercase tracking-widest text-emerald-400 font-semibold">Subir nueva imagen</h4>
-                <input type="file" id="hero-custom-file" accept="image/*" class="w-full text-xs text-gray-300 py-2">
+            <div class="bg-luxuryBg/60 p-3 rounded-xl border border-white/10 space-y-2">
+                <input type="file" id="hero-custom-file" accept="image/*" class="w-full text-xs text-gray-300 py-1">
                 <button type="button" onclick="uploadNewHeroImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all cursor-pointer">Subir y Guardar</button>
-            </div>
-            <div class="pt-2 border-t border-white/10 flex justify-end">
-                <button type="button" onclick="closeHeroModal()" class="bg-white/10 px-6 py-2 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cerrar</button>
             </div>
         </div>
     </div>
 
     <!-- Modal Selector de Imagen para Servicios -->
     <div id="service-img-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6">
-            <div class="flex justify-between items-center border-b border-white/10 pb-4">
-                <h3 class="text-lg font-bold font-cinzel text-emerald-400" id="service-modal-title">Cambiar Imagen de Servicio</h3>
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-base font-bold font-cinzel text-emerald-400" id="service-modal-title">Cambiar Imagen</h3>
                 <button onclick="closeServiceImgModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-            <div class="bg-luxuryBg/60 p-4 rounded-2xl border border-white/10 space-y-3">
-                <input type="file" id="service-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-2">
+            <div class="bg-luxuryBg/60 p-3 rounded-xl border border-white/10 space-y-2">
+                <input type="file" id="service-file-input" accept="image/*" class="w-full text-xs text-gray-300 py-1">
                 <button type="button" onclick="uploadNewServiceImage()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold transition-all cursor-pointer">Actualizar Portada</button>
             </div>
         </div>
@@ -347,26 +326,26 @@
 
     <!-- Modal Mini Formulario de Cotización para Servicio Específico -->
     <div id="service-quote-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-6 animate-in fade-in zoom-in duration-300">
-            <div class="flex justify-between items-center border-b border-white/10 pb-4">
+        <div class="glass-card max-w-md w-full p-5 sm:p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
                 <div>
-                    <h3 class="text-lg font-bold font-cinzel text-emerald-400">Cotizar Servicio</h3>
-                    <p id="modal-service-name-label" class="text-xs text-gray-300 uppercase tracking-wider font-semibold"></p>
+                    <h3 class="text-base font-bold font-cinzel text-emerald-400">Cotizar Servicio</h3>
+                    <p id="modal-service-name-label" class="text-[11px] text-gray-300 uppercase tracking-wider font-semibold"></p>
                 </div>
                 <button onclick="closeServiceQuoteModal()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
             </div>
-            <form id="service-quote-form" onsubmit="submitServiceQuote(event)" class="space-y-4">
+            <form id="service-quote-form" onsubmit="submitServiceQuote(event)" class="space-y-3">
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Nombre *</label>
-                    <input type="text" id="sq-name" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-300 mb-1">Nombre *</label>
+                    <input type="text" id="sq-name" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Apellido *</label>
-                    <input type="text" id="sq-lastname" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-300 mb-1">Apellido *</label>
+                    <input type="text" id="sq-lastname" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Tipo de Evento *</label>
-                    <select id="sq-event-type" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-300 mb-1">Tipo de Evento *</label>
+                    <select id="sq-event-type" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
                         <option value="Boda">Boda</option>
                         <option value="Bautizo">Bautizo</option>
                         <option value="Primera Comunion">Primera Comunion</option>
@@ -377,19 +356,19 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Cantidad de Personas *</label>
-                    <input type="number" id="sq-persons" min="1" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Ej. 150">
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-300 mb-1">Cantidad de Personas *</label>
+                    <input type="number" id="sq-persons" min="1" required class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Ej. 150">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase tracking-wider text-gray-300 mb-1">Número de WhatsApp de Destino *</label>
-                    <select id="sq-phone-target" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
+                    <label class="block text-[10px] uppercase tracking-wider text-gray-300 mb-1">WhatsApp de Destino *</label>
+                    <select id="sq-phone-target" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
                         <option value="584242056147">0424-2056147</option>
                         <option value="584123765263">0412-3765263</option>
                     </select>
                 </div>
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closeServiceQuoteModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Atrás</button>
-                    <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer shadow-lg">Enviar a WhatsApp</button>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeServiceQuoteModal()" class="flex-1 bg-white/10 py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Atrás</button>
+                    <button type="submit" class="flex-1 bg-luxuryBtn hover:bg-luxuryBtnHover py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer shadow-lg">Enviar</button>
                 </div>
             </form>
         </div>
@@ -397,13 +376,13 @@
 
     <!-- Modal "Otro" para Cotización Interactiva -->
     <div id="other-input-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative space-y-4">
-            <h3 class="text-lg font-bold font-cinzel text-emerald-400">Especifique su preferencia</h3>
-            <p class="text-xs text-gray-300">Indique qué opción personalizada desea agregar a su cotización.</p>
-            <input type="text" id="custom-option-text" placeholder="Escriba aquí..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500">
-            <div class="flex gap-3 pt-2">
-                <button type="button" onclick="closeOtherModal()" class="flex-1 bg-white/10 py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
-                <button type="button" onclick="saveOtherOption()" class="flex-1 bg-luxuryBtn py-3 rounded-xl text-xs uppercase font-semibold cursor-pointer">Agregar</button>
+        <div class="glass-card max-w-sm w-full p-6 rounded-2xl border border-white/10 shadow-2xl relative space-y-3">
+            <h3 class="text-base font-bold font-cinzel text-emerald-400">Especifique su preferencia</h3>
+            <p class="text-[11px] text-gray-300">Indique qué opción personalizada desea agregar.</p>
+            <input type="text" id="custom-option-text" placeholder="Escriba aquí..." class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500">
+            <div class="flex gap-2 pt-1">
+                <button type="button" onclick="closeOtherModal()" class="flex-1 bg-white/10 py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Cancelar</button>
+                <button type="button" onclick="saveOtherOption()" class="flex-1 bg-luxuryBtn py-2.5 rounded-xl text-xs uppercase font-semibold cursor-pointer">Agregar</button>
             </div>
         </div>
     </div>
@@ -413,15 +392,13 @@
         const SUPABASE_URL = 'https://yhppsaavkgxxxydbnyns.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlocHBzYWF2a2d4eHh5ZGJueW5zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0MTk4NTEsImV4cCI6MjEwMjk5NTg1MX0.l-GI1vaV7UIsKLNQJHFPR34RQTtlDepqCj9-JV5W91k';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        const BUCKET_NAME = 'img'; // Carpeta de Supabase orientada al repositorio
+        const BUCKET_NAME = 'img';
 
-        // Control de menú móvil
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         function toggleMobileMenu() { mobileMenu.classList.add('hidden'); }
 
-        // Navegación entre vistas sin scroll vertical general (por Navbar)
         function switchView(viewId) {
             document.querySelectorAll('.page-view').forEach(view => {
                 view.classList.remove('active-view');
@@ -461,16 +438,16 @@
             servicesList.forEach(srv => {
                 const imgUrl = serviceImagesDB[srv.keyName] || srv.defaultImg;
                 const card = document.createElement('div');
-                card.className = 'glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-500 flex flex-col shadow-xl';
+                card.className = 'glass-card rounded-2xl overflow-hidden group hover:border-emerald-500/50 transition-all duration-300 flex flex-col shadow-xl';
                 card.innerHTML = `
-                    <div class="relative h-52 overflow-hidden">
-                        <img src="${imgUrl}" alt="${srv.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="relative h-44 sm:h-52 overflow-hidden">
+                        <img src="${imgUrl}" alt="${srv.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1E3E62] via-transparent to-transparent opacity-80"></div>
                         <button onclick="openPasswordModal('service', '${srv.keyName}')" class="absolute top-2 right-2 bg-black/70 hover:bg-luxuryBtn text-white text-[9px] uppercase tracking-wider px-2 py-1 rounded backdrop-blur-md border border-white/20 transition-all">Cambiar foto</button>
                     </div>
-                    <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-                        <h4 class="text-lg font-bold font-cinzel text-white">${srv.name}</h4>
-                        <button onclick="openServiceQuoteModal('${srv.name}')" class="w-full text-center bg-luxuryCard hover:bg-luxuryBtn text-emerald-400 hover:text-white py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border border-emerald-500/30 cursor-pointer">
+                    <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                        <h4 class="text-base sm:text-lg font-bold font-cinzel text-white">${srv.name}</h4>
+                        <button onclick="openServiceQuoteModal('${srv.name}')" class="w-full text-center bg-luxuryCard hover:bg-luxuryBtn text-emerald-400 hover:text-white py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border border-emerald-500/30 cursor-pointer active:scale-95 shadow-sm">
                             Cotizar este servicio
                         </button>
                     </div>
@@ -479,7 +456,7 @@
             });
         }
 
-        // ================= GESTIÓN DE MODALES DE ADMIN / FOTOS =================
+        // ================= GESTIÓN DE MODALES =================
         let authTargetType = '';
         let activeHeroSlot = 1;
         let activeServiceKey = '';
@@ -505,18 +482,15 @@
             const pass = document.getElementById('admin-pass').value.trim();
             if (pass === 'eventos2026') {
                 closePasswordModal();
-                if (authTargetType === 'hero') {
-                    openHeroModal();
-                } else if (authTargetType === 'service') {
-                    openServiceImgModal();
-                }
+                if (authTargetType === 'hero') openHeroModal();
+                else if (authTargetType === 'service') openServiceImgModal();
             } else {
                 alert('Contraseña incorrecta.');
             }
         });
 
         function openHeroModal() {
-            document.getElementById('hero-modal-title').textContent = `Actualizar Hero (hero${activeHeroSlot})`;
+            document.getElementById('hero-modal-title').textContent = `Actualizar Hero (${activeHeroSlot})`;
             const modal = document.getElementById('hero-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -536,7 +510,7 @@
             document.getElementById(`hero-img-${activeHeroSlot}`).src = publicUrlData.publicUrl;
             fileInput.value = '';
             closeHeroModal();
-            alert('¡Imagen del Hero actualizada!');
+            alert('¡Imagen actualizada!');
         }
 
         async function fetchHeroConfig() {
@@ -550,7 +524,7 @@
         }
 
         function openServiceImgModal() {
-            document.getElementById('service-modal-title').textContent = `Actualizar foto para: ${activeServiceKey}`;
+            document.getElementById('service-modal-title').textContent = `Foto: ${activeServiceKey}`;
             const modal = document.getElementById('service-img-modal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -571,7 +545,7 @@
             fileInput.value = '';
             closeServiceImgModal();
             renderServicesGrid();
-            alert('¡Portada de servicio actualizada con éxito!');
+            alert('¡Actualizado con éxito!');
         }
 
         // ================= COTIZAR SERVICIO ESPECÍFICO =================
@@ -603,9 +577,7 @@
             window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // ================= COTIZACIÓN INTERACTIVA (WIZARD DE 10 PASOS) =================
-        // Nombres clave de imágenes solicitadas para cotización interactiva:
-        // tipo_evento, personas, fecha, presupuesto, catering, mobiliario, locaciones, carpas, sonido, decoracion, tortas, musica
+        // ================= COTIZACIÓN INTERACTIVA (WIZARD MOBILE OPTIMIZED) =================
         const interactiveImages = {
             tipo_evento: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=600',
             personas: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=600',
@@ -620,6 +592,14 @@
             tortas: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&q=80&w=600',
             musica: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600'
         };
+
+        async function fetchInteractiveImages() {
+            const { data } = await supabaseClient.from('interactive_images').select('*');
+            if (data) {
+                data.forEach(item => { interactiveImages[item.key_name] = item.url; });
+            }
+            renderWizardStep();
+        }
 
         let wizardStep = 1;
         const totalWizardSteps = 10;
@@ -651,133 +631,148 @@
 
             nextContainer.innerHTML = '';
             container.innerHTML = '';
-
-            // Animación suave de entrada
             container.classList.add('animate-in', 'fade-in', 'duration-300');
 
             if (wizardStep === 1) {
-                // Tipo de evento
                 const options = ['Boda', 'Bautizo', 'Primera Comunion', 'Corporativo', 'Cumpleaños', 'Gender reveal', 'Baby Shower'];
-                let html = `<h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">1. Seleccione el tipo de evento</h4>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">`;
+                let html = `<div class="mb-3 rounded-xl overflow-hidden h-28 sm:h-32 relative border border-white/10 shadow-md">
+                                <img src="${interactiveImages.tipo_evento}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                                    <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">1. Seleccione el tipo de evento</h4>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 sm:gap-3">`;
                 options.forEach(opt => {
-                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="relative h-32 rounded-xl overflow-hidden glass-card cursor-pointer border border-white/10 group transition-all hover:border-emerald-500 p-3 flex flex-col justify-end ${userSelection.tipoEvento === opt ? 'border-emerald-400 ring-2 ring-emerald-400' : ''}">
-                                <img src="${interactiveImages.tipo_evento}" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform">
-                                <div class="relative z-10 font-cinzel font-bold text-xs sm:text-sm">${opt}</div>
+                    html += `<div onclick="setWizardChoice('tipoEvento', '${opt}', this)" class="p-3 rounded-xl glass-card cursor-pointer border ${userSelection.tipoEvento === opt ? 'border-emerald-400 bg-emerald-900/30 ring-2 ring-emerald-400' : 'border-white/10'} text-xs font-semibold uppercase transition-all flex items-center justify-between active:scale-95">
+                                <span class="truncate">${opt}</span>
+                                <span class="w-4 h-4 rounded-full border ${userSelection.tipoEvento === opt ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[10px] text-luxuryBg shrink-0">${userSelection.tipoEvento === opt ? '✓' : ''}</span>
                             </div>`;
                 });
                 html += `</div>`;
                 container.innerHTML = html;
             } else if (wizardStep === 2) {
-                // Cantidad de personas
                 container.innerHTML = `
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">2. ¿Cantidad de personas?</h4>
-                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4">
-                        <img src="${interactiveImages.personas}" class="w-full h-36 object-cover rounded-xl mb-3">
-                        <input type="number" id="w-persons-input" min="1" value="${userSelection.personas || ''}" placeholder="Ej. 120" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3 text-white text-center focus:outline-none focus:border-emerald-500 text-lg">
-                        <button type="button" onclick="savePersonsStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Continuar</button>
+                    <div class="mb-3 rounded-xl overflow-hidden h-28 sm:h-32 relative border border-white/10 shadow-md">
+                        <img src="${interactiveImages.personas}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">2. ¿Cantidad de personas?</h4>
+                        </div>
+                    </div>
+                    <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
+                        <input type="number" id="w-persons-input" min="1" value="${userSelection.personas || ''}" placeholder="Ej. 120" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
+                        <button type="button" onclick="savePersonsStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
                     </div>`;
             } else if (wizardStep === 3) {
-                // Fecha
                 container.innerHTML = `
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">3. Seleccione la fecha del evento</h4>
-                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4 text-center">
-                        <img src="${interactiveImages.fecha}" class="w-full h-36 object-cover rounded-xl mb-3">
-                        <input type="date" id="w-date-input" value="${userSelection.fecha || ''}" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-4 text-white text-center focus:outline-none focus:border-emerald-500 text-lg">
-                        <button type="button" onclick="saveDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Continuar</button>
+                    <div class="mb-3 rounded-xl overflow-hidden h-28 sm:h-32 relative border border-white/10 shadow-md">
+                        <img src="${interactiveImages.fecha}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">3. Seleccione la fecha del evento</h4>
+                        </div>
+                    </div>
+                    <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3 text-center">
+                        <input type="date" id="w-date-input" value="${userSelection.fecha || ''}" class="w-full bg-luxuryBg border border-white/20 rounded-xl px-4 py-3.5 text-white text-center focus:outline-none focus:border-emerald-500 text-base">
+                        <button type="button" onclick="saveDateStep()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Continuar</button>
                     </div>`;
             } else if (wizardStep === 4) {
-                // Presupuesto
                 container.innerHTML = `
-                    <h4 class="text-base sm:text-lg font-semibold mb-6 text-center font-cinzel">4. Presupuesto estimado</h4>
-                    <div class="max-w-md mx-auto glass-card p-6 rounded-2xl border border-white/10 space-y-4">
-                        <img src="${interactiveImages.presupuesto}" class="w-full h-32 object-cover rounded-xl mb-2">
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" onclick="setWizardChoice('presupuesto', '5000-10.000$', null); nextWizardStep();" class="p-4 rounded-xl glass-card border border-white/10 hover:border-emerald-500 text-xs font-bold uppercase cursor-pointer">5.000 - 10.000$</button>
-                            <input type="text" id="custom-budget-input" placeholder="Otro monto ($)" value="${userSelection.presupuesto && userSelection.presupuesto !== '5000-10.000$' ? userSelection.presupuesto : ''}" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-3 text-xs text-white text-center focus:outline-none focus:border-emerald-500">
+                    <div class="mb-3 rounded-xl overflow-hidden h-28 sm:h-32 relative border border-white/10 shadow-md">
+                        <img src="${interactiveImages.presupuesto}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">4. Presupuesto estimado</h4>
                         </div>
-                        <button type="button" onclick="saveBudgetInput()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer">Guardar y Continuar</button>
+                    </div>
+                    <div class="max-w-md mx-auto glass-card p-5 rounded-2xl border border-white/10 space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="setWizardChoice('presupuesto', '5000-10.000$', null); nextWizardStep();" class="p-3.5 rounded-xl glass-card border border-white/10 hover:border-emerald-500 text-[11px] font-bold uppercase cursor-pointer active:scale-95">5.000 - 10.000$</button>
+                            <input type="text" id="custom-budget-input" placeholder="Otro ($)" value="${userSelection.presupuesto && userSelection.presupuesto !== '5000-10.000$' ? userSelection.presupuesto : ''}" class="w-full bg-luxuryBg border border-white/10 rounded-xl px-2 text-xs text-white text-center focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <button type="button" onclick="saveBudgetInput()" class="w-full bg-luxuryBtn hover:bg-luxuryBtnHover py-3 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all cursor-pointer active:scale-95">Guardar y Continuar</button>
                     </div>`;
             } else if (wizardStep === 5) {
-                // Catering (múltiple + Otro)
                 const items = ['pasapalos frios', 'pasapalos calientes', 'buffet', 'carne en vara', 'estacion de cierre', 'mesa de charcuteria y embutido'];
-                container.innerHTML = renderMultiCheckboxStep('Catering', 'catering', items, interactiveImages.catering);
+                container.innerHTML = renderMultiCheckboxStep('5. Catering', 'catering', items, interactiveImages.catering);
             } else if (wizardStep === 6) {
-                // Mobiliario (múltiple + Otro)
                 const items = ['sillas tiffany', 'sillas chivary', 'sillas de madera', 'silla américa', 'mesas cuadradas de madera', 'mesas redonda de madera', 'mesas cuadradas forradas', 'mesas de vidrio', 'areas lounch'];
-                container.innerHTML = renderMultiCheckboxStep('Mobiliario', 'mobiliario', items, interactiveImages.mobiliario);
+                container.innerHTML = renderMultiCheckboxStep('6. Mobiliario', 'mobiliario', items, interactiveImages.mobiliario);
             } else if (wizardStep === 7) {
-                // Locaciones (múltiple + Otro)
                 const items = ['Mirador', 'Casa de Ita', 'Neo Caracas', 'Casa el Arroyo'];
-                container.innerHTML = renderMultiCheckboxStep('Locaciones', 'locaciones', items, interactiveImages.locaciones);
+                container.innerHTML = renderMultiCheckboxStep('7. Locaciones', 'locaciones', items, interactiveImages.locaciones);
             } else if (wizardStep === 8) {
-                // Carpas y toldos (múltiple + Otro)
                 const items = ['toldos desde 4x6', 'carpas desde 10x15'];
-                container.innerHTML = renderMultiCheckboxStep('Carpas y toldos', 'carpas', items, interactiveImages.carpas);
+                container.innerHTML = renderMultiCheckboxStep('8. Carpas y toldos', 'carpas', items, interactiveImages.carpas);
             } else if (wizardStep === 9) {
-                // Sonido, iluminación y pantallas (múltiple + Otro)
                 const items = ['montaje pequeño', 'montaje sencillo', 'montaje grande'];
-                container.innerHTML = renderMultiCheckboxStep('Sonido, iluminación y pantallas', 'sonido', items, interactiveImages.sonido);
+                container.innerHTML = renderMultiCheckboxStep('9. Sonido, iluminación y pantallas', 'sonido', items, interactiveImages.sonido);
             } else if (wizardStep === 10) {
-                // Última página de opciones y envío final (Decoración, Tortas, Música en vivo)
                 const decos = ['arreglos florales', 'centros de mesa', 'decoracion con globos'];
                 const tortas = ['torta pequeña', 'torta de dos pisos', 'torta de tres pisos', 'mini dulces'];
                 const musica = ['Musica bailable', 'saxofonista', 'violinista', 'trio de cuerdas'];
 
                 container.innerHTML = `
-                    <h4 class="text-base sm:text-lg font-semibold mb-4 text-center font-cinzel">10. Detalles Finales de Ambientación</h4>
-                    <div class="space-y-6 max-h-[320px] overflow-y-auto pr-2">
+                    <div class="mb-3 rounded-xl overflow-hidden h-24 sm:h-28 relative border border-white/10 shadow-md">
+                        <img src="${interactiveImages.decoracion}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                            <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">10. Detalles Finales</h4>
+                        </div>
+                    </div>
+                    <div class="space-y-4 max-h-[260px] overflow-y-auto pr-1">
                         <div>
-                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Decoración y Floristería</h5>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${decos.map(i => renderCheckboxCard('decoracion', i)).join('')}</div>
+                            <h5 class="text-[10px] uppercase text-emerald-400 font-semibold mb-1.5">Decoración y Floristería</h5>
+                            <div class="grid grid-cols-2 gap-2">${decos.map(i => renderCheckboxCard('decoracion', i)).join('')}</div>
                         </div>
                         <div>
-                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Tortas y Dulces</h5>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${tortas.map(i => renderCheckboxCard('tortas', i)).join('')}</div>
+                            <h5 class="text-[10px] uppercase text-emerald-400 font-semibold mb-1.5">Tortas y Dulces</h5>
+                            <div class="grid grid-cols-2 gap-2">${tortas.map(i => renderCheckboxCard('tortas', i)).join('')}</div>
                         </div>
                         <div>
-                            <h5 class="text-xs uppercase text-emerald-400 font-semibold mb-2">Música en Vivo</h5>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">${musica.map(i => renderCheckboxCard('musica', i)).join('')}</div>
+                            <h5 class="text-[10px] uppercase text-emerald-400 font-semibold mb-1.5">Música en Vivo</h5>
+                            <div class="grid grid-cols-2 gap-2">${musica.map(i => renderCheckboxCard('musica', i)).join('')}</div>
                         </div>
                     </div>`;
-                nextContainer.innerHTML = `<button type="button" onclick="finalizeInteractiveQuote()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-8 py-3 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg cursor-pointer">Finalizar y Enviar WhatsApp</button>`;
+                nextContainer.innerHTML = `<button type="button" onclick="finalizeInteractiveQuote()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-3 rounded-xl text-xs font-semibold uppercase tracking-widest shadow-lg cursor-pointer active:scale-95">Finalizar y Enviar WhatsApp</button>`;
             }
 
             if (wizardStep < 10 && wizardStep !== 2 && wizardStep !== 3 && wizardStep !== 4) {
-                nextContainer.innerHTML = `<button type="button" onclick="nextWizardStep()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-6 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider cursor-pointer">Siguiente →</button>`;
+                nextContainer.innerHTML = `<button type="button" onclick="nextWizardStep()" class="bg-luxuryBtn hover:bg-luxuryBtnHover text-white px-5 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider cursor-pointer active:scale-95">Siguiente →</button>`;
             }
         }
 
         function renderMultiCheckboxStep(title, categoryKey, items, imgUrl) {
-            let html = `<h4 class="text-base sm:text-lg font-semibold mb-4 text-center font-cinzel">${title}</h4>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">`;
+            let html = `<div class="mb-3 rounded-xl overflow-hidden h-28 sm:h-32 relative border border-white/10 shadow-md">
+                            <img src="${imgUrl}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-luxuryBg via-luxuryBg/40 to-transparent flex items-end p-3">
+                                <h4 class="text-xs sm:text-sm font-semibold font-cinzel text-white">${title}</h4>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-3">`;
             items.forEach(item => {
                 const isSelected = userSelection[categoryKey].includes(item);
-                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-3 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'} text-xs font-semibold uppercase transition-all flex items-center justify-between">
-                            <span>${item}</span>
-                            <span class="w-4 h-4 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[10px] text-luxuryBg">${isSelected ? '✓' : ''}</span>
+                html += `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-2.5 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/30' : 'border-white/10'} text-[11px] font-semibold uppercase transition-all flex items-center justify-between active:scale-95">
+                            <span class="truncate pr-1">${item}</span>
+                            <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[9px] text-luxuryBg shrink-0">${isSelected ? '✓' : ''}</span>
                         </div>`;
             });
             html += `</div>
-                     <button type="button" onclick="openOtherModalFor('${categoryKey}')" class="w-full bg-luxuryCard hover:bg-white/10 border border-dashed border-emerald-500/40 text-emerald-400 py-2.5 rounded-xl text-xs uppercase font-semibold tracking-wider cursor-pointer">+ Otro (Escribir preferencia)</button>`;
+                     <button type="button" onclick="openOtherModalFor('${categoryKey}')" class="w-full bg-luxuryCard hover:bg-white/10 border border-dashed border-emerald-500/40 text-emerald-400 py-2.5 rounded-xl text-xs uppercase font-semibold tracking-wider cursor-pointer active:scale-95">+ Otro (Escribir)</button>`;
             return html;
         }
 
         function renderCheckboxCard(categoryKey, item) {
             const isSelected = userSelection[categoryKey].includes(item);
-            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-2.5 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/20' : 'border-white/10'} text-[11px] font-semibold uppercase transition-all flex items-center justify-between">
-                        <span class="truncate">${item}</span>
-                        <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[9px] text-luxuryBg shrink-0">${isSelected ? '✓' : ''}</span>
+            return `<div onclick="toggleMultiChoice('${categoryKey}', '${item}', this)" class="p-2 rounded-xl glass-card cursor-pointer border ${isSelected ? 'border-emerald-400 bg-emerald-900/30' : 'border-white/10'} text-[10px] font-semibold uppercase transition-all flex items-center justify-between active:scale-95">
+                        <span class="truncate pr-1">${item}</span>
+                        <span class="w-3.5 h-3.5 rounded-full border ${isSelected ? 'bg-emerald-400 border-emerald-400' : 'border-white/30'} flex items-center justify-center text-[8px] text-luxuryBg shrink-0">${isSelected ? '✓' : ''}</span>
                     </div>`;
         }
 
         function setWizardChoice(key, value, element) {
             userSelection[key] = value;
             if (element) {
-                element.parentElement.querySelectorAll('div').forEach(d => d.classList.remove('border-emerald-400', 'ring-2', 'ring-emerald-400'));
-                element.classList.add('border-emerald-400', 'ring-2', 'ring-emerald-400');
+                element.parentElement.querySelectorAll('div').forEach(d => d.classList.remove('border-emerald-400', 'bg-emerald-900/30', 'ring-2', 'ring-emerald-400'));
+                element.classList.add('border-emerald-400', 'bg-emerald-900/30', 'ring-2', 'ring-emerald-400');
             }
-            setTimeout(() => { nextWizardStep(); }, 300);
+            setTimeout(() => { nextWizardStep(); }, 250);
         }
 
         function savePersonsStep() {
@@ -847,7 +842,6 @@
         }
 
         function finalizeInteractiveQuote() {
-            // Animación de check verde elegante y confetis
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.5 } });
 
             const summaryMsg = `*Resumen de Cotización Interactiva DobleA* 🌟\n\n` +
@@ -864,17 +858,16 @@
                 `🎂 *Tortas y dulces:* ${userSelection.tortas.join(', ') || 'Ninguno'}\n` +
                 `🎻 *Música en vivo:* ${userSelection.musica.join(', ') || 'Ninguna'}`;
 
-            const phoneTarget = "584242056147"; // Número solicitado
+            const phoneTarget = "584242056147";
 
             setTimeout(() => {
                 window.open(`https://wa.me/${phoneTarget}?text=${encodeURIComponent(summaryMsg)}`, '_blank');
-            }, 1200);
+            }, 1000);
         }
 
-        // Inicialización al cargar la página
         fetchHeroConfig();
         fetchServicesImages();
-        renderWizardStep();
+        fetchInteractiveImages();
     </script>
 </body>
 </html>
